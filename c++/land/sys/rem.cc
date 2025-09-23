@@ -30,12 +30,15 @@ bool operator !(rem::code c)
            (c != rem::code::done)    &&
            (c != rem::code::ready)   &&
            (c != rem::code::finish)  &&
-           (c != rem::code::complete) &&
-           (c != rem::code::found)  &&
+           (c != rem::code::complete)&&
+           (c != rem::code::found)   &&
            (c != rem::code::applied) &&
            (c != rem::code::notapplicable) &&
-           (c != rem::code::exist);
+           (c != rem::code::exist)   &&
+           (c != rem::code::applied) &&
+           (c != rem::code::valid);
 }
+
 
 
 using cat::color;
@@ -154,7 +157,9 @@ std::map<rem::code, const char*> return_codes_dictionary = {
     {rem::code::dismissed,        "dismissed"},
     {rem::code::syntax_error,     "syntax error"},
     {rem::code::applied,          "applied"},
-    {rem::code::notapplicable,    "not applicable"}
+    {rem::code::notapplicable,    "not applicable"},
+    {rem::code::valid,            "valid"},
+    {rem::code::invalid,          "invalid"}
 };
 
 /**
@@ -388,6 +393,11 @@ std::map<rem::code, std::pair<glyph::value, color::pair>> codes_database={
     {rem::code::found,           {glyph::success,         {color::fuchsia           ,color::reset }}},
     {rem::code::dismissed,       {glyph::circle_x,        {color::yellow            ,color::reset }}},
     {rem::code::syntax_error,    {glyph::circle_x,        {color::hotpink4          ,color::reset }}},
+    {rem::code::applied,         {glyph::success,         {color::green             ,color::reset }}},
+    {rem::code::notapplicable,   {glyph::circle_x,        {color::hotpink4          ,color::reset }}},
+    {rem::code::valid,           {glyph::success,         {color::green             ,color::reset }}},
+    {rem::code::invalid,         {glyph::circle_x,        {color::hotpink4          ,color::reset }}}
+
 };
 
 /**

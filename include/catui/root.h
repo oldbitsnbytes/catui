@@ -41,7 +41,7 @@ pragma warning(disable : 4996)
 #   endif
 
 #else
-#   define CATUI_LIB __visibility__("default")
+#   define CATUI_LIB //__visibility__("default")
 #endif
 
 // ------------ Mandatory includes ------------

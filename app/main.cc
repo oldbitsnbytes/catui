@@ -1,23 +1,51 @@
-#include <catui/land/sys/rem.h>
+#include <catui/land/sys/expect.h>
+#include <catui/utxt.h>
 #include <iostream>
 
 using cat::color;
 
-rem::code test_rem()
+int fortydeux = 42;
+
+
+cat::expect<int&> test_rem()
 {
     auto [g,c] = rem::function_attributes(rem::fn::stamp);
-    std::cout << color::render_rgb(c) << cat::glyph::data[g] << color::render_rgb(color::lime) << " timer glyph...\n";
-    return rem::code::success;
+    std::cout << color::render_rgb(c) << cat::glyph::data[g] << color::render_rgb(color::skyblue3) << " timer glyph...\n" << color::render(color::reset);
+    return rem::code::rejected;
 }
 
 
 
 auto main(int argc, char** argv, char** env) -> int
 {
-    using cat::color;
-    std::cout << color::render_rgb(color::lime) << "Hello world!" << color::render(color::r) << std::endl;
-    test_rem();
-    std::cout << "Cool!" << std::endl;
+
+    try
+    {
+        cat::utxt txt;
+        txt = "   Hello world!";
+        std::string str;
+        auto p = txt >> str;
+        using cat::color;
+
+        if (!!p)
+            std::cout << "extract " << color::render(color::blueviolet) << str << color::render(color::r) << std::endl;
+
+
+        std::cout << color::render_rgb(color::lime) << "Hello world!" << color::render(color::r) << std::endl;
+        auto r = test_rem();
+        if (r)
+            std::cout << "test_rem result: " << color::render(color::yellow) << *test_rem() << std::endl;
+        else
+        {
+            auto [g,c] = rem::function_attributes(rem::fn::stamp);
+            std::cout << " test_rem result: " << color::render(color::hotpink4) << color::render_rgb(c) << cat::glyph::data[g] << rem::to_string(r.error()) << std::endl;;
+        }
+        std::cout << "Fini...\n";
+    }
+    catch (std::exception& e)
+    {
+        std::cout << "Exception: " << e.what() << std::endl;
+    }
     return 0;
 }
 

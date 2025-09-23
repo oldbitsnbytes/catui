@@ -161,6 +161,8 @@ enum class code :cat::integers::U8
     syntax_error     ,
     applied          ,
     notapplicable    ,
+    valid            ,
+    invalid          ,
     //...to be continued
 
 };
