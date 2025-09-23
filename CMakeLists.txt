@@ -8,32 +8,32 @@ project(catui CXX)
 
 
 set(HEADERS
-    include/catui/defs.h
-#    include/catui/cadres.h
-#    include/catui/cmdargs.h
-#    include/catui/colors.h
-#    include/catui/notify.h
-#    include/catui/expect.h
-#    include/catui/geometry.h
-#    include/catui/glyphes.h
-#    include/catui/data/databits.h
-#    include/catui/data/field.h
-#    include/catui/data/table.h
-#    include/catui/sys/sys.h
-#    include/catui/sys/sys.inc
-#    include/catui/object.h
-#    include/catui/rem.h
-#    include/catui/string.h
-#    include/catui/app_base.h
-#    include/catui/vchar.h
-#    include/catui/strscan.h
-#    include/catui/strscan.numeric_data.value.inc.h
-#    include/catui/io/lfd.h
-#    include/catui/io/listener.h
-#    include/catui/io/tcp_socket.h
-#    include/catui/io/kbhit.h
-#    include/catui/io/mouse.h
-#    include/catui/io/console.h
+    include/tui/defs.h
+#    include/tui/cadres.h
+#    include/tui/cmdargs.h
+#    include/tui/colors.h
+#    include/tui/notify.h
+#    include/tui/expect.h
+#    include/tui/geometry.h
+#    include/tui/glyphes.h
+#    include/tui/data/databits.h
+#    include/tui/data/field.h
+#    include/tui/data/table.h
+#    include/tui/sys/sys.h
+#    include/tui/sys/sys.inc
+#    include/tui/object.h
+#    include/tui/rem.h
+#    include/tui/string.h
+#    include/tui/app_base.h
+#    include/tui/vchar.h
+#    include/tui/strscan.h
+#    include/tui/strscan.numeric_data.value.inc.h
+#    include/tui/io/lfd.h
+#    include/tui/io/listener.h
+#    include/tui/io/tcp_socket.h
+#    include/tui/io/kbhit.h
+#    include/tui/io/mouse.h
+#    include/tui/io/console.h
 
 )
 
@@ -43,25 +43,25 @@ add_library(catui
             SHARED
 
             ${HEADERS}
-#            c++/catui/colors.cc
-#            c++/catui/geometry.cc
-#            c++/catui/sys/sys.cc
-#            c++/catui/cadres.cc
-#            c++/catui/glyphes.cc
-#            c++/catui/object.cc
-#            c++/catui/rem.cc
-#            c++/catui/cmdargs.cc
-#            c++/catui/string.cc
-#            c++/catui/app_base.cc
-#            c++/catui/vchar.cc
-#            c++/catui/vchar.pad.cc
-#            c++/catui/strscan.cc
-#            c++/catui/io/lfd.cc
-#            c++/catui/io/listener.cc
-#            c++/catui/io/tcp_socket.cc
-#            c++/catui/io/kbhit.cc
-#            c++/catui/io/mouse.cc
-#            c++/catui/io/console.cc
+#            c++/tui/colors.cc
+#            c++/tui/geometry.cc
+#            c++/tui/sys/sys.cc
+#            c++/tui/cadres.cc
+#            c++/tui/glyphes.cc
+#            c++/tui/object.cc
+#            c++/tui/rem.cc
+#            c++/tui/cmdargs.cc
+#            c++/tui/string.cc
+#            c++/tui/app_base.cc
+#            c++/tui/vchar.cc
+#            c++/tui/vchar.pad.cc
+#            c++/tui/strscan.cc
+#            c++/tui/io/lfd.cc
+#            c++/tui/io/listener.cc
+#            c++/tui/io/tcp_socket.cc
+#            c++/tui/io/kbhit.cc
+#            c++/tui/io/mouse.cc
+#            c++/tui/io/console.cc
 
 )
 target_include_directories(catui PUBLIC
