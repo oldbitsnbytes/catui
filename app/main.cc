@@ -22,7 +22,7 @@ auto main(int argc, char** argv, char** env) -> int
     try
     {
         cat::utxt txt;
-        txt = "   Hello 42 world!";
+        txt = "   Hello 42.2 world!";
         std::string str;
         auto p = txt >> str;
         using cat::color;
@@ -35,13 +35,13 @@ auto main(int argc, char** argv, char** env) -> int
             else
                 std::cout << color::render(color::blueviolet) << "result is empty!" << color::render(color::r) << std::endl;
         }
-        int x42;
+        float x42;
         p = txt >> x42;
         std::cout << "testing utxt extract operator - next 'token':" << rem::render(p) << "\n";
         if (!!p)
         {
             if (str.size() > 1)
-                std::cout << "'" << color::render(color::blueviolet) << x42 << color::render(color::r) << "'" << std::endl;
+                std::cout << "[" << color::render(color::blueviolet) << x42 << color::render(color::r) << "]" << std::endl;
             else
                 std::cout << color::render(color::blueviolet) << "result is empty!" << color::render(color::r) << std::endl;
         }
