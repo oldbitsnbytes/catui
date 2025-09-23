@@ -67,11 +67,11 @@ template<typename T> rem::code  utxt::operator>>(T& val)
         std::cout << " cursor on '" << *cursor.begin << "'" << std::endl;
         cursor.skip_ws();
         std::cout << " after skip_wd() : cursor on '" << *cursor.begin << "'" << std::endl;
-        auto beg = cursor.begin;
+        auto ptr = cursor.begin;
 
-        while (!std::isspace(*beg) && (beg++ != cursor.end));
-        val = std::string{cursor.begin,beg};
-        cursor.begin = beg;
+        while (!std::isspace(*ptr) && (ptr++ != cursor.end));
+        val = std::string{cursor.begin,ptr};
+        cursor.begin = ptr;
 
         return rem::code::valid;
     }
@@ -97,31 +97,31 @@ template<typename T> rem::code  utxt::operator>>(T& val)
             std::cout << " cursor on '" << *cursor.begin << "'" << std::endl;
             cursor.skip_ws();
             std::cout << " after skip_wd() : cursor on '" << *cursor.begin << "'" << std::endl;
-            auto beg = cursor.begin;
+            auto ptr = cursor.begin;
             bool real=false;
             bool ok = true;
-            if (!std::isdigit(*beg))
+            if (!std::isdigit(*ptr))
             {
-                if (*beg == '.'){ ++beg; real = true; }
+                if (*ptr == '.'){ ++ptr; real = true; }
                 else
                     return rem::code::rejected;
             }
 
-           cont: while (std::isdigit(*beg) && (beg++ != cursor.end));
-           if (!real && (*beg == '.'))
+           cont: while (std::isdigit(*ptr) && (ptr++ != cursor.end));
+           if (!real && (*ptr == '.'))
            {
-               ++beg;
+               ++ptr;
                real = true;
                goto cont;
            }
            else
            {
                     if (real)
-                        val = std::stod(std::string{cursor.begin,beg});
+                        val = std::stod(std::string{cursor.begin,ptr});
                     else
-                        val = std::stoll(std::string{cursor.begin,beg});
+                        val = std::stoll(std::string{cursor.begin,ptr});
 
-                    cursor.begin = beg;
+                    cursor.begin = ptr;
            }
            return rem::code::valid;
         }
@@ -138,11 +138,11 @@ template<typename T> rem::code  utxt::operator>>(T& val)
                 std::cout << " cursor on '" << *cursor.begin << "'" << std::endl;
                 cursor.skip_ws();
                 std::cout << " after skip_wd() : cursor on '" << *cursor.begin << "'" << std::endl;
-                auto beg = cursor.begin;
+                auto ptr = cursor.begin;
 
-                while (!std::isspace(*beg) && (beg++ != cursor.end));
-                val = std::string{cursor.begin,beg}.c_str();
-                cursor.begin = beg;
+                while (!std::isspace(*ptr) && (ptr++ != cursor.end));
+                val = std::string{cursor.begin,ptr}.c_str();
+                cursor.begin = ptr;
 
                 return rem::code::valid;
             }

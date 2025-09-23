@@ -46,7 +46,16 @@ class CATUI_LIB utxt
     using list = std::vector<std::string>;
 
 public:
+    struct CATUI_LIB numeric
+    {
+        union
+        {
+            double d;
+            integers::u64 u;
+        }value{0.0};
 
+
+    };
     struct CATUI_LIB word
     {
         std::string::iterator begin{};
