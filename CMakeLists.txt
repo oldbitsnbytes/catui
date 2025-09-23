@@ -1,81 +1,86 @@
 
 cmake_minimum_required(VERSION 3.40 FATAL_ERROR)
-cmake_minimum_required(VERSION 3.30 FATAL_ERROR)
+
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-project(catui CXX)
+
+project(catui
+        VERSION 0.1.0
+        DESCRIPTION "A non-standard c++ framework suite of my personal hobby projects"
+        LANGUAGES CXX
+)
 
 
 set(HEADERS
-    include/tui/defs.h
-#    include/tui/cadres.h
-#    include/tui/cmdargs.h
-#    include/tui/colors.h
-#    include/tui/notify.h
-#    include/tui/expect.h
-#    include/tui/geometry.h
-#    include/tui/glyphes.h
-#    include/tui/data/databits.h
-#    include/tui/data/field.h
-#    include/tui/data/table.h
-#    include/tui/sys/sys.h
-#    include/tui/sys/sys.inc
-#    include/tui/object.h
-#    include/tui/rem.h
-#    include/tui/string.h
-#    include/tui/app_base.h
-#    include/tui/vchar.h
-#    include/tui/strscan.h
-#    include/tui/strscan.numeric_data.value.inc.h
-#    include/tui/io/lfd.h
-#    include/tui/io/listener.h
-#    include/tui/io/tcp_socket.h
-#    include/tui/io/kbhit.h
-#    include/tui/io/mouse.h
-#    include/tui/io/console.h
+     include/${PROJECT_NAME}/root.h
+#    include/${PROJECT_NAME}/land/cadres.h
+#    include/${PROJECT_NAME}/land/cmdargs.h
+     include/${PROJECT_NAME}/land/colors.h
+#    include/${PROJECT_NAME}/land/notify.h
+#    include/${PROJECT_NAME}/land/expect.h
+#    include/${PROJECT_NAME}/land/geometry.h
+#    include/${PROJECT_NAME}/land/glyphes.h
+#    include/${PROJECT_NAME}/land/data/databits.h
+#    include/${PROJECT_NAME}/land/data/field.h
+#    include/${PROJECT_NAME}/land/data/table.h
+#    include/${PROJECT_NAME}/land/sys/sys.h
+#    include/${PROJECT_NAME}/land/sys/sys.inc
+#    include/${PROJECT_NAME}/land/object.h
+#    include/${PROJECT_NAME}/land/sys/rem.h
+#    include/${PROJECT_NAME}/land/string.h
+#    include/${PROJECT_NAME}/land/app_base.h
+#    include/${PROJECT_NAME}/land/vchar.h
+#    include/${PROJECT_NAME}/land/strscan.h
+#    include/${PROJECT_NAME}/land/strscan.numeric_data.value.inc.h
+#    include/${PROJECT_NAME}/land/io/lfd.h
+#    include/${PROJECT_NAME}/land/io/listener.h
+#    include/${PROJECT_NAME}/land/io/tcp_socket.h
+#    include/${PROJECT_NAME}/land/io/kbhit.h
+#    include/${PROJECT_NAME}/land/io/mouse.h
+#    include/${PROJECT_NAME}/land/io/console.h
 
 )
 
 
-add_library(catui
+add_library(${PROJECT_NAME}
 
             SHARED
 
             ${HEADERS}
-#            c++/tui/colors.cc
-#            c++/tui/geometry.cc
-#            c++/tui/sys/sys.cc
-#            c++/tui/cadres.cc
-#            c++/tui/glyphes.cc
-#            c++/tui/object.cc
-#            c++/tui/rem.cc
-#            c++/tui/cmdargs.cc
-#            c++/tui/string.cc
-#            c++/tui/app_base.cc
-#            c++/tui/vchar.cc
-#            c++/tui/vchar.pad.cc
-#            c++/tui/strscan.cc
-#            c++/tui/io/lfd.cc
-#            c++/tui/io/listener.cc
-#            c++/tui/io/tcp_socket.cc
-#            c++/tui/io/kbhit.cc
-#            c++/tui/io/mouse.cc
-#            c++/tui/io/console.cc
+             c++/land/colors.cc
+#            c++/land/geometry.cc
+#            c++/land/sys/sys.cc
+#            c++/land/sys/rem.cc
+#            c++/land/cadres.cc
+#            c++/land/glyphes.cc
+#            c++/land/object.cc
+#            c++/land/cmdargs.cc
+#            c++/land/string.cc
+#            c++/land/app_base.cc
+#            c++/land/vchar.cc
+#            c++/land/vchar.pad.cc
+#            c++/land/strscan.cc
+#            c++/land/io/lfd.cc
+#            c++/land/io/listener.cc
+#            c++/land/io/tcp_socket.cc
+#            c++/land/io/kbhit.cc
+#            c++/land/io/mouse.cc
+#            c++/land/io/console.cc
 
 )
-target_include_directories(catui PUBLIC
-                           $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-                           $<INSTALL_INTERFACE:include/catui>
+target_include_directories(${PROJECT_NAME} PUBLIC
+                           $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+                           $<INSTALL_INTERFACE:include/${PROJECT_NAME}>
 )
-message("build and include dir:" ${CMAKE_CURRENT_SOURCE_DIR}/catui)
-set_target_properties(${WORK} PROPERTIES OUTPUT_NAME catui++)
+message("build and include dir:" ${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME})
+set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME ${PROJECT_NAME}++)
 
 
 
-target_compile_definitions(cat PUBLIC "catui_DEBUG=$<CONFIG:Debug>")
+target_compile_definitions(${PROJECT_NAME} PUBLIC "${PROJECT_NAME}_DEBUG=$<CONFIG:Debug>")
 include(GenerateExportHeader)
-generate_export_header(catui EXPORT_FILE_NAME "catui_export")
+generate_export_header(${PROJECT_NAME} EXPORT_FILE_NAME "${PROJECT_NAME}_export")
 
 IF (EXISTS "${CMAKE_CURRENT_BINARY_DIR}/compile_commands.json")
     EXECUTE_PROCESS(COMMAND ${CMAKE_COMMAND} -E copy_if_different
@@ -84,28 +89,32 @@ IF (EXISTS "${CMAKE_CURRENT_BINARY_DIR}/compile_commands.json")
 ENDIF ()
 
 
-target_link_libraries(catui ${CMAKE_DL_LIBS} sqlite3) # and other system dependencies...
+target_link_libraries(${PROJECT_NAME} ${CMAKE_DL_LIBS} sqlite3) # and other system dependencies...
 
 
+add_executable(catapp
+    app/main.cc
+)
+
+target_link_libraries(catapp catui)
 
 
-
-install(TARGETS catui
-        EXPORT catui
+install(TARGETS ${PROJECT_NAME}
+        EXPORT ${PROJECT_NAME}
         LIBRARY DESTINATION lib
         ARCHIVE DESTINATION lib
         RUNTIME DESTINATION bin
 )
 
-INSTALL(FILES ${HEADERS} DESTINATION ${CMAKE_INSTALL_PREFIX}/include/catui)
+INSTALL(FILES ${HEADERS} DESTINATION ${CMAKE_INSTALL_PREFIX}/include/${PROJECT_NAME})
 
 
-add_custom_target("uninstall_catui" COMMENT "Uninstall installed files")
+add_custom_target("uninstall_${PROJECT_NAME}" COMMENT "Uninstall installed files")
 add_custom_command(
     TARGET "uninstall_${PROJECT_NAME}"
     POST_BUILD
     COMMENT "Uninstall ${PROJECT_NAME} files under include and lib"
-    COMMAND rm -vrf ${CMAKE_INSTALL_PREFIX}/include/${PROJECT_NAME} ${CMAKE_INSTALL_PREFIX}/lib/lib${PROJECT_NAME}* || echo Nothing in install_manifest.txt to be uninstalled!
+    COMMAND rm -vrf ${CMAKE_INSTALL_PREFIX}/include/${PROJECT_NAME} ${CMAKE_INSTALL_PREFIX}/lib/lib${PROJECT_NAME}++* || echo "Nothing in install_manifest.txt to be uninstalled!"
 )
 
 

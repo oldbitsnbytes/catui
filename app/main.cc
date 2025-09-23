@@ -1,4 +1,11 @@
+#include <catui/land/colors.h>
+#include <iostream>
+auto main(int argc, char** argv, char** env) -> int
+{
 
+    std::cout << "Cool!" << std::endl;
+    return 0;
+}
 
 
 /*
