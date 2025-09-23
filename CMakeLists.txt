@@ -20,14 +20,14 @@ set(HEADERS
 #    include/${PROJECT_NAME}/land/notify.h
 #    include/${PROJECT_NAME}/land/expect.h
 #    include/${PROJECT_NAME}/land/geometry.h
-#    include/${PROJECT_NAME}/land/glyphes.h
+     include/${PROJECT_NAME}/land/glyphes.h
 #    include/${PROJECT_NAME}/land/data/databits.h
 #    include/${PROJECT_NAME}/land/data/field.h
 #    include/${PROJECT_NAME}/land/data/table.h
 #    include/${PROJECT_NAME}/land/sys/sys.h
 #    include/${PROJECT_NAME}/land/sys/sys.inc
 #    include/${PROJECT_NAME}/land/object.h
-#    include/${PROJECT_NAME}/land/sys/rem.h
+     include/${PROJECT_NAME}/land/sys/rem.h
 #    include/${PROJECT_NAME}/land/string.h
 #    include/${PROJECT_NAME}/land/app_base.h
 #    include/${PROJECT_NAME}/land/vchar.h
@@ -51,9 +51,9 @@ add_library(${PROJECT_NAME}
              c++/land/colors.cc
 #            c++/land/geometry.cc
 #            c++/land/sys/sys.cc
-#            c++/land/sys/rem.cc
+             c++/land/sys/rem.cc
 #            c++/land/cadres.cc
-#            c++/land/glyphes.cc
+             c++/land/glyphes.cc
 #            c++/land/object.cc
 #            c++/land/cmdargs.cc
 #            c++/land/string.cc

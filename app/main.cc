@@ -1,8 +1,22 @@
-#include <catui/land/colors.h>
+#include <catui/land/sys/rem.h>
 #include <iostream>
+
+using cat::color;
+
+rem::code test_rem()
+{
+    auto [g,c] = rem::function_attributes(rem::fn::stamp);
+    std::cout << color::render_rgb(c) << cat::glyph::data[g] << color::render_rgb(color::lime) << " timer glyph...\n";
+    return rem::code::success;
+}
+
+
+
 auto main(int argc, char** argv, char** env) -> int
 {
-
+    using cat::color;
+    std::cout << color::render_rgb(color::lime) << "Hello world!" << color::render(color::r) << std::endl;
+    test_rem();
     std::cout << "Cool!" << std::endl;
     return 0;
 }
