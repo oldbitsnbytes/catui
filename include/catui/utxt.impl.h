@@ -23,9 +23,10 @@
 
 
 #pragma once
+#include <iostream>
 #include <catui/utxt.h>
 #include <sstream>
-
+#include <source_location>
 namespace cat
 {
 
@@ -49,34 +50,34 @@ template<typename T> utxt& utxt::operator<<(T&&_blk)
 /*!
  * @brief Extract/ Scan a value from the text from the current utxt::cursor position.
  */
-template<typename T> rem::code  utxt::operator>>(T&val)
+template<typename T> rem::code  utxt::operator>>(T& val)
 {
     if (m_txt.empty()) return rem::code::rejected;
     //utxt::word _word(m_txt);
-    if (std::is_same<T, std::string>::value ||
+    if constexpr (std::is_same<T, std::string>::value ||
         std::is_same<T, std::string_view>::value ||
         std::is_same<T, std::wstring>::value ||
-        std::is_same<T, std::wstring_view>::value
-        //std::is_same<T, const char*>::value ||
-        //std::is_same<T, const wchar_t*>::value ||
-        //std::is_same<T, char*>::value ||
-        //std::is_same<T, wchar_t*>::value ||
-        //std::is_same<T, cat::utxt>::value
+        std::is_same<T, std::wstring_view>::value ||
+        std::is_same<T, cat::utxt>::value
     )
     {
         // In all 'string' cases, we scan the word and return it.
         // if cursor is on quote symbol, then scan until the end of quote. complete the sequence with quote. and return the sequence.
-
+        std::cout << std::source_location::current().function_name() << ":" << std::endl;
+        std::cout << " cursor on '" << *cursor.begin << "'" << std::endl;
         cursor.skip_ws();
+        std::cout << " after skip_wd() : cursor on '" << *cursor.begin << "'" << std::endl;
         auto beg = cursor.begin;
 
-        while (!std::isspace(*beg) && (beg != cursor.end)) ++cursor.begin;
-        val = std::string{beg, cursor.begin};
+        while (!std::isspace(*beg) && (beg++ != cursor.end));
+        val = std::string{cursor.begin,beg};
+        cursor.begin = beg;
+
         return rem::code::valid;
     }
     else
     {
-        if (std::is_same<T, bool>::value  ||
+        if constexpr (std::is_same<T, bool>::value  ||
             std::is_same<T, int>::value  ||
             std::is_same<T, unsigned int>::value  ||
             std::is_same<T, float>::value  ||
@@ -92,10 +93,63 @@ template<typename T> rem::code  utxt::operator>>(T&val)
             std::is_same<T, unsigned char>::value )
         {
             // In all 'number' cases, we scan the numeric sequence until non-numeric byte and return
-            ;
+            std::cout << std::source_location::current().function_name() << ":" << std::endl;
+            std::cout << " cursor on '" << *cursor.begin << "'" << std::endl;
+            cursor.skip_ws();
+            std::cout << " after skip_wd() : cursor on '" << *cursor.begin << "'" << std::endl;
+            auto beg = cursor.begin;
+            bool real=false;
+            bool ok = true;
+            if (!std::isdigit(*beg))
+            {
+                if (*beg == '.'){ ++beg; real = true; }
+                else
+                    return rem::code::rejected;
+            }
+
+           cont: while (std::isdigit(*beg) && (beg++ != cursor.end));
+           if (!real && (*beg == '.'))
+           {
+               ++beg;
+               real = true;
+               goto cont;
+           }
+           else
+           {
+                    if (real)
+                        val = std::stod(std::string{cursor.begin,beg});
+                    else
+                        val = std::stoll(std::string{cursor.begin,beg});
+
+                    cursor.begin = beg;
+           }
+           return rem::code::valid;
+        }
+        else
+        {
+            if constexpr (std::is_same<T, const char*>::value ||
+                std::is_same<T, const wchar_t*>::value ||
+                std::is_same<T, char*>::value ||
+                std::is_same<T, wchar_t*>::value)
+            {
+                // In all 'string' cases, we scan the word and return it.
+                // if cursor is on quote symbol, then scan until the end of quote. complete the sequence with quote. and return the sequence.
+                std::cout << std::source_location::current().function_name() << ":" << std::endl;
+                std::cout << " cursor on '" << *cursor.begin << "'" << std::endl;
+                cursor.skip_ws();
+                std::cout << " after skip_wd() : cursor on '" << *cursor.begin << "'" << std::endl;
+                auto beg = cursor.begin;
+
+                while (!std::isspace(*beg) && (beg++ != cursor.end));
+                val = std::string{cursor.begin,beg}.c_str();
+                cursor.begin = beg;
+
+                return rem::code::valid;
+            }
         }
 
     }
+
     return rem::code::rejected;
 }
 

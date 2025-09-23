@@ -53,7 +53,7 @@ public:
         std::string::iterator end{};
 
         word() = delete;
-        explicit word(std::string& txt);
+        word(std::string& txt);
         word(std::string::iterator begin, std::string::iterator end);
         ~word() = default;
         std::string     operator()() const;
@@ -79,9 +79,9 @@ public:
     utxt(const std::string& txt) : m_txt(txt){ cursor.begin = m_txt.begin();}
     utxt(std::string&& txt) : m_txt(std::move(txt)){cursor.begin = m_txt.begin();}
     utxt(const char* txt) : m_txt(txt){ cursor.begin = m_txt.begin();}
-    utxt& operator=(const char* txt) {m_txt = txt; cursor.begin = m_txt.begin(); return *this;}
-    utxt& operator=(const std::string& txt) { m_txt = txt; cursor.begin = m_txt.begin(); return *this; }
-    utxt& operator=(std::string&& txt) { m_txt = std::move(txt); cursor.begin = m_txt.begin(); return *this;}
+    utxt& operator=(const char* txt) {m_txt = txt; cursor={m_txt}; cursor.begin = m_txt.begin(); return  *this;}
+    utxt& operator=(const std::string& txt) { m_txt = txt;  cursor={m_txt};cursor.begin = m_txt.begin(); return *this; }
+    utxt& operator=(std::string&& txt) { m_txt = std::move(txt);  cursor={m_txt}; cursor.begin = m_txt.begin(); return *this;}
 
 
     template<typename T> void append(T&& _blk);

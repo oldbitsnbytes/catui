@@ -232,28 +232,6 @@ std::map<rem::fn, const char*> functions_dictionary= {
 
 
 
-std::string to_string(rem::type ty)
-{
-    return enums_type_dictionary[ty];
-}
-
-std::string to_string(rem::code value)
-{
-    return return_codes_dictionary[value];
-}
-
-
-
-std::string to_string(rem::fn fn)
-{
-    return functions_dictionary[fn];
-}
-
-std::string to_string(rem::action ac)
-{
-    return actions_dictionary[ac];
-}
-
 
 /**
  * A database mapping specific types of `rem::type` to their corresponding glyph representation
@@ -499,6 +477,45 @@ std::pair<glyph::value, color::pair> action_attributes(rem::action a)
 {
     return rem::actions_color_db[a];
 }
+
+
+std::string render(rem::code c)
+{
+
+    auto [g,col] = return_code_attributes(c);
+    std::string text = color::render_rgb(col);
+    text += glyph::data[g];
+    text += ' ';
+    text += rem::to_string(c);
+    text += "\x1b[39m";
+    return text;
+}
+
+
+std::string to_string(rem::type ty)
+{
+    return enums_type_dictionary[ty];
+}
+
+std::string to_string(rem::code value)
+{
+
+    return return_codes_dictionary[value];
+}
+
+
+
+std::string to_string(rem::fn fn)
+{
+    return functions_dictionary[fn];
+}
+
+std::string to_string(rem::action ac)
+{
+    return actions_dictionary[ac];
+}
+
+
 
 
 }

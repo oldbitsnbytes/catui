@@ -250,6 +250,8 @@ std::pair<cat::glyph::value,cat::color::pair> return_code_attributes(rem::code c
 std::pair<cat::glyph::value,cat::color::pair> function_attributes(rem::fn fn);
 std::pair<cat::glyph::value,cat::color::pair> action_attributes(rem::action a);
 
+std::string render(rem::code c);
+
 }
 
 

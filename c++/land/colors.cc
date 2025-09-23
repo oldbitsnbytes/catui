@@ -379,7 +379,7 @@ std::string color::render_rgb(color::pair a_pair)
 {
     std::ostringstream txt;
     if (a_pair.fg == 255)
-        txt << "\x1b[39";
+        txt << "\x1b[39;";
     else
     {
         auto rgb_data  = color::colors_db[a_pair.fg];
