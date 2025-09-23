@@ -3,17 +3,17 @@
 
 /*
 
-#include <tuxvision/tui/application.h>
-#include <tuxvision/utility/app_base.h>
-#include <tuxvision/lexer/lexer.h>
+#include <catui/tui/application.h>
+#include <catui/utility/app_base.h>
+#include <catui/lexer/lexer.h>
 //#include </vision/element.h>
-#include <tuxvision/est/ynod.h>  //-- Future y-nod interpreter ;)
-#include <tuxvision/utility/io/console.h>
-#include <tuxvision/utility/strscan.h>
-#include <tuxvision/tui/element.h>
-#include <tuxvision/tui/event.h>
-#include <tuxvision/tui/screen_dc.h>
-#include <tuxvision/tui/label_dc.h>
+#include <catui/est/ynod.h>  //-- Future y-nod interpreter ;)
+#include <catui/utility/io/console.h>
+#include <catui/utility/strscan.h>
+#include <catui/tui/element.h>
+#include <catui/tui/event.h>
+#include <catui/tui/screen_dc.h>
+#include <catui/tui/label_dc.h>
 
 namespace tux::vision
 {
