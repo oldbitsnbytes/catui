@@ -20,10 +20,10 @@
 namespace cat
 {
 
-utxt::word::word(std::string&txt):begin(txt.end()), end(txt.end()){}
+utxt::word::word(std::string&txt):begin(txt.end()), cur(begin),  end(txt.end()){}
 
 
-utxt::word::word(std::string::iterator _begin, std::string::iterator _end):begin{_begin},end(_end){}
+utxt::word::word(std::string::iterator _begin, std::string::iterator _end):begin{_begin}, cur(begin),end(_end){}
 
 std::string utxt::word::operator()() const { return {begin, end}; }
 
@@ -32,6 +32,22 @@ rem::code utxt::word::skip_ws()
 {
     while(begin != end && std::isspace(*begin)) ++begin;
     return rem::code::valid;
+}
+
+
+bool utxt::operator++()
+{
+    if (cursor.cur == cursor.end) return false;
+    ++cursor.cur;
+    return true;
+}
+
+
+bool utxt::operator--()
+{
+    if (cursor.cur <= cursor.begin) return false;
+    --cursor.cur;
+    return true;
 }
 
 

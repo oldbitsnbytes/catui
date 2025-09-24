@@ -41,7 +41,7 @@ auto main(int argc, char** argv, char** env) -> int
         if (!!p)
         {
             if (str.size() > 1)
-                std::cout << "[" << color::render(color::blueviolet) << x42 << color::render(color::r) << "]" << std::endl;
+                std::cout << "[" << color::render(color::aquamarine3) << x42 << color::render(color::r) << "]" << std::endl;
             else
                 std::cout << color::render(color::blueviolet) << "result is empty!" << color::render(color::r) << std::endl;
         }

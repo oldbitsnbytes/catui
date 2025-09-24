@@ -46,19 +46,11 @@ class CATUI_LIB utxt
     using list = std::vector<std::string>;
 
 public:
-    struct CATUI_LIB numeric
-    {
-        union
-        {
-            double d;
-            integers::u64 u;
-        }value{0.0};
 
-
-    };
     struct CATUI_LIB word
     {
         std::string::iterator begin{};
+        std::string::iterator cur{};
         std::string::iterator end{};
 
         word() = delete;
@@ -66,10 +58,11 @@ public:
         word(std::string::iterator begin, std::string::iterator end);
         ~word() = default;
         std::string     operator()() const;
-        void            reset() { end=begin;}
+        void            reset() { cur=begin;}
         [[nodiscard]]   bool empty() const { return begin==end;}
         explicit        operator bool() const { return begin!=end;}
         rem::code       skip_ws();
+
     }cursor{m_txt};
 
 
@@ -95,12 +88,15 @@ public:
 
     template<typename T> void append(T&& _blk);
     template<typename T> utxt& operator << (T&& _blk);
+    template<typename T>  rem::code operator >> (T& val);
 
     [[nodiscard]] size_t size() const { return m_txt.length();}
     [[nodiscard]] size_t length() const { return m_txt.length();}
     [[nodiscard]] size_t count() const { return m_txt.length();}
 
-    template<typename T>  rem::code operator >> (T& val);
+    bool operator ++();
+    bool operator --();
+
 
 };
 
