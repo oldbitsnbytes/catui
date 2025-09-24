@@ -13,32 +13,33 @@ project(catui
 
 
 set(HEADERS
-     include/${PROJECT_NAME}/root.h
-#    include/${PROJECT_NAME}/land/cadres.h
-#    include/${PROJECT_NAME}/land/cmdargs.h
-     include/${PROJECT_NAME}/land/colors.h
-#    include/${PROJECT_NAME}/land/notify.h
-     include/${PROJECT_NAME}/land/sys/expect.h
-#    include/${PROJECT_NAME}/land/geometry.h
-     include/${PROJECT_NAME}/land/glyphes.h
-#    include/${PROJECT_NAME}/land/data/databits.h
-#    include/${PROJECT_NAME}/land/data/field.h
-#    include/${PROJECT_NAME}/land/data/table.h
-#    include/${PROJECT_NAME}/land/sys/sys.h
-#    include/${PROJECT_NAME}/land/sys/sys.inc
-#    include/${PROJECT_NAME}/land/object.h
-     include/${PROJECT_NAME}/land/sys/rem.h
-     include/${PROJECT_NAME}/utxt.h
-#    include/${PROJECT_NAME}/land/app_base.h
-#    include/${PROJECT_NAME}/land/vchar.h
-#    include/${PROJECT_NAME}/land/strscan.h
-#    include/${PROJECT_NAME}/land/strscan.numeric_data.value.inc.h
-#    include/${PROJECT_NAME}/land/io/lfd.h
-#    include/${PROJECT_NAME}/land/io/listener.h
-#    include/${PROJECT_NAME}/land/io/tcp_socket.h
-#    include/${PROJECT_NAME}/land/io/kbhit.h
-#    include/${PROJECT_NAME}/land/io/mouse.h
-#    include/${PROJECT_NAME}/land/io/console.h
+    include/${PROJECT_NAME}/root.h
+    include/${PROJECT_NAME}/land/border.h
+    #    include/${PROJECT_NAME}/land/cmdargs.h
+    include/${PROJECT_NAME}/land/colors.h
+    #    include/${PROJECT_NAME}/land/notify.h
+    include/${PROJECT_NAME}/land/sys/expect.h
+    include/${PROJECT_NAME}/land/geometry.h
+    include/${PROJECT_NAME}/land/glyphes.h
+    #    include/${PROJECT_NAME}/land/data/databits.h
+    #    include/${PROJECT_NAME}/land/data/field.h
+    #    include/${PROJECT_NAME}/land/data/table.h
+    #    include/${PROJECT_NAME}/land/sys/sys.h
+    #    include/${PROJECT_NAME}/land/sys/sys.inc
+    #    include/${PROJECT_NAME}/land/object.h
+    include/${PROJECT_NAME}/land/sys/rem.h
+    include/${PROJECT_NAME}/utxt.h
+    include/${PROJECT_NAME}/land/sys/sys.h
+    #    include/${PROJECT_NAME}/land/app_base.h
+        include/${PROJECT_NAME}/land/vchar.h
+    #    include/${PROJECT_NAME}/land/strscan.h
+    #    include/${PROJECT_NAME}/land/strscan.numeric_data.value.inc.h
+    #    include/${PROJECT_NAME}/land/io/lfd.h
+    #    include/${PROJECT_NAME}/land/io/listener.h
+    #    include/${PROJECT_NAME}/land/io/tcp_socket.h
+    #    include/${PROJECT_NAME}/land/io/kbhit.h
+    #    include/${PROJECT_NAME}/land/io/mouse.h
+    #    include/${PROJECT_NAME}/land/io/console.h
 
 )
 
@@ -49,7 +50,8 @@ add_library(${PROJECT_NAME}
 
             ${HEADERS}
              c++/land/colors.cc
-#            c++/land/geometry.cc
+             c++/land/geometry.cc
+             c++/land/border.cc
 #            c++/land/sys/sys.cc
              c++/land/sys/rem.cc
 #            c++/land/cadres.cc
@@ -58,8 +60,8 @@ add_library(${PROJECT_NAME}
 #            c++/land/cmdargs.cc
              c++/utxt.cc
 #            c++/land/app_base.cc
-#            c++/land/vchar.cc
-#            c++/land/vchar.pad.cc
+            c++/land/vchar.cc
+            c++/land/vchar.pad.cc
 #            c++/land/strscan.cc
 #            c++/land/io/lfd.cc
 #            c++/land/io/listener.cc
