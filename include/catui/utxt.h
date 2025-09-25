@@ -25,6 +25,8 @@
 #include <string>
 #include <string_view>
 #include <catui/land/sys/expect.h>
+#include <catui/land/geometry.h>
+#include <catui/land/vchar.h>
 
 namespace cat
 {
@@ -89,6 +91,16 @@ public:
     template<typename T> void append(T&& _blk);
     template<typename T> utxt& operator << (T&& _blk);
     template<typename T>  rem::code operator >> (T& val);
+
+    utxt& operator << (const char* txt);
+    utxt& operator << (const std::string& txt);
+    utxt& operator << (std::string_view txt);
+    utxt& operator << (color::value c);
+    utxt& operator << (color::pair p);
+    utxt& operator << (ui::crect rect);
+    utxt& operator << (ui::cpoint pt);
+    utxt& operator << (ui::vchar vc);
+    utxt& operator << (const ui::vchar::string& )
 
     [[nodiscard]] size_t size() const { return m_txt.length();}
     [[nodiscard]] size_t length() const { return m_txt.length();}

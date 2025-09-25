@@ -19,10 +19,10 @@
 #pragma once
 
 
-#include <RemSys/Ui/Geometry.h>
-#include <RemSys/Ui/Border.h>
-#include <RemSys/Sys.h>
-#include <RemSys/Ui/Glyphes.h>
+#include <catui/land/geometry.h>
+#include <catui/land/border.h>
+//#include <RemSys/Sys.h>
+#include <catui/land/glyphes.h>
 
 
 namespace cat::ui
@@ -33,8 +33,8 @@ struct vchar
 {
     U32 D{0x8003A020};
 
-    using String = std::vector<vchar>;
-    using Iterator = String::iterator;
+    using string = std::vector<vchar>;
+    using iterator = string::iterator;
 
     static constexpr u32 CharMask  = 0x800000FF;
     static constexpr u32 FGMask    = 0x0000FF00;
@@ -61,41 +61,41 @@ struct vchar
     static constexpr int ATShift = 0x18;
 
 
-    struct Pad
+    struct pad
     {
         // --- CONFIGS AND INTERNAL DATA--------------
-        Color::Pair     Colors{};
-        CRect           Geometry{};
-        vchar::String    Dc{};           ///< Using one-dimension array of vchar as a two-dimension pad bloc.
-        Rem::Code       State{Rem::Code::Empty};
-        vchar::Iterator  Cursor{};
-        using Shared = std::shared_ptr<vchar::Pad>;
+        color::pair     colors{};
+        crect           geometry{};
+        vchar::string   dc{};           ///< Using one-dimension array of vchar as a two-dimension pad bloc.
+        rem::code       state{rem::code::empty};
+        vchar::iterator  cursor{};
+        using shared = std::shared_ptr<vchar::pad>;
 
-        ~Pad();
+        ~pad();
 
         // --- Ui STUFF ------------------------------
 
-        [[nodiscard]] int       Width() const {return Geometry.S.X;}
-        [[nodiscard]] int       Height() const {return Geometry.S.Y;}
-        static Shared           Create(CPoint Dxy, Color::Pair aColors);
+        [[nodiscard]] int       width() const {return geometry.S.X;}
+        [[nodiscard]] int       height() const {return geometry.S.Y;}
+        static shared           create(cpoint Dxy, color::pair aColors);
         void                    Clear();
-        Rem::Code               Copy(vchar::Pad& PadDc, CRect InnerArea);
-        vchar::Iterator          Home();
-        void                    SetForegroundColor(Color::Code aFg);
-        void                    SetBackgroundColor(Color::Code aBg);
-        void                    SetColors(Color::Pair Cp);
-        Color::Code             Fg() const;
-        Color::Code             Bg() const;
-        CRect                   operator&(const CRect &rhs) const;
-        CRect                   operator/(const CRect &rhs) const;
-        vchar::Iterator          operator[](CPoint P);
-        vchar::Pad&              operator*();
+        rem::code               copy(vchar::pad& PadDc, crect InnerArea);
+        vchar::iterator          home();
+        void                    set_foreground_color(color::value aFg);
+        void                    set_background_color(color::value aBg);
+        void                    SetColors(color::pair Cp);
+        color::value            fg() const;
+        color::value            bg() const;
+        crect                   operator&(const crect &rhs) const;
+        crect                   operator/(const crect &rhs) const;
+        vchar::iterator          operator[](cpoint P);
+        vchar::pad&              operator*();
 
         bool         operator ++();    ///< ++geometry (++geometry.cursor.x)
         bool         operator ++(int); ///< geometry++ (++geometry.cursor.y)
         bool         operator --();    ///< --geometry (--geometry.cursor.x)
         bool         operator --(int); ///< geometry-- (++geometry.cursor.x)
-        vchar::Iterator SetPosition(CPoint P);
+        vchar::iterator set_position(cpoint P);
     };
 
 
@@ -104,14 +104,14 @@ struct vchar
     explicit vchar(vchar* C);
     vchar(vchar& C){D = C.D;}
     vchar(const vchar& C){D = C.D;}
-    vchar(Color::Pair Cp);
+    vchar(color::pair Cp);
     ~vchar() = default;
-    vchar& SetFg(Color::Code aFg);
-    vchar& SetBg(Color::Code aBg);
-    vchar& SetAttributes(U32 Ch);
+    vchar& set_fg(color::value aFg);
+    vchar& set_bg(color::value aBg);
+    vchar& set_attributes(U32 Ch);
     //vchar& set_colors(color::pair&&Ch);
     // vchar& ResetAttributes(vchar::value_type bits_);
-    vchar& SetColors(const Color::Pair& Cp);
+    vchar& set_colors(const color::pair& Cp);
     vchar& operator=(U32 Ch);
     vchar& operator=(const vchar& Ch) = default;
     vchar& operator=(const U32* Ch);
@@ -122,31 +122,31 @@ struct vchar
         return *this;
     };
 
-    [[nodiscard]] std::string     GetUtfString() const;
-    [[nodiscard]] Color::Code     Foreground() const;
-    [[nodiscard]] Color::Code     Background() const;
-    [[nodiscard]] Color::Pair     Colors() const;
-    [[nodiscard]] Glyph::Type     IconIndex() const;
-    [[nodiscard]] AccentFr::Type  AccentIndex() const;
-    [[nodiscard]] Border::Index   BorderIndex() const;
-    [[nodiscard]] char            Ascii() const;
+    [[nodiscard]] std::string     get_utf_string() const;
+    [[nodiscard]] color::value     foreground() const;
+    [[nodiscard]] color::value    background() const;
+    [[nodiscard]] color::pair     colors() const;
+    [[nodiscard]] glyph::value    icon_index() const;
+    [[nodiscard]] accent_fr::value  accent_index() const;
+    [[nodiscard]] border::Index   border_index() const;
+    [[nodiscard]] char            ascii() const;
     vchar&  operator*() { return *this; }
-    [[nodiscard]] U16   Attributes() const;
-    vchar& operator <<(Glyph::Type gl);
-    vchar& operator <<(AccentFr::Type ac);
-    vchar& operator << (Border::Index fr);
-    vchar& operator <<(Color::Pair Cp);
+    [[nodiscard]] U16   attributes() const;
+    vchar& operator <<(glyph::value gl);
+    vchar& operator <<(accent_fr::value ac);
+    vchar& operator << (border::Index fr);
+    vchar& operator <<(color::pair Cp);
     vchar& operator <<(vchar Ch)
     {
         D = Ch.D;
         return *this;
     }
-    static std::string RenderLine(vchar::Iterator _It, std::size_t aCount);
+    static std::string render_line(vchar::iterator _It, std::size_t aCount);
 
     vchar&     operator <<(char Ch);
-    [[nodiscard]] std::string RenderColors() const;
+    [[nodiscard]] std::string render_colors() const;
     explicit    operator std::string() const;
-    [[nodiscard]] std::string Details() const;
+    [[nodiscard]] std::string details() const;
 
 };
 } // namespace OBB::Ui
