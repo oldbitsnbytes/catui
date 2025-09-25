@@ -1,7 +1,7 @@
 
-#include <RemSys/Ui/Char.h>
+#include <catui/land/vchar.hh>
 
-namespace Ui
+namespace cat::ui
 {
 
 
