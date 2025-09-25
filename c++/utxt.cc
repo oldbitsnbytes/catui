@@ -35,6 +35,68 @@ rem::code utxt::word::skip_ws()
 }
 
 
+utxt& utxt::operator<<(const char* txt)
+{
+    m_txt += txt;
+    return *this;
+}
+
+
+utxt& utxt::operator<<(const std::string&txt)
+{
+    m_txt += txt;
+    return *this;
+}
+
+
+utxt& utxt::operator<<(std::string_view txt)
+{
+    m_txt += txt;
+    return *this;
+}
+
+
+utxt& utxt::operator<<(color::value c)
+{
+    m_txt += color::render_rgb(c);
+    return *this;
+}
+
+
+utxt& utxt::operator<<(color::pair p)
+{
+    m_txt += color::render_rgb(p);
+    return *this;
+}
+
+
+utxt& utxt::operator<<(ui::crect rect)
+{
+    m_txt += (std::string)rect;
+    return *this;
+}
+
+
+utxt& utxt::operator<<(ui::cpoint pt)
+{
+    m_txt += (std::string)pt;
+    return *this;
+}
+
+
+utxt& utxt::operator<<(ui::vchar vc)
+{
+    m_txt += (std::string)vc;
+    return *this;
+}
+
+
+utxt& utxt::operator<<(const ui::vchar::string&)
+{
+    return *this;
+}
+
+
 bool utxt::operator++()
 {
     if (cursor.cur == cursor.end) return false;

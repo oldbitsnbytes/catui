@@ -5,7 +5,7 @@ namespace cat::ui
 {
 
 
-#define _eol_ color::pair(color::R, color::R)()
+#define _eol_ color::pair(color::r, color::r)()
 
 //using Ui::Int;
 
@@ -211,7 +211,7 @@ std::string vchar::details() const
 {
 
     utxt infos;
-    CString utf_info{};
+    utxt utf_info{};
     if(D & UTFBITS)
     {
         switch(D & UTFBITS)
@@ -220,19 +220,19 @@ std::string vchar::details() const
             utf_info << "icon index:" << icon_index();
             break;
         case Accent:
-            utf_info << "accent (fr) index:" << AccentIndex();
+            utf_info << "accent (fr) index:" << accent_index();
             break;
         case Frame:
-            utf_info << "frame index:" << BorderIndex();
+            utf_info << "frame index:" << border_index();
             break;
         default:break;
             //throw rem::exception() [rem::fatal() << " Memory corruption into screen::vchar data!"];
         }
     }
     else
-        utf_info << Ascii();
-    infos << "| foreground color:" << Foreground() << color::Name(Foreground()) << color::R << "| background color:" << Background() << color::Name(Background()) << color::R;
-    infos << " char:['" << Colors() << utf_info() << color::R <<  "']";
+        utf_info << ascii();
+    infos << "| foreground color:" << foreground() << color::name(foreground()) << color::r << "| background color:" << background() << color::name(background()) << color::r;
+    infos << " char:['" << colors() << utf_info() << color::r <<  "']";
     if(D & Underline) infos << "|Underline";
     if(D & Stroke) infos << "|Stroke";
     if(D & Blink) infos << "|Blink";

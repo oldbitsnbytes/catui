@@ -13,16 +13,16 @@ namespace cat::ui
 
 
 
-vchar::Iterator vchar::Pad::SetPosition(CPoint _pos)
+vchar::iterator vchar::pad::set_position(cpoint _pos)
 {
-    if (!Geometry.SetCursorPos(_pos))
+    if (!geometry.SetCursorPos(_pos))
     {
-        State = Rem::Code::Oob;
-        return Cursor;
+        state = rem::code::oob;
+        return cursor;
     }
 
-    State = Rem::Code::Accepted;
-    return Dc.begin() + Geometry.Width()*_pos.Y + _pos.X;
+    state = rem::code::accepted;
+    return dc.begin() + geometry.Width()*_pos.Y + _pos.X;
 }
 
 
@@ -154,11 +154,11 @@ rem::code vchar::Pad::clear(ui::rectangle r, color::pair cp)
  */
 
 
-bool vchar::Pad::operator++()
+bool vchar::pad::operator++()
 {
-    if (++Geometry)
+    if (++geometry)
     {
-        ++Cursor;
+        ++cursor;
         return true;
     }
     return false;
@@ -170,11 +170,11 @@ bool vchar::Pad::operator++()
  * @return true if the cursor is within the boundaries  false otherwise.
  * @author Serge luxsier (oldlonecoder)
  */
-bool vchar::Pad::operator++(int)
+bool vchar::pad::operator++(int)
 {
-    if (++Geometry)
+    if (++geometry)
     {
-        ++Cursor;
+        ++cursor;
         return true;
     }
     return false;
@@ -187,11 +187,11 @@ bool vchar::Pad::operator++(int)
  * @return true if the cursor is within the boundaries  false otherwise.
  * @author Serge luxsier (oldlonecoder)
  */
-bool vchar::Pad::operator--()
+bool vchar::pad::operator--()
 {
-    if (--Geometry)
+    if (--geometry)
     {
-        --Cursor;
+        --cursor;
         return true;
     }
     return false;
@@ -237,11 +237,11 @@ bool vchar::Pad::operator--()
  * @return true if the cursor is within the boundaries  false otherwise.
  * @author Serge luxsier (oldlonecoder)
  */
-bool vchar::Pad::operator--(int)
+bool vchar::pad::operator--(int)
 {
-    if (--Geometry)
+    if (--geometry)
     {
-        --Cursor;
+        --cursor;
         return true;
     }
     return false;
@@ -249,22 +249,22 @@ bool vchar::Pad::operator--(int)
 
 
 
-vchar::Pad::~Pad()
+vchar::pad::~pad()
 {
-    Dc.clear();
-    Geometry={};
+    dc.clear();
+    geometry={};
 }
 
 
-vchar::Pad::Shared vchar::Pad::Create(CPoint _dim, Color::Pair _colours)
+vchar::pad::shared vchar::pad::create(cpoint _dim, color::pair _colours)
 {
-    auto p  = std::make_shared<vchar::Pad>();
+    auto p  = std::make_shared<vchar::pad>();
 
-    p->Dc = vchar::String(_dim.Area(),vchar(Color::Pair(_colours)));
-    p->Colors = _colours;
-    p->Geometry = {0,0,_dim};
-    p->Clear();
-    auto l = Sys::Info(1); l << " vchar::Pad size:" << Color::Yellow << p->Geometry.S.Area() << l;
+    p->dc = vchar::string(_dim.Area(),vchar(color::pair(_colours)));
+    p->colors = _colours;
+    p->geometry = {0,0,_dim};
+    p->clear();
+    //auto l = sys::Info(1); l << " vchar::Pad size:" << Color::Yellow << p->Geometry.S.Area() << l;
     return p;
 }
 
@@ -275,9 +275,9 @@ vchar::Pad::Shared vchar::Pad::Create(CPoint _dim, Color::Pair _colours)
 //////////////////////////////////////////////////////////////
 /// \brief vchar::Pad::clear
 ///        Clears the buffer with the current colors attributes
-void vchar::Pad::Clear()
+void vchar::pad::clear()
 {
-    std::fill_n(Dc.begin(),Geometry.S.Area(), vchar(Color::Pair(Colors)));
+    std::fill_n(dc.begin(),geometry.S.Area(), vchar(color::pair(colors)));
 }
 
 

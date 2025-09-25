@@ -23,7 +23,7 @@
 #include <catui/land/border.h>
 //#include <RemSys/Sys.h>
 #include <catui/land/glyphes.h>
-
+#include <catui/utxt.h>
 
 namespace cat::ui
 {
@@ -78,12 +78,12 @@ struct vchar
         [[nodiscard]] int       width() const {return geometry.S.X;}
         [[nodiscard]] int       height() const {return geometry.S.Y;}
         static shared           create(cpoint Dxy, color::pair aColors);
-        void                    Clear();
+        void                    clear();
         rem::code               copy(vchar::pad& PadDc, crect InnerArea);
         vchar::iterator          home();
         void                    set_foreground_color(color::value aFg);
         void                    set_background_color(color::value aBg);
-        void                    SetColors(color::pair Cp);
+        void                    set_colors(color::pair Cp);
         color::value            fg() const;
         color::value            bg() const;
         crect                   operator&(const crect &rhs) const;

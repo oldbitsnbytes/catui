@@ -100,12 +100,12 @@ public:
     utxt& operator << (ui::crect rect);
     utxt& operator << (ui::cpoint pt);
     utxt& operator << (ui::vchar vc);
-    utxt& operator << (const ui::vchar::string& )
+    utxt& operator << (const ui::vchar::string& );
 
     [[nodiscard]] size_t size() const { return m_txt.length();}
     [[nodiscard]] size_t length() const { return m_txt.length();}
     [[nodiscard]] size_t count() const { return m_txt.length();}
-
+    std::string operator()() { return m_txt; }
     bool operator ++();
     bool operator --();
 
