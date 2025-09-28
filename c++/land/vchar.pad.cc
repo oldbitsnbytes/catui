@@ -34,7 +34,7 @@ vchar::iterator vchar::pad::set_position(cpoint _pos)
  * ...
  *  @return ref to self for chaining calls.
  *
-vchar::Pad& vchar::Pad::operator<<(const std::string& _str)
+vchar::pad& vchar::pad::operator<<(const std::string& _str)
 {
     if (_str.length() >= (dc.end() - cursor_ptr))
         throw sys::exception()[
@@ -54,11 +54,11 @@ vchar::Pad& vchar::Pad::operator<<(const std::string& _str)
 
 
  *
-vchar::Pad& vchar::Pad::operator<<(glyph::type _glyph)
+vchar::pad& vchar::pad::operator<<(glyph::type _glyph)
 {
     // if (!++geometry)
     // {
-    //     auto l = sys::error(1); l << " vchar::Pad::operator<<(glyph::type) : request area:" << geometry.dwh << l;
+    //     auto l = sys::error(1); l << " vchar::pad::operator<<(glyph::type) : request area:" << geometry.dwh << l;
     //     return *this;
     // }
     **cursor_ptr++ << colors << _glyph;
@@ -69,7 +69,7 @@ vchar::Pad& vchar::Pad::operator<<(glyph::type _glyph)
 
 
  *
-vchar::Pad& vchar::Pad::operator<<(color::code _color)
+vchar::pad& vchar::pad::operator<<(color::value _color)
 {
     if (_color == color::reset)
         _color = colors.fg;
@@ -79,7 +79,7 @@ vchar::Pad& vchar::Pad::operator<<(color::code _color)
 }
 
 
-vchar::Pad& vchar::Pad::operator<<(color::pair _colors)
+vchar::pad& vchar::pad::operator<<(color::pair _colors)
 {
     if (_colors.fg == color::reset)
         _colors.fg = colors.fg;
@@ -91,14 +91,14 @@ vchar::Pad& vchar::Pad::operator<<(color::pair _colors)
 }
 
 
-vchar::Pad& vchar::Pad::operator<<(cadre::index _frameindex)
+vchar::pad& vchar::pad::operator<<(cadre::index _frameindex)
 {
     **cursor_ptr++ << _frameindex;
     return *this;
 }
 
 
-vchar::Pad& vchar::Pad::operator<<(ui::cxy xy)
+vchar::pad& vchar::pad::operator<<(ui::cxy xy)
 {
     gotoxy(xy);
     // Handle result...
@@ -106,26 +106,26 @@ vchar::Pad& vchar::Pad::operator<<(ui::cxy xy)
 }
 
 
-vchar::Pad& vchar::Pad::operator<<(const vchar::Pad& blk)
+vchar::pad& vchar::pad::operator<<(const vchar::pad& blk)
 {
     return *this;
 }
 
 
-vchar::Pad& vchar::Pad::operator<<(char c)
+vchar::pad& vchar::pad::operator<<(char c)
 {
     **cursor_ptr << c;
     return *this;
 }
 
 /////////////////////////////////////////////////////////////////////////////////
-/// \brief vchar::Pad::clear
+/// \brief vchar::pad::clear
 ///     Clears sub-area given by \arg r using colors attributes \arg cp
 /// \param r
 /// \param cp
 /// \return accepted if all of the clear went ok, rem::code::rejected otherwise
 ///
-rem::code vchar::Pad::clear(ui::rectangle r, color::pair cp)
+rem::code vchar::pad::clear(ui::rectangle r, color::pair cp)
 {
     auto rw = geometry.tolocal() & (r);
     if(!rw){
@@ -197,7 +197,7 @@ bool vchar::pad::operator--()
     return false;
 }
 
-// rem::code vchar::Pad::draw_frame()
+// rem::code vchar::pad::draw_frame()
 // {
 //     home();
 //     *this<< cadre::TopLeft
@@ -218,7 +218,7 @@ bool vchar::pad::operator--()
 // }
 //
 //
-// rem::code vchar::Pad::draw_line(int w)
+// rem::code vchar::pad::draw_line(int w)
 // {
 //     if (w<0)
 //     {
@@ -264,7 +264,7 @@ vchar::pad::shared vchar::pad::create(cpoint _dim, color::pair _colours)
     p->colors = _colours;
     p->geometry = {0,0,_dim};
     p->clear();
-    //auto l = sys::Info(1); l << " vchar::Pad size:" << Color::Yellow << p->Geometry.S.Area() << l;
+    //auto l = sys::Info(1); l << " vchar::pad size:" << color::Yellow << p->geometry.S.Area() << l;
     return p;
 }
 
@@ -273,7 +273,7 @@ vchar::pad::shared vchar::pad::create(cpoint _dim, color::pair _colours)
 
 
 //////////////////////////////////////////////////////////////
-/// \brief vchar::Pad::clear
+/// \brief vchar::pad::clear
 ///        Clears the buffer with the current colors attributes
 void vchar::pad::clear()
 {
@@ -292,113 +292,113 @@ void vchar::pad::clear()
  *  @param inner_area The rectangular region within the source pad that is to be copied.
  *  @return rem::code::accepted if the operation completes successfully.
  */
-Rem::Code vchar::Pad::Copy(vchar::Pad&pad_dc, CRect inner_area)
+rem::code vchar::pad::Copy(vchar::pad&pad_dc, crect inner_area)
 {
-    auto rw = inner_area+pad_dc.Geometry.A;
+    auto rw = inner_area+pad_dc.geometry.A;
     for (int y = 0;y < rw.S.Y; y++)
-        std::copy_n(pad_dc[inner_area.A+CPoint{0,y}],rw.S.X, (*this)[rw.A+CPoint{0,y}]);
+        std::copy_n(pad_dc[inner_area.A+cpoint{0,y}],rw.S.X, (*this)[rw.A+cpoint{0,y}]);
 
-    return Rem::Code::Accepted;
+    return rem::code::accepted;
 }
 
 
 //////////////////////////////////////////////////////////////////////
-/// \brief vchar::Pad::home
+/// \brief vchar::pad::home
 ///     Resets iterator and internal cursor at {0,0};
 ///
-vchar::Iterator vchar::Pad::Home()
+vchar::iterator vchar::pad::home()
 {
-    Geometry.SetCursorPos({0,0});
-    Cursor = Dc.begin();
-    return Cursor;
+    geometry.SetCursorPos({0,0});
+    cursor = dc.begin();
+    return cursor;
 }
 
 
 
 ////////////////////////////////////////
 /// \defgroup pad-colors
-///     Just copying into the current colors member vchar::Pad::colors
+///     Just copying into the current colors member vchar::pad::colors
 ///
 
 
 ///////////////////////////////////////////////////////////////////////////////
-/// \brief vchar::Pad::set_foreground_color
+/// \brief vchar::pad::set_foreground_color
 /// \param fg
 /// \group pad-colors
-void vchar::Pad::SetForegroundColor(Color::Code fg)
+void vchar::pad::set_foreground_color(color::value fg)
 {
-    Colors.Fg = fg;
-    Cursor->SetFg(fg);
+    colors.fg = fg;
+    cursor->set_fg(fg);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-/// \brief vchar::Pad::set_background_color
+/// \brief vchar::pad::set_background_color
 /// \param bg
 /// \group pad-colors
-void vchar::Pad::SetBackgroundColor(Color::Code bg)
+void vchar::pad::set_background_color(color::value bg)
 {
-    Colors.Bg = bg;
-    Cursor->SetBg(bg);
+    colors.bg = bg;
+    cursor->set_bg(bg);
 }
 
 ///////////////////////////////////////////////////////
-/// \brief vchar::Pad::set_colors
+/// \brief vchar::pad::set_colors
 /// \param cp
 /// \group pad-colors
-void vchar::Pad::SetColors(Color::Pair cp)
+void vchar::pad::set_colors(color::pair cp)
 {
-    Colors = cp;
-    Cursor->SetColors(cp);
+    colors = cp;
+    cursor->set_colors(cp);
 }
 
 ////////////////////////////////////////////////////////////
-/// \brief vchar::Pad::fg
+/// \brief vchar::pad::fg
 /// \return color code
 /// \group pad-colors
 /// \note Statusquo sur lire la couleur de la cellule au cursor_ptr ou donner la couleur courante a appliquer
-Color::Code vchar::Pad::Fg() const { return Colors.Fg; }
+color::value vchar::pad::fg() const { return colors.fg; }
 
 ////////////////////////////////////////////////////////////
-/// \brief vchar::Pad::bg
+/// \brief vchar::pad::bg
 /// \return
 /// \group pad-colors
 /// \note Statusquo sur lire la couleur de la cellule au cursor_ptr ou donner la couleur courante a appliquer
 ///
-Color::Code vchar::Pad::Bg() const { return Colors.Bg; }
+color::value vchar::pad::bg() const { return colors.bg; }
 
 
 
 ////////////////////////////////////////////////////////////////////////
-/// \brief vchar::Pad::operator &
+/// \brief vchar::pad::operator &
 ///     Intersect the rectangular geometry of this pad with \arg rhs.
 /// \param rhs
 /// \return resulting of the intersection.
 /// \note \arg rhs origin must be on the same origin of this pad.
 ///
-CRect vchar::Pad::operator &(const CRect& rhs) const { return Geometry & rhs; }
+crect vchar::pad::operator &(const crect& rhs) const { return geometry & rhs; }
 
 
 ////////////////////////////////////////////////////////////////////////
-/// \brief vchar::Pad::operator /
+/// \brief vchar::pad::operator /
 ///     Intersect the rectangular inner geometry ( origin at {0,0} ) of this pad with \arg rhs.
 /// \param rhs
 /// \return resulting of the intersection shifted to the inner origin {0,0}.
 /// \note \arg rhs must be on the same origin scale of this pad. So the resulting rectangle will have its offset moved to the relative geometry of this pad
 ///
-CRect vchar::Pad::operator /(const CRect& rhs) const { return Geometry / rhs; }
+crect vchar::pad::operator /(const crect& rhs) const { return geometry / rhs; }
 
 
 /**
  *
  */
-vchar::Iterator vchar::Pad::operator[](CPoint P)
+vchar::iterator vchar::pad::operator[](cpoint P)
 {
-    return Dc.begin() + (P.Y * Geometry.S.X) + P.X;
+    return dc.begin() + (P.Y * geometry.S.X) + P.X;
 }
 
 
 
-vchar::Pad& vchar::Pad::operator *() { return *this; }
+vchar::pad& vchar::pad::operator *() { return *this; }
 
 
 
