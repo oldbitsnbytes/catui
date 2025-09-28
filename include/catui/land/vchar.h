@@ -23,7 +23,7 @@
 #include <catui/land/border.h>
 //#include <RemSys/Sys.h>
 #include <catui/land/glyphes.h>
-#include <catui/utxt.h>
+//#include <catui/utxt.h>
 
 namespace cat::ui
 {

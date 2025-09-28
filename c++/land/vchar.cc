@@ -1,6 +1,9 @@
 
 #include <catui/land/vchar.h>
 #include <iostream>
+
+#include <catui/utxt.h>
+
 namespace cat::ui
 {
 

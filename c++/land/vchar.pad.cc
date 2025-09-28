@@ -292,7 +292,7 @@ void vchar::pad::clear()
  *  @param inner_area The rectangular region within the source pad that is to be copied.
  *  @return rem::code::accepted if the operation completes successfully.
  */
-rem::code vchar::pad::Copy(vchar::pad&pad_dc, crect inner_area)
+rem::code vchar::pad::copy(vchar::pad&pad_dc, crect inner_area)
 {
     auto rw = inner_area+pad_dc.geometry.A;
     for (int y = 0;y < rw.S.Y; y++)
