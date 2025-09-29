@@ -1,12 +1,12 @@
 #include <catui/land/sys/expect.h>
 #include <catui/land/sys/sys.h>
 #include <iostream>
+#include <catui/io/console.h>
 
 
 using cat::color;
 
 int fortydeux = 42;
-
 
 
 
@@ -17,62 +17,24 @@ rem::code test_sys(std::string_view filename)
     return rem::code::success;
 }
 
-cat::expect<int&> test_rem()
-{
-    auto [g,c] = rem::function_attributes(rem::fn::stamp);
-    std::cout << color::render_rgb(c) << cat::glyph::data[g] << color::render_rgb(color::skyblue3) << " timer glyph...\n" << color::render(color::reset);
-    return rem::code::rejected;
-}
-
-
-
 auto main(int argc, char** argv, char** env) -> int
 {
-
     try
     {
-        cat::utxt txt;
-        txt = "   Hello 42.2 world!";
-        std::string str;
-        auto p = txt >> str;
-        using cat::color;
-
-        std::cout << "testing utxt extract operator : " << rem::render(p) << "\n";
-        if (!!p)
-        {
-            if (str.size() > 1)
-                std::cout << "'" << color::render(color::blueviolet) << str << color::render(color::r) << "'" << std::endl;
-            else
-                std::cout << color::render(color::blueviolet) << "result is empty!" << color::render(color::r) << std::endl;
-        }
-        float x42;
-        p = txt >> x42;
-        std::cout << "testing utxt extract operator - next 'token':" << rem::render(p) << "\n";
-        if (!!p)
-        {
-            if (str.size() > 1)
-                std::cout << "[" << color::render(color::aquamarine3) << x42 << color::render(color::r) << "]" << std::endl;
-            else
-                std::cout << color::render(color::blueviolet) << "result is empty!" << color::render(color::r) << std::endl;
-        }
-
-
-        std::cout << color::render_rgb(color::lime) << "Hello world!" << color::render(color::r) << std::endl;
-        auto r = test_rem();
-        if (r)
-            std::cout << "test_rem result: " << color::render(color::yellow) << *test_rem() << std::endl;
-        else
-        {
-            auto [g,c] = rem::function_attributes(rem::fn::stamp);
-            std::cout << " test_rem result: " << color::render(color::hotpink4) << color::render_rgb(c) << cat::glyph::data[g] << rem::to_string(r.error()) << std::endl;;
-        }
-
+        cat::io::con << color::aqua << " Hello " << color::r << "from the " << color::yellow << "world of " << color::deeppink8 << "catui" << color::white << "!\n";
+        cat::io::con << rem::code::ready << '\n';
 
         auto r2 = test_sys("test.sys");
         if (!r2)
             std::cerr << "test_sys : " << rem::to_string(r2) << std::endl;
 
-        std::cout << "Fini...\n";
+        cat::io::console::start();
+        cat::io::con << cat::ui::cpoint{2,10} << " 2,10 \n";
+        cat::io::con >> fortydeux;
+        cat::io::con << fortydeux << '\n';
+        cat::io::con << "Fini...\n";
+        cat::io::console::end();
+        cat::io::con << "Fini...\n";
     }
     catch (std::exception& e)
     {

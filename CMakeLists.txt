@@ -34,12 +34,12 @@ set(HEADERS
         include/${PROJECT_NAME}/land/vchar.h
     #    include/${PROJECT_NAME}/land/strscan.h
     #    include/${PROJECT_NAME}/land/strscan.numeric_data.value.inc.h
-    #    include/${PROJECT_NAME}/land/io/lfd.h
+    include/${PROJECT_NAME}/io/polling.h
     #    include/${PROJECT_NAME}/land/io/listener.h
     #    include/${PROJECT_NAME}/land/io/tcp_socket.h
     #    include/${PROJECT_NAME}/land/io/kbhit.h
     #    include/${PROJECT_NAME}/land/io/mouse.h
-    #    include/${PROJECT_NAME}/land/io/console.h
+    include/${PROJECT_NAME}/io/console.h
 
 )
 
@@ -63,12 +63,12 @@ add_library(${PROJECT_NAME}
             c++/land/vchar.cc
             c++/land/vchar.pad.cc
 #            c++/land/strscan.cc
-#            c++/land/io/lfd.cc
+            c++/io/polling.cc
 #            c++/land/io/listener.cc
 #            c++/land/io/tcp_socket.cc
 #            c++/land/io/kbhit.cc
 #            c++/land/io/mouse.cc
-#            c++/land/io/console.cc
+            c++/io/console.cc
 
 )
 target_include_directories(${PROJECT_NAME} PUBLIC

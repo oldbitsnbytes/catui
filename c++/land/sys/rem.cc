@@ -357,7 +357,7 @@ std::map<rem::code, std::pair<glyph::value, color::pair>> codes_database={
     {rem::code::complete   ,     {glyph::ok,              {color::yellow            ,color::reset }}},
     {rem::code::finish     ,     {glyph::ok,              {color::lime              ,color::reset }}},
     {rem::code::undefined  ,     {glyph::err3,            {color::red               ,color::reset }}},
-    {rem::code::ready      ,     {glyph::ok,              {color::lime              ,color::reset }}},
+    {rem::code::ready      ,     {glyph::ok,              {color::aqua              ,color::reset }}},
     {rem::code::terminate  ,     {glyph::flag,            {color::hotpink4          ,color::reset }}},
     {rem::code::timeout    ,     {glyph::chronos,         {color::lime              ,color::reset }}},
     {rem::code::divbyzero  ,     {glyph::circle_x,        {color::red4              ,color::reset }}},
@@ -483,6 +483,18 @@ std::string render(rem::code c)
 {
 
     auto [g,col] = return_code_attributes(c);
+    std::string text = color::render_rgb(col);
+    text += glyph::data[g];
+    text += ' ';
+    text += rem::to_string(c);
+    text += "\x1b[39m";
+    return text;
+}
+
+
+std::string render(rem::type c)
+{
+    auto [g,col] = type_attributes(c);
     std::string text = color::render_rgb(col);
     text += glyph::data[g];
     text += ' ';
