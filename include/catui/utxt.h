@@ -27,6 +27,7 @@
 #include <catui/land/sys/expect.h>
 #include <catui/land/geometry.h>
 #include <catui/land/vchar.h>
+#include <chrono>
 
 namespace cat
 {
@@ -71,7 +72,7 @@ public:
 
 
     utxt() = default;
-    explicit utxt(std::string_view txt);
+    explicit utxt(std::string_view txt):m_txt(txt){};
     ~utxt() = default;
 
     utxt(const utxt&) = default;
@@ -105,7 +106,14 @@ public:
     [[nodiscard]] size_t size() const { return m_txt.length();}
     [[nodiscard]] size_t length() const { return m_txt.length();}
     [[nodiscard]] size_t count() const { return m_txt.length();}
-    std::string operator()() { return m_txt; }
+    std::string operator()() const { return m_txt; }
+    static std::string now(const std::string& fmt);
+    static std::string bytes(std::string_view a_seq);
+    static std::string bytes(std::vector<int> a_seq);
+    static std::string bytes(std::vector<integers::U8> a_seq);
+
+    static std::vector<std::string_view> make_view_list(int Count, char** s, int offset);
+    static std::vector<std::string> make_list(int Count, char** s, int offset);
     bool operator ++();
     bool operator --();
 

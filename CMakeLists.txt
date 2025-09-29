@@ -24,7 +24,7 @@ set(HEADERS
     #    include/${PROJECT_NAME}/land/data/databits.h
     #    include/${PROJECT_NAME}/land/data/field.h
     #    include/${PROJECT_NAME}/land/data/table.h
-    #    include/${PROJECT_NAME}/land/sys/sys.h
+    include/${PROJECT_NAME}/land/sys/sys.h
     #    include/${PROJECT_NAME}/land/sys/sys.inc
     #    include/${PROJECT_NAME}/land/object.h
     include/${PROJECT_NAME}/land/sys/rem.h
@@ -52,7 +52,7 @@ add_library(${PROJECT_NAME}
              c++/land/colors.cc
              c++/land/geometry.cc
              c++/land/border.cc
-#            c++/land/sys/sys.cc
+             c++/land/sys/sys.cc
              c++/land/sys/rem.cc
 #            c++/land/cadres.cc
              c++/land/glyphes.cc

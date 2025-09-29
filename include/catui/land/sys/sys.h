@@ -30,16 +30,18 @@ using namespace cat::integers;
 using cat::color;
 using cat::glyph;
 
+
+
+
 class CATUI_LIB sys
 {
     static std::vector<std::string> _ram;
 
 public:
 
-
-    struct out
+    static int indent,indentsize;
+    struct CATUI_LIB out
     {
-        std::ostream* OutFilePtr{&std::cout};
         struct header_component
         {
             U8 Type  : 1;
@@ -57,15 +59,15 @@ public:
         rem::code code{};
         std::source_location location{};
         // ---------------------------------
-        std::string  text{};
-        std::string  header{};
+        cat::utxt  text{};
+        cat::utxt  header{};
 
         header_component header_data{1,1,1,1,1,1,0,0,0};
         out() = default;
     private:
         out(rem::type message, std::source_location&& src={});
         out(rem::type message, sys::out::header_component hc, std::source_location&& src={});
-        std::string location_tail(const std::string& Fn);
+        static std::string location_tail(const std::string& Fn);
         friend class sys;
     public:
         ~out();
@@ -85,16 +87,17 @@ public:
         out& operator << (rem::type ty);
         out& operator << (rem::fn f);
         out& operator << (glyph::value f);
-        //out& operator << (CPoint xy);
+        out& operator << (cat::utxt ut);
+        out& operator << (cat::ui::cpoint xy);
         // Out& operator << (whinfo z);
-        //out& operator << (CRect Rect);
+        out& operator << (cat::ui::crect rect);
         //out& operator << (string2d s2d);
 
         template<typename T> out& operator << (const T& v)
         {
             std::ostringstream o;
             o << v;
-            text += o.str();
+            text << o.str();
             return *this;
         }
 
@@ -104,26 +107,26 @@ public:
     ~sys() = default;
 
 
-    static sys::out Error       (std::source_location&& src = std::source_location::current());
-    static sys::out Status      (std::source_location&& src = std::source_location::current());
-    static sys::out Warning     (std::source_location&& src = std::source_location::current());
-    static sys::out Fatal       (std::source_location&& src = std::source_location::current());
-    static sys::out Except      (std::source_location&& src = std::source_location::current());
-    static sys::out Message     (std::source_location&& src = std::source_location::current());
-    static sys::out Write       (std::source_location&& src = std::source_location::current());
-    static sys::out Debug       (std::source_location&& src = std::source_location::current());
-    static sys::out Info        (std::source_location&& src = std::source_location::current());
-    static sys::out Comment     (std::source_location&& src = std::source_location::current());
-    static sys::out Syntax      (std::source_location&& src = std::source_location::current());
-    static sys::out Test        (std::source_location&& src = std::source_location::current());
-    static sys::out Interrupted (std::source_location&& src = std::source_location::current());
-    static sys::out Aborted     (std::source_location&& src = std::source_location::current());
-    static sys::out Segfault    (std::source_location&& src = std::source_location::current());
-    static sys::out Log         (std::source_location&& src = std::source_location::current());
+    static sys::out error       (std::source_location&& src = std::source_location::current());
+    static sys::out status      (std::source_location&& src = std::source_location::current());
+    static sys::out warning     (std::source_location&& src = std::source_location::current());
+    static sys::out fatal       (std::source_location&& src = std::source_location::current());
+    static sys::out except      (std::source_location&& src = std::source_location::current());
+    static sys::out message     (std::source_location&& src = std::source_location::current());
+    static sys::out write       (std::source_location&& src = std::source_location::current());
+    static sys::out debug       (std::source_location&& src = std::source_location::current());
+    static sys::out info        (std::source_location&& src = std::source_location::current());
+    static sys::out comment     (std::source_location&& src = std::source_location::current());
+    static sys::out syntax      (std::source_location&& src = std::source_location::current());
+    static sys::out test        (std::source_location&& src = std::source_location::current());
+    static sys::out interrupted (std::source_location&& src = std::source_location::current());
+    static sys::out aborted     (std::source_location&& src = std::source_location::current());
+    static sys::out segfault    (std::source_location&& src = std::source_location::current());
+    static sys::out log         (std::source_location&& src = std::source_location::current());
     //...
 
-    static rem::code CloseAll();
-    //static sys::File& Cet(sys::File::Handle h);
+    static rem::code close();
+
     class CATUI_LIB exception :  public std::exception
     {
     public:
