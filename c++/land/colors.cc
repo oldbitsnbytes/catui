@@ -360,7 +360,7 @@ std::string color::render_rgb(color::value a_code)
 {
     std::ostringstream txt;
     if (a_code == color::reset)
-        return "\x1b[39;49";
+        return "\x1b[39;49m";
     else
         txt << "\x1b[38;2;";
     auto rgb_data  = color::colors_db[a_code];

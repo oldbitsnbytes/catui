@@ -1,11 +1,21 @@
 #include <catui/land/sys/expect.h>
-#include <catui/utxt.h>
+#include <catui/land/sys/sys.h>
 #include <iostream>
+
 
 using cat::color;
 
 int fortydeux = 42;
 
+
+
+
+rem::code test_sys(std::string_view filename)
+{
+    sys::message() << color::yellow << fortydeux << color::r << " est la reponse de l'Univers.";
+    sys::flush(filename);
+    return rem::code::success;
+}
 
 cat::expect<int&> test_rem()
 {
@@ -56,6 +66,12 @@ auto main(int argc, char** argv, char** env) -> int
             auto [g,c] = rem::function_attributes(rem::fn::stamp);
             std::cout << " test_rem result: " << color::render(color::hotpink4) << color::render_rgb(c) << cat::glyph::data[g] << rem::to_string(r.error()) << std::endl;;
         }
+
+
+        auto r2 = test_sys("test.sys");
+        if (!r2)
+            std::cerr << "test_sys : " << rem::to_string(r2) << std::endl;
+
         std::cout << "Fini...\n";
     }
     catch (std::exception& e)

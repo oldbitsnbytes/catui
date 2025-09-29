@@ -2,10 +2,11 @@
 // Created by Serge Lussier on 2025-08-18.
 //
 
-#include  <catui/land/sys/sys.h>
-#include <mutex>
+#include <catui/land/sys/sys.h>
+//#include <mutex>
 
-#include "catui/land/glyphes.h"
+#include <fstream>
+#include <catui/land/glyphes.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 //   Copyright (C) ...,2025,... by Serge Lussier
@@ -154,12 +155,12 @@ void sys::out::init_header()
     }
     if(header_data.Type){
         auto [Icon,Colors] = rem::type_attributes(type);
-        header << Colors << Icon  << ' ' << rem::to_string(type) << color::z << ' ';
+        header << Colors <<  glyph::data[Icon]  << ' ' << rem::to_string(type) << color::z << ' ';
     }
 
     if(header_data.File){
         auto [Icon, Colors] = rem::function_attributes(rem::fn::file);
-        header << color::r << " in " << Colors << Icon << location_tail(location.file_name()) << color::r << ' ';
+        header << color::r << " in " << Colors << glyph::data[Icon] << ' ' <<  location_tail(location.file_name()) << color::r << ' ';
     }
 
     if(header_data.Line){
@@ -174,11 +175,12 @@ void sys::out::init_header()
     header = "";
     if(header_data.Fun && type != rem::type::test){
         auto [gh, colors] = rem::function_attributes(rem::fn::func);
-        header << colors << gh << ' ' << location.function_name()<< color::r;
+        //header << color::r << "Function:" << colors <<  glyph::data[gh]  << location.function_name()<< color::r;
+        header << color::r << "Function:" << colors << location.function_name()<< color::r;
 
         sys::_ram.push_back(header());
     }
-    sys::_ram.push_back(dash());
+    //sys::_ram.push_back(dash());
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -189,7 +191,8 @@ void sys::out::init_header()
 sys::out &sys::out::operator <<(const std::string &txt)
 {
     std::lock_guard<std::mutex> lock(LogMTX);
-    _ram.push_back(txt);
+   //_ram.emplace_back(txt);
+    text << txt;
     return *this;
 }
 
@@ -198,7 +201,8 @@ sys::out &sys::out::operator <<(const std::string &txt)
 sys::out& sys::out::operator << (glyph::value f)
 {
     std::lock_guard<std::mutex> lock(LogMTX);
-    _ram.push_back(glyph::data[f]);
+   //_ram.emplace_back(glyph::data[f]);
+    text << glyph::data[f];
     return *this;
 }
 
@@ -210,7 +214,8 @@ sys::out& sys::out::operator << (glyph::value f)
 sys::out& sys::out::operator << (const char* cstr)
 {
     std::lock_guard<std::mutex> lock(LogMTX);
-    _ram.push_back(cstr);
+    //_ram.emplace_back(cstr);
+    text << cstr;
     return *this;
 }
 
@@ -223,7 +228,8 @@ sys::out& sys::out::operator << (const char* cstr)
 sys::out& sys::out::operator << (std::string_view cstr)
 {
     std::lock_guard<std::mutex> lock(LogMTX);
-    _ram.push_back(cstr.data());
+    //_ram.emplace_back(cstr.data());
+    text << cstr.data();
     return *this;
 }
 
@@ -235,7 +241,8 @@ sys::out& sys::out::operator << (std::string_view cstr)
 sys::out& sys::out::operator << (cat::utxt obstr)
 {
     std::lock_guard<std::mutex> lock(LogMTX);
-    _ram.push_back(obstr());
+    //_ram.emplace_back(obstr());
+    text << obstr();
     return *this;
 }
 
@@ -249,7 +256,8 @@ sys::out& sys::out::operator << (char c)
     std::lock_guard<std::mutex> lock(LogMTX);
     std::string str;
     str += c;
-    _ram.push_back(str);
+    //_ram.emplace_back(str);
+    text << c;
     return *this;
 }
 
@@ -263,7 +271,8 @@ sys::out& sys::out::operator << (char c)
 sys::out& sys::out::operator << (color::value clr)
 {
     std::lock_guard<std::mutex> lock(LogMTX);
-    sys::_ram.push_back(color::render_rgb(clr));
+    //sys::_ram.push_back(color::render_rgb(clr));
+    text << color::render_rgb(clr);
     return *this;
 }
 
@@ -276,7 +285,8 @@ sys::out& sys::out::operator << (color::value clr)
 sys::out& sys::out::operator << (color::pair clr)
 {
     std::lock_guard<std::mutex> lock(LogMTX);
-    sys::_ram.push_back(color::render_rgb(clr));
+    //sys::_ram.push_back(color::render_rgb(clr));
+    text << color::render_rgb(clr);
     return *this;
 }
 
@@ -293,7 +303,8 @@ sys::out& sys::out::operator << ( rem::code c)
     auto [ic,col] = rem::return_code_attributes(c);
     cat::utxt str;
     str << col << ic << rem::to_string(c);
-    sys::_ram.push_back(str());
+    //sys::_ram.push_back(str());
+    text << str();
     return *this;
 }
 
@@ -309,14 +320,16 @@ sys::out& sys::out::operator << ( rem::type ty)
     auto [ic,col] = rem::type_attributes(ty);
     cat::utxt str;
     str << col << ic << rem::to_string(ty);
-    sys::_ram.push_back(str());
+    //sys::_ram.push_back(str());
+    text << str();
     return *this;
 }
 
 sys::out& sys::out::operator << (cpoint xy)
 {
     std::lock_guard<std::mutex> lock(LogMTX);
-    sys::_ram.push_back((std::string)xy);
+    //sys::_ram.push_back((std::string)xy);
+    text << (std::string)xy;
     return *this;
 }
 
@@ -324,7 +337,8 @@ sys::out& sys::out::operator << (cpoint xy)
 sys::out& sys::out::operator << (crect r)
 {
     std::lock_guard<std::mutex> lock(LogMTX);
-    sys::_ram.push_back ((std::string)r);
+    //sys::_ram.push_back ((std::string)r);
+    text << (std::string)r;
     return *this;
 }
 
@@ -343,7 +357,8 @@ sys::out& sys::out::operator << (rem::fn f)
 
     switch (f) {
         case rem::fn::eol:
-            str << '\n';
+            sys::_ram.emplace_back(text());
+            text="";
             //            switch (appbook::format()) ///@todo create COut::format(); directly instead.
             //            {
             //                case color::format::ansi256:
@@ -369,25 +384,28 @@ sys::out& sys::out::operator << (rem::fn f)
             auto [ic, a] = rem::function_attributes(rem::fn::stamp);
 
             str << a.fg << glyph::data[ic] << color::z << cat::utxt::now("%H:%M:%S");
-            sys::_ram.push_back(str());
+            //sys::_ram.push_back(str());
+            text << str();
             return *this;
         }
 
         case rem::fn::file:
-            sys::_ram.push_back(location.file_name());
+            sys::_ram.emplace_back(location.file_name());
             return *this;
         case rem::fn::line:
         {
             auto [ggg, ccolors] = rem::function_attributes(rem::fn::line);
             str << ccolors << location.line() << color::r  << "line #" << str();
-            sys::_ram.push_back(str());
+            //sys::_ram.emplace_back(str());
+            text << str();
             return *this;
         }
         case rem::fn::weekday: {
             auto [ic, a] = rem::function_attributes(rem::fn::weekday);
             //auto today{std::chrono::system_clock::now()};
             str << a.fg << cat::utxt::now("%A");
-            sys::_ram.push_back(str());
+            //sys::_ram.emplace_back(str());
+            text << str();
             return *this;
         }
 
@@ -395,7 +413,8 @@ sys::out& sys::out::operator << (rem::fn f)
             auto [ic, a] = rem::function_attributes(rem::fn::day);
             //auto today{std::chrono::system_clock::now()};
             str << a.fg << cat::utxt::now("%d");
-            sys::_ram.push_back(str());
+            //sys::_ram.emplace_back(str());
+            text << str();
             return *this;
         }
 
@@ -403,14 +422,16 @@ sys::out& sys::out::operator << (rem::fn f)
             auto [ic, a] = rem::function_attributes(rem::fn::month);
             //auto today{std::chrono::system_clock::now()};
             str << a.fg << cat::utxt::now("%M");
-            sys::_ram.push_back(str());
+            //sys::_ram.emplace_back(str());
+            text << str();
             return *this;
         }
         case rem::fn::monthnum: {
             auto [ic, a] = rem::function_attributes(rem::fn::month);
             //auto today{std::chrono::system_clock::now()};
             str << a.fg <<  cat::utxt::now("%b");
-            sys::_ram.push_back(str());
+            //sys::_ram.emplace_back(str());
+            text << str();
             return *this;
         }
         case rem::fn::year: {
@@ -418,14 +439,17 @@ sys::out& sys::out::operator << (rem::fn f)
             //auto today{std::chrono::system_clock::now()};
             cat::utxt acc;
             acc << /*utf::glyph::data[ic] <<*/ a.fg << cat::utxt::now("%Y");
-            sys::_ram.push_back(acc());
+            //sys::_ram.emplace_back(acc());
+            text << acc();
             return *this;
         }
         case rem::fn::func:
         {
             auto [gh, colors] = rem::function_attributes(rem::fn::func);
             str << colors << location.function_name() << color::z << "\n";
-            sys::_ram.push_back(str());
+            //sys::_ram.emplace_back(str());
+            text << str();
+            return *this;
         }
             break;
         default: break;
@@ -437,7 +461,8 @@ sys::out& sys::out::operator << (rem::fn f)
 sys::out& sys::out::eol()
 {
     std::lock_guard<std::mutex> lock(LogMTX);
-    sys::_ram.push_back("\n");
+    sys::_ram.emplace_back(text());
+    text="";
     return *this;
 }
 
@@ -452,7 +477,8 @@ sys::out& sys::out::eol()
 sys::out& sys::out::operator << (sys::out&)
 {
     std::lock_guard<std::mutex> lock(LogMTX);
-    sys::_ram.push_back("\n");
+    sys::_ram.emplace_back(text());
+    text="";
     return *this;
 }
 
@@ -488,7 +514,7 @@ const char* sys::exception::what() const noexcept
 ////////////////////////////////////////////////////////////////////////////////////
 /// \brief COut::error
 ///     Create a COut::out for output to the specified COut::File.
-/// \param hdnl index number OutFilePtr the files list.
+///
 /// \param src implicit
 /// \return  COut::out instance
 ///
@@ -562,4 +588,16 @@ sys::out sys::segfault    (std::source_location&& src){
 
 sys::out sys::log         (std::source_location&& src){
     return {rem::type::book, std::move(src)};// nolint(*-move-const-arg)
+}
+
+
+rem::code sys::flush(std::string_view filename)
+{
+    std::ofstream file;
+    file.open(filename.data(),std::ios_base::binary| std::ios_base::trunc);
+    for (const auto& txt : sys::_ram) file << txt << std::endl;
+    // ~file() auto-close?
+    sys::_ram.clear();
+    file.close();
+    return rem::code::done;
 }
