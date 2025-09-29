@@ -74,6 +74,7 @@ rem::code pollin::operator()(int _timeout)
 
     if (events[0].revents & POLLIN)
     {
+        buffer.resize(max_bytes,0);
         if (buffer.empty())
         {
             if (auto iost = ::ioctl(events[0].fd, FIONREAD, &input_count); iost==-1)
@@ -82,18 +83,19 @@ rem::code pollin::operator()(int _timeout)
                 buffer.clear();
                 return rem::code::failed;
             }
-            auto sz = std::min(static_cast<size_t>(input_count),buffer.size());
-            if (const auto r = ::read(events[0].fd, buffer.data(),sz); r == -1)
-            {
-                sys::error() << strerror(errno);
-                buffer.clear();
-                return rem::code::failed;
-            }
+
         }
+        auto sz = std::min(static_cast<size_t>(input_count),buffer.size());
+        if (const auto r = ::read(events[0].fd, buffer.data(),sz); r == -1)
+        {
+            sys::error() << strerror(errno);
+            buffer.clear();
+            return rem::code::failed;
+        }
+        if (callback)
+            return callback(*this);
     }
 
-    if (callback)
-        return callback(*this);
     return rem::code::accepted;
 }
 

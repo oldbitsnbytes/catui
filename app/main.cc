@@ -1,8 +1,8 @@
 #include <catui/land/sys/expect.h>
-#include <catui/land/sys/sys.h>
+
 #include <iostream>
 #include <catui/io/console.h>
-
+#include <catui/land/cmdargs.h>
 
 using cat::color;
 
@@ -19,6 +19,9 @@ rem::code test_sys(std::string_view filename)
 
 auto main(int argc, char** argv, char** env) -> int
 {
+    auto args = cat::utxt::make_view_list(argc,argv,1);
+    cat::cmd::line line;
+
     try
     {
         cat::io::con << color::aqua << " Hello " << color::r << "from the " << color::yellow << "world of " << color::deeppink8 << "catui" << color::white << "!\n";
