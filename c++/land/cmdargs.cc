@@ -4,6 +4,7 @@
 
 #include <catui/land/cmdargs.h>
 
+#include "catui/io/console.h"
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -32,13 +33,22 @@ namespace cat::cmd
 arg::iterator& line::query(std::string_view SwitchData)
 {
     A = arguments.begin();
+    std::string Check = SwitchData.data();
     for (; A != arguments.end(); ++A)
     {
-        if ((SwitchData == (*A)->switch_text ) || (SwitchData == (*A)->switch_char))
+        std::string str = A->name;
+        std::string str2 = A->switch_text;
+        std::string str3 = A->switch_char;
+        std::transform(str.begin(), str.end(), str.begin(), ::toupper);
+        std::transform(str2.begin(), str2.end(), str2.begin(), ::toupper);
+        std::transform(str3.begin(), str3.end(), str3.begin(), ::toupper);
+        cat::io::con << Check << " <> " << str << " " << str2 << " " << str3 << '\n';
+        if ((Check == str ) || (Check == str2 ||( Check == str3)))
             return A;
     }
     return A;
 }
+
 
 line::~line()
 {
@@ -57,17 +67,18 @@ line::~line()
  * that there will be NO move/copy of the instances. We may instantiate directly into the arguments using emplace_back tho. -
  * to be considered...
  */
-arg &line::operator<<(const arg &Arg)
+line& line::operator<<(const arg &Arg)
 {
-    arguments.push_back(std::make_shared<arg>());
-    arg::shared Sw = arguments.back();
-    Sw->name = Arg.name;
-    Sw->switch_char = Arg.switch_char;
-    Sw->switch_text = Arg.switch_text;
-    Sw->descriptions = Arg.descriptions;
-    Sw->required = Arg.required;
-
-    return *Sw;
+    arguments.push_back(Arg);
+    arg Sw = arguments.back();
+    Sw.name = Arg.name;
+    Sw.switch_char = Arg.switch_char;
+    Sw.switch_text = Arg.switch_text;
+    Sw.descriptions = Arg.descriptions;
+    Sw.required = Arg.required;
+    Sw.count = 0;
+    Sw.callback = Arg.callback;
+    return *this;
 }
 
 
@@ -91,11 +102,11 @@ rem::code line::input(const std::vector<std::string_view>& StrArray)
         {
             // It is not a switch - so must be an argument data for the CurArg/NextArg...
             if((a != arguments.end()) &&
-                ((*a)->required > (*a)->count) && ((*a)->required > 0))
+                (a->required > a->count) && (a->required > 0))
             {
-                (*a)->arguments.emplace_back(sv);
-                ++(*a)->count;
-                (*a)->enabled = true;
+                a->arguments.emplace_back(sv);
+                ++a->count;
+                a->enabled = true;
                 //rem::debug() << color::yellow << (*a)->name << color::reset << " arg:" << (*a)->count << " '" << sv << '\'';
             }
             else
@@ -109,13 +120,13 @@ rem::code line::input(const std::vector<std::string_view>& StrArray)
         }
         else
         {
-            if ((a != arguments.end()) && ((*a)->count < (*a)->required))
+            if ((a != arguments.end()) && (a->count < a->required))
             {
                 //rem::error() << " argument " << color::yellow << (*a)->name << color::reset << " is missing " << color::red4 << (*a)->required - (*a)->count << color::reset << " arguments / " << color::lime << (*a)->required;
                 return rem::code::failed;
             }
             a = next;
-            (*a)->enabled = true;
+            a->enabled = true;
         }
     }
     return rem::code::ok;
@@ -130,13 +141,13 @@ rem::action  line::process()
     auto r = rem::action::end;
     if (!arguments.empty())
     {
-        for (const auto& arg : arguments)
+        for (auto& arg : arguments)
         {
-            if (arg->enabled)
+            if (arg)
             {
-                if (arg->required > arg->count)
+                if (arg.required > arg.count)
                 {
-                    arg->enabled = false;
+                    arg.enabled = false;
                     // throw rem::except() << " arg '" << color::yellow << arg->name
                     //     << color::reset << " is missing "
                     //     << color::red4 << arg->required - arg->count
@@ -149,8 +160,8 @@ rem::action  line::process()
                     return rem::action::leave;
 
                 }
-                if (arg->callback && (arg->callback(*arg) != rem::action::cont))
-                    return rem::action::leave;
+                cat::io::con << "callback :" << (arg.callback != nullptr) << '\n';
+                return arg.callback(arg);
             }
         }
     }
@@ -168,9 +179,9 @@ rem::action  line::process()
 
 arg &line::operator[](const std::string &ArgName)
 {
-    for(auto Arg :arguments)
+    for(auto& Arg :arguments)
     {
-        if(Arg->name == ArgName) return *Arg;
+        if(Arg.name == ArgName) return Arg;
     }
     return defaults;
 }
@@ -188,10 +199,10 @@ std::string line::usage() const
     for (auto Arg : arguments)
     {
         Str << std::format(line::expr,
-                Arg->switch_char,
-                Arg->switch_text ,
-                Arg->descriptions ,
-                (Arg->enabled ? Used() : Unused())
+                Arg.switch_char,
+                Arg.switch_text ,
+                Arg.descriptions ,
+                (Arg.enabled ? Used() : Unused())
             );
 
         Str << color::reset << "\n------------------------------------------------------------------------------\n";
@@ -205,10 +216,11 @@ std::string line::usage() const
  */
 arg &line::add_cmd(const std::string &cId)
 {
-    arguments.push_back(std::make_shared<arg>());
-    arg::shared Sw = arguments.back();
-    Sw->name = cId;
-    return *Sw;
+    arguments.push_back({});
+    arg& Sw = arguments.back();
+    Sw.name = cId;
+    Sw.callback = nullptr;
+    return Sw;
 }
 
 

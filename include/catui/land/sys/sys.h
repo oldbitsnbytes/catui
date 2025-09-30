@@ -79,7 +79,7 @@ public:
         out& operator << (const std::string&);
         out& operator << (const char*);
         out& operator << (std::string_view);
-        out& operator << (std::string str);
+        //out& operator << (std::string str);
         out& operator << (char c);
         out& operator << (color::value clr);
         out& operator << (color::pair clr);

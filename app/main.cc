@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <catui/io/console.h>
-#include <catui/land/cmdargs.h>
+
 
 using cat::color;
 
@@ -10,39 +10,36 @@ int fortydeux = 42;
 
 
 
-rem::code test_sys(std::string_view filename)
-{
-    sys::message() << color::yellow << fortydeux << color::r << " est la reponse de l'Univers.";
-    sys::flush(filename);
-    return rem::code::success;
-}
 
 auto main(int argc, char** argv, char** env) -> int
 {
     auto args = cat::utxt::make_view_list(argc,argv,1);
-    cat::cmd::line line;
+
 
     try
     {
-        cat::io::con << color::aqua << " Hello " << color::r << "from the " << color::yellow << "world of " << color::deeppink8 << "catui" << color::white << "!\n";
-        cat::io::con << rem::code::ready << '\n';
-
-        auto r2 = test_sys("test.sys");
-        if (!r2)
-            std::cerr << "test_sys : " << rem::to_string(r2) << std::endl;
-
         cat::io::console::start();
-        cat::io::con << cat::ui::cpoint{2,10} << " 2,10 \n";
+        cat::io::con << color::aqua << " Hello " << color::r << "from the " << color::yellow << "world of " << color::deeppink8 << "catui" << color::white << "!\r\n";
+        cat::io::con << rem::code::ready << "\r\n";
+
+
+
+        cat::io::con << cat::ui::cpoint{2,10} << " 2,10 \r\n";
+
         cat::io::con >> fortydeux;
-        cat::io::con << fortydeux << '\n';
-        cat::io::con << "Fini...\n";
+
+        cat::io::con << "fortydeux" << color::yellow << fortydeux << "\n\r";
+        cat::io::con << "Fini...\r\n";
+        cat::io::con << "Press any key to exit...\r\n";
+        cat::io::con >> cat::io::console::ignore;
         cat::io::console::end();
-        cat::io::con << "Fini...\n";
+
     }
     catch (std::exception& e)
     {
         std::cout << "Exception: " << e.what() << std::endl;
     }
+    sys::flush("test.sys");
     return 0;
 }
 

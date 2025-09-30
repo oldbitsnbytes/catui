@@ -134,6 +134,7 @@ void sys::out::init_header()
     cat::utxt dash;
     cat::utxt hline;
     hline << color::r;
+    if (type == rem::type::output) return;
     if(header_data.BorderFrame){
         if(header_data.HLine){
             // for(int x=0; x < sys::Files_S[0].PageWidth ; x++)

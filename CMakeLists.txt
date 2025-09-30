@@ -15,7 +15,7 @@ project(catui
 set(HEADERS
     include/${PROJECT_NAME}/root.h
     include/${PROJECT_NAME}/land/border.h
-    include/${PROJECT_NAME}/land/cmdargs.h
+#    include/${PROJECT_NAME}/land/cmdargs.h
     include/${PROJECT_NAME}/land/colors.h
     #    include/${PROJECT_NAME}/land/notify.h
     include/${PROJECT_NAME}/land/sys/expect.h
@@ -57,7 +57,7 @@ add_library(${PROJECT_NAME}
 #            c++/land/cadres.cc
              c++/land/glyphes.cc
 #            c++/land/object.cc
-             c++/land/cmdargs.cc
+#             c++/land/cmdargs.cc
              c++/utxt.cc
 #            c++/land/app_base.cc
             c++/land/vchar.cc

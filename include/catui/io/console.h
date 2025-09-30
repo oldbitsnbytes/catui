@@ -26,6 +26,7 @@ namespace cat::io::console
 {
 static constexpr auto set_caret_pos="\x1b[{};{}H";
 
+static int ignore{0};
 
 static constexpr u8 ST_SAVED         = 1;
 static constexpr u8 ST_MOUSE_ENABLED = 2;

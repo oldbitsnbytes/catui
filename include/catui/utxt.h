@@ -46,9 +46,10 @@ class CATUI_LIB utxt
 {
 
     std::string m_txt{};
-    using list = std::vector<std::string>;
 
 public:
+    using list = std::vector<std::string>;
+    using list_view = std::vector<std::string_view>;
 
     struct CATUI_LIB word
     {

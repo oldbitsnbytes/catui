@@ -86,7 +86,7 @@ std::map<rem::type, const char*> enums_type_dictionary = {
     {rem::type::interrupted, "interrupted"},
     {rem::type::aborted,     "aborted"},
     {rem::type::segfault,    "segmentation fault"},
-    {rem::type::book,         "book"},
+    {rem::type::book,         "log"},
     {rem::type::normal,       "normal"},
     {rem::type::grace,        "gracefully terminated/done/clean."}
 };
