@@ -30,7 +30,7 @@ auto main(int argc, char** argv, char** env) -> int
 
         cat::io::con << "fortydeux" << color::yellow << fortydeux << "\n\r";
         cat::io::con << "Fini...\r\n";
-        cat::io::con << "Press any key to exit...\r\n";
+        cat::io::con << color::white << glyph::mouse << "|| " << color::skyblue3 << glyph::keyboard << " to exit...\r\n";
         cat::io::con >> cat::io::console::ignore;
         cat::io::console::end();
 

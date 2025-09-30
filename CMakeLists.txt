@@ -15,7 +15,7 @@ project(catui
 set(HEADERS
     include/${PROJECT_NAME}/root.h
     include/${PROJECT_NAME}/land/border.h
-#    include/${PROJECT_NAME}/land/cmdargs.h
+    #    include/${PROJECT_NAME}/land/cmdargs.h
     include/${PROJECT_NAME}/land/colors.h
     #    include/${PROJECT_NAME}/land/notify.h
     include/${PROJECT_NAME}/land/sys/expect.h
@@ -31,15 +31,19 @@ set(HEADERS
     include/${PROJECT_NAME}/utxt.h
     include/${PROJECT_NAME}/land/sys/sys.h
     #    include/${PROJECT_NAME}/land/app_base.h
-        include/${PROJECT_NAME}/land/vchar.h
+    include/${PROJECT_NAME}/land/vchar.h
     #    include/${PROJECT_NAME}/land/strscan.h
     #    include/${PROJECT_NAME}/land/strscan.numeric_data.value.inc.h
     include/${PROJECT_NAME}/io/polling.h
     #    include/${PROJECT_NAME}/land/io/listener.h
     #    include/${PROJECT_NAME}/land/io/tcp_socket.h
-    #    include/${PROJECT_NAME}/land/io/kbhit.h
-    #    include/${PROJECT_NAME}/land/io/mouse.h
+        include/${PROJECT_NAME}/io/kstroke.h
+    include/${PROJECT_NAME}/io/mouse.h
     include/${PROJECT_NAME}/io/console.h
+    c++/io/mouse.cc
+    include/catui/io/mouse.h
+    c++/io/kstroke.cc
+    include/catui/io/kstroke.h
 
 )
 
@@ -66,8 +70,8 @@ add_library(${PROJECT_NAME}
             c++/io/polling.cc
 #            c++/land/io/listener.cc
 #            c++/land/io/tcp_socket.cc
-#            c++/land/io/kbhit.cc
-#            c++/land/io/mouse.cc
+            c++/io/kstroke.cc
+            c++/io/mouse.cc
             c++/io/console.cc
 
 )

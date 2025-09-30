@@ -235,6 +235,13 @@ conio& conio::operator<<(ui::cpoint xy)
 }
 
 
+conio& conio::operator<<(glyph::value f)
+{
+    std::cout << glyph::data[f];
+    return *this;
+}
+
+
 conio& conio::operator<<(ui::vchar::pad& ui_bloc)
 {
 
