@@ -20,7 +20,7 @@
 
 #include <catui/land/sys/sys.h>
 #include <catui/io/polling.h>
-
+#include <unistd.h>
 
 namespace cat::io::console
 {

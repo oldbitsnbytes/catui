@@ -1,8 +1,3 @@
-#include <catui/io/console.h>
-#include <termios.h>
-#include <sys/ioctl.h>
-#include <sys/poll.h>
-
 ////////////////////////////////////////////////////////////////////////////////////////////
 //   Copyright (C) ...,2025,... by Serge Lussier
 //   serge.lussier@oldbitsnbytes.club / lussier.serge@gmail.com
@@ -19,6 +14,13 @@
 //   make it to restricted private license.
 ////////////////////////////////////////////////////////////////////////////////////////////
 //------------------------------------------------------------------------------------------
+
+
+#include <catui/io/console.h>
+#include <termios.h>
+#include <sys/ioctl.h>
+#include <sys/poll.h>
+#include <unistd.h>
 
 
 namespace cat::io::console

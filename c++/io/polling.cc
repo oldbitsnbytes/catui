@@ -9,7 +9,7 @@
 #include <utility>
 #include <sys/ioctl.h>
 
-#include "catui/io/console.h"
+#include <catui/io/console.h>
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -88,7 +88,7 @@ rem::code pollin::operator()(int _timeout)
         }
         buffer.resize(input_count,0);
         auto sz = std::min(static_cast<size_t>(input_count), buffer.size());
-        if (const auto r = ::read(events[0].fd, buffer.data(),sz); r == -1)
+        if (const auto r = read(events[0].fd, buffer.data(),sz); r == -1)
         {
             sys::error() << strerror(errno) << log;
             buffer.clear();
