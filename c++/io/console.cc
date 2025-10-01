@@ -194,17 +194,22 @@ mk_event::mk_event(mouse&&mev)
 }
 
 
-mk_event& mk_event::operator=(mk_event&& ce) noexcept
+mk_event::~mk_event()
 {
+    ;
+}
 
+
+mk_event& mk_event::operator=(const mk_event& cev)
+{
+    if (cev.is<kstroke>()) k = cev.k;
+    else if (cev.is<mouse>()) m = cev.m;
+    event_type = cev.event_type;
     return *this;
 }
 
 
-mk_event& mk_event::operator=(const mk_event&)
-{
-    return *this;
-}
+
 } // namespace cat::io::console;
 
 
@@ -281,5 +286,18 @@ conio& conio::operator>>(int&i)
     io::console::poll_fd()();
     i = 42;
     return *this;
+}
+
+
+io::console::mk_event conio::wait()
+{
+    if (!!io::console::poll_fd()())
+    {
+        // swallow copy
+        auto in = io::console::poll_fd();
+        if ()
+    }
+
+    return {};
 }
 } // io

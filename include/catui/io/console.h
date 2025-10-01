@@ -123,13 +123,27 @@ struct CATUI_LIB mk_event
         mouse   m;
     };
 
+    enum type :u8
+    {
+        KEY_EVENT,
+        MOUSE_EVENT,
+        UNSET
+    }event_type{mk_event::UNSET};
+
+    mk_event(){};
     explicit mk_event(kstroke&& k);
     explicit mk_event(mouse&& m);
-    ~mk_event()=default;
+    ~mk_event();
 
-    mk_event& operator=(mk_event&&) noexcept;// = default;
+    //mk_event& operator=(mk_event&&) noexcept = default;
     mk_event& operator=(const mk_event&);
 
+    template<typename T> [[nodiscard]] bool is() const
+    {
+        if (std::is_same_v<T, kstroke> && event_type == mk_event::KEY_EVENT) return true;
+        if (std::is_same_v<T, mouse> && event_type == mk_event::MOUSE_EVENT) return true;
+        return false;
+    }
 };
 
 } // namespace cat::io::console;
@@ -144,10 +158,6 @@ class CATUI_LIB conio
 
 public:
 
-
-
-
-
     conio& operator << (const char* str);
     conio& operator << (color::value clr);
     conio& operator << (color::pair  clr);
@@ -161,7 +171,7 @@ public:
     conio& operator >> (int& i);
 
 
-
+    static io::console::mk_event wait();
     template<typename T> conio& operator << (T&& val)
     {
         cat::utxt s;

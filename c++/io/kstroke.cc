@@ -30,7 +30,7 @@ kstroke kstroke::none{kstroke::NO_KEY, 0, "no key"};
 
 
 
-kstroke::kstroke(kstroke::enums e, u64 c, std::string_view n): mnemonic(e), kcode(c), name(n){}
+kstroke::kstroke(kstroke::enums e, u64 c, const std::string& n): mnemonic(e), kcode(c), name(n){}
 
 
 

@@ -26,7 +26,7 @@ auto main(int argc, char** argv, char** env) -> int
 
         cat::con << cat::ui::cpoint{2,10} << " 2,10 \r\n";
 
-        cat::con >> forty_deux;
+        auto cev = cat::conio::wait();
 
         cat::con << "forty deux:" << color::yellow << forty_deux << "\n\r";
         cat::con << "Fini...\r\n";

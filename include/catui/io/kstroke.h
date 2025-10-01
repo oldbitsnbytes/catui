@@ -123,12 +123,12 @@ struct  CATUI_LIB kstroke
 
     kstroke::enums       mnemonic{kstroke::NO_KEY};
     u64 kcode{0};
-    std::string_view name{"no_key"};
+    std::string name{"no_key"};
 
     kstroke() = default;
-    ~kstroke() = default;
+    ~kstroke(){name.clear();}
 
-    kstroke(kstroke::enums e,  u64 c, std::string_view n);
+    kstroke(kstroke::enums e,  u64 c, const std::string& n);
 
     kstroke(kstroke&& ks) noexcept{ *this = std::move(ks);}
     kstroke& operator=(kstroke&& akst)noexcept
