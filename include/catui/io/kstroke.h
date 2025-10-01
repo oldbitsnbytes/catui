@@ -1,9 +1,3 @@
-//
-// Created by Serge Lussier on 2025-09-30.
-//
-
-//#ifndef CATUI_KSTROKE_H
-//#define CATUI_KSTROKE_H
 ////////////////////////////////////////////////////////////////////////////////////////////
 //   Copyright (C) ...,2025,... by Serge Lussier
 //   serge.lussier@oldbitsnbytes.club / lussier.serge@gmail.com
@@ -119,7 +113,7 @@ struct  CATUI_LIB kstroke
         CHARACTER             ,
         NO_KEY,
     };
-    struct  State
+    struct  state
     {
         u8 shift : 1;
         u8 ctrl  : 1;
@@ -127,39 +121,39 @@ struct  CATUI_LIB kstroke
         u8 sup   : 1;
     }kst{0,0,0,0};
 
-    kstroke::enums       Mnemonic{kstroke::NO_KEY};
-    u64 KCode{0};
-    std::string_view Name{"NO_KEY"};
+    kstroke::enums       mnemonic{kstroke::NO_KEY};
+    u64 kcode{0};
+    std::string_view name{"no_key"};
 
     kstroke() = default;
     ~kstroke() = default;
 
     kstroke(kstroke::enums e,  u64 c, std::string_view n);
 
-    kstroke(kstroke&& KS) noexcept{ *this = std::move(KS);}
-    kstroke& operator=(kstroke&& aKst)noexcept
+    kstroke(kstroke&& ks) noexcept{ *this = std::move(ks);}
+    kstroke& operator=(kstroke&& akst)noexcept
     {
-        kst = aKst.kst;
-        Mnemonic = aKst.Mnemonic;
-        KCode = aKst.KCode;
-        Name = aKst.Name;
+        kst = akst.kst;
+        mnemonic = akst.mnemonic;
+        kcode = akst.kcode;
+        name = akst.name;
 
         return *this;
     }
-    kstroke(const kstroke& aKst)
+    kstroke(const kstroke& akst)
     {
-        *this = aKst;
+        *this = akst;
     }
-    kstroke& operator=(const kstroke& aKst)
+    kstroke& operator=(const kstroke& akst)
     {
-        kst = aKst.kst;
-        Mnemonic = aKst.Mnemonic;
-        KCode = aKst.KCode;
-        Name = aKst.Name;
+        kst = akst.kst;
+        mnemonic = akst.mnemonic;
+        kcode = akst.kcode;
+        name = akst.name;
         return *this;
     }
 
-    explicit operator bool() const{ return Mnemonic != kstroke::NO_KEY;};
+    explicit operator bool() const{ return mnemonic != kstroke::NO_KEY;};
 
     using refdb = std::map<kstroke::enums, kstroke>;
     using textdb = std::map<std::string_view, kstroke>;
@@ -171,13 +165,10 @@ struct  CATUI_LIB kstroke
     static kstroke query(std::string_view s);
     static std::pair<rem::code, kstroke> parse(pollin& fd);
 
-    static kstroke NONE;
+    static kstroke none;
 
 
 private:
 
 };
-} // io
-} // cat
-
-//#endif //CATUI_KSTROKE_H
+} // namespace cat::io
