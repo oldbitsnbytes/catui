@@ -295,7 +295,12 @@ io::console::mk_event conio::wait()
     {
         // swallow copy
         auto in = io::console::poll_fd();
-        if ()
+        if (auto [r,ev] = io::kstroke::parse(in); !!r)
+            return io::console::mk_event(std::move(ev));
+        if (auto [r,ev] = io::mouse::parse(in); !!r)
+            return io::console::mk_event(std::move(ev));
+        // --- Else check for terminal resize signal
+
     }
 
     return {};
