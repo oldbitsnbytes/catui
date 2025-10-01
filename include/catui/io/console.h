@@ -22,6 +22,9 @@
 #include <catui/io/polling.h>
 #include <unistd.h>
 
+#include <catui/io/kstroke.h>
+#include <catui/io/mouse.h>
+
 namespace cat::io::console
 {
 static constexpr auto set_caret_pos="\x1b[{};{}H";
@@ -112,10 +115,26 @@ void restore_screen();
 
 cat::io::pollin& poll_fd();
 
+struct CATUI_LIB mk_event
+{
+    union
+    {
+        kstroke k;
+        mouse   m;
+    };
+
+    explicit mk_event(kstroke&& k);
+    explicit mk_event(mouse&& m);
+    ~mk_event()=default;
+
+    mk_event& operator=(mk_event&&) noexcept;// = default;
+    mk_event& operator=(const mk_event&);
+
+};
 
 } // namespace cat::io::console;
 
-namespace cat::io
+namespace cat
 {
 
 
@@ -124,6 +143,11 @@ class CATUI_LIB conio
 {
 
 public:
+
+
+
+
+
     conio& operator << (const char* str);
     conio& operator << (color::value clr);
     conio& operator << (color::pair  clr);

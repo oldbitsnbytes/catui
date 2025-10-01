@@ -1,4 +1,4 @@
-#include <catui/land/sys/expect.h>
+//#include <catui/land/sys/expect.h>
 
 #include <iostream>
 #include <catui/io/console.h>
@@ -6,7 +6,7 @@
 
 using cat::color;
 
-int fortydeux = 42;
+int forty_deux = 42;
 
 
 
@@ -19,19 +19,19 @@ auto main(int argc, char** argv, char** env) -> int
     try
     {
         cat::io::console::start();
-        cat::io::con << color::aqua << " Hello " << color::r << "from the " << color::yellow << "world of " << color::deeppink8 << "catui" << color::white << "!\r\n";
-        cat::io::con << rem::code::ready << "\r\n";
+        cat::con << color::aqua << " Hello " << color::r << "from the " << color::yellow << "world of " << color::deeppink8 << "catui" << color::white << "!\r\n";
+        cat::con << rem::code::ready << "\r\n";
 
 
 
-        cat::io::con << cat::ui::cpoint{2,10} << " 2,10 \r\n";
+        cat::con << cat::ui::cpoint{2,10} << " 2,10 \r\n";
 
-        cat::io::con >> fortydeux;
+        cat::con >> forty_deux;
 
-        cat::io::con << "fortydeux" << color::yellow << fortydeux << "\n\r";
-        cat::io::con << "Fini...\r\n";
-        cat::io::con << color::white << glyph::mouse << "|| " << color::skyblue3 << glyph::keyboard << " to exit...\r\n";
-        cat::io::con >> cat::io::console::ignore;
+        cat::con << "forty deux:" << color::yellow << forty_deux << "\n\r";
+        cat::con << "Fini...\r\n";
+        cat::con << color::white << glyph::mouse << "|| " << color::skyblue3 << glyph::keyboard << " to exit...\r\n";
+        cat::con >> cat::io::console::ignore;
         cat::io::console::end();
 
     }

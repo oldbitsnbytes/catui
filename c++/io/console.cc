@@ -180,14 +180,36 @@ cat::io::pollin& poll_fd()
 }
 
 
+mk_event::mk_event(kstroke&& ks)
+{
+    k=ks;
+    k = {};
+}
 
 
+mk_event::mk_event(mouse&&mev)
+{
+    m = mev;
+    mev={};
+}
 
+
+mk_event& mk_event::operator=(mk_event&& ce) noexcept
+{
+
+    return *this;
+}
+
+
+mk_event& mk_event::operator=(const mk_event&)
+{
+    return *this;
+}
 } // namespace cat::io::console;
 
 
 
-namespace cat::io
+namespace cat
 {
 
 
@@ -229,7 +251,7 @@ conio& conio::operator<<(rem::type ty)
 
 conio& conio::operator<<(ui::cpoint xy)
 {
-    std::cout << std::format(console::set_caret_pos, xy.Y,xy.X);//"\x1b[" << xy.Y << ";" << xy.X << "H";
+    std::cout << std::format(io::console::set_caret_pos, xy.Y,xy.X);//"\x1b[" << xy.Y << ";" << xy.X << "H";
     std::cout.flush();
     return *this;
 }
@@ -256,7 +278,7 @@ conio& conio::operator<<(ui::vchar::pad& ui_bloc)
 
 conio& conio::operator>>(int&i)
 {
-    console::poll_fd()();
+    io::console::poll_fd()();
     i = 42;
     return *this;
 }
