@@ -159,6 +159,30 @@ bool crect::SetCursorOffset(int Ix)
 }
 
 
+cpoint crect::top_left() const
+{
+    return A;
+}
+
+
+cpoint crect::top_right() const
+{
+    return {B.X,A.Y};
+}
+
+
+cpoint crect::bottom_left() const
+{
+    return {A.X,B.Y};
+}
+
+
+cpoint crect::bottom_right() const
+{
+    return B;
+}
+
+
 bool crect::operator++()
 {
     ScrollDirection = 0;

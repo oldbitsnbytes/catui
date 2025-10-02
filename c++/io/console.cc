@@ -281,6 +281,40 @@ conio& conio::operator<<(ui::vchar::pad& ui_bloc)
 }
 
 
+conio& conio::operator<<(ui::crect rect)
+{
+    *this << rect.A << ui::border::TopLeft
+        << rect.B << ui::border::BottomRight
+        << rect.bottom_left() << ui::border::BottomLeft
+        << rect.top_right() << ui::border::TopRight;
+
+    *this << rect.A + ui::cpoint{1,0};
+    for (int x = 1; x < rect.S.X; ++x)
+        *this << ui::border::Horizontal;
+
+    *this << rect.bottom_left() + ui::cpoint{1,0};
+    for (int x = 1; x < rect.S.X; ++x)
+        *this << ui::border::Horizontal;
+
+    for (int y =1; y < rect.S.Y; ++y)
+    {
+        *this << rect.top_left() + ui::cpoint{0,y};
+        *this << ui::border::Vertical;
+        *this << rect.top_right() + ui::cpoint{0,y};
+        *this << ui::border::Vertical;
+    }
+    return *this;
+
+}
+
+
+conio& conio::operator<<(ui::border::Index idx)
+{
+    std::cout << ui::border()[idx];
+    return *this;
+}
+
+
 conio& conio::operator>>(int&i)
 {
     io::console::poll_fd()();
@@ -305,4 +339,4 @@ io::console::mk_event conio::wait()
 
     return {};
 }
-} // io
+} // namespace cat

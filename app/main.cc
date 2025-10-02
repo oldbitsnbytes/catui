@@ -32,20 +32,20 @@ auto main(int argc, char** argv, char** env) -> int
             cat::con << "keystroke: " << cev.k.name << "\n\r";
         }
         else
+        {
             cat::con << "mouse event: " << cev.m() << "\n\r";
+            cat::con << cev.m.pos << cat::ui::crect{cev.m.pos.X,cev.m.pos.Y,{20,5}};
+        }
 
-
-        cat::con << "forty deux:" << color::yellow << forty_deux << "\n\r";
-        cat::con << "Fini...\r\n";
-        cat::con << color::white << glyph::mouse << "|| " << color::skyblue3 << glyph::keyboard << " to exit...\r\n";
+        cat::con << cat::ui::cpoint{1,10} << "press " << color::white << glyph::mouse << "|| " << color::skyblue3 << glyph::esc << " to exit...\r\n";
         cat::con >> cat::io::console::ignore;
         cat::io::console::end();
-
     }
     catch (std::exception& e)
     {
         std::cout << "Exception: " << e.what() << std::endl;
     }
+
     sys::flush("test.sys");
     return 0;
 }

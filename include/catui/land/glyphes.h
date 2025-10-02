@@ -153,7 +153,7 @@ struct  glyph
     static constexpr value_type c_mouse                 = "󰍽 "; // Mouse
     static constexpr value_type c_label                 = "󰌕 "; // label/tag
     static constexpr value_type c_tag                   = "󰓹 "; // tag
-
+    static constexpr value_type c_esc                   = "󱊷 "; // ESC
 
 
     static constexpr value ok                 = 0;
@@ -274,6 +274,7 @@ struct  glyph
     static constexpr value mouse              = 115;
     static constexpr value label              = 116;
     static constexpr value tag                = 117;
+    static constexpr value esc                = 118;
 
 
     static glyph::data_array data;

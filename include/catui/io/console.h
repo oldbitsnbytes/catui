@@ -166,7 +166,8 @@ public:
     conio& operator << (ui::cpoint xy);
     conio& operator << (glyph::value f);
     conio& operator << (ui::vchar::pad& ui_bloc);
-
+    conio& operator << (ui::crect rect);
+    conio& operator << (ui::border::Index idx);
 
     conio& operator >> (int& i);
 
@@ -181,6 +182,9 @@ public:
     }
 
 }inline con{};
+
+
+
 // ...
 // con << "Hello!\n";
 // con >> a_number;

@@ -253,7 +253,8 @@ glyph::data_array glyph::data =
     c_keyboard,
     c_mouse,
     c_label,
-    c_tag
+    c_tag,
+    c_esc
 };
 
 std::map<glyph::value, std::string> glyph_dict =
@@ -375,7 +376,8 @@ std::map<glyph::value, std::string> glyph_dict =
     {glyph::keyboard            ,"keyboard"},
     {glyph::mouse               ,"mouse"},
     {glyph::label               ,"label"},
-    {glyph::tag                 ,"tag"}
+    {glyph::tag                 ,"tag"},
+    {glyph::esc                 ,"esc"}
 
 };
 

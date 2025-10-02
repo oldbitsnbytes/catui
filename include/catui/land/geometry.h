@@ -139,7 +139,10 @@ struct crect
     bool SetCursorPos(cpoint P);
     bool SetCursorPos(int Ix, int Iy);
     bool SetCursorOffset(int Ix);
-
+    cpoint top_left() const;
+    cpoint top_right() const;
+    cpoint bottom_left() const;
+    cpoint bottom_right() const;
     operator bool() const { return S.X > 0 && S.Y > 0;}
 
 };
