@@ -27,6 +27,13 @@ auto main(int argc, char** argv, char** env) -> int
         cat::con << cat::ui::cpoint{2,10} << " 2,10 \r\n";
 
         auto cev = cat::conio::wait();
+        if (cev.is<cat::io::kstroke>())
+        {
+            cat::con << "keystroke: " << cev.k.name << "\n\r";
+        }
+        else
+            cat::con << "mouse event: " << cev.m() << "\n\r";
+
 
         cat::con << "forty deux:" << color::yellow << forty_deux << "\n\r";
         cat::con << "Fini...\r\n";
