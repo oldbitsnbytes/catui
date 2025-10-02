@@ -2,7 +2,7 @@
 // Created by oldlonecoder on 2025-09-23.
 //
 
-#include <catui/land/colors.h>
+#include <catui/ui/colors.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 //   Copyright (C) ...,2025,... by Serge Lussier
@@ -40,7 +40,7 @@
 // #include <map>
 
 
-namespace cat
+namespace cat::ui
 {
 
 /*!

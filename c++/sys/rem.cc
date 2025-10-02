@@ -1,5 +1,5 @@
 #include <map>
-#include <catui/land/sys/rem.h>
+#include <catui/sys/rem.h>
 
 
 
@@ -41,8 +41,8 @@ bool operator !(rem::code c)
 
 
 
-using cat::color;
-using cat::glyph;
+
+
 
 
 namespace rem
@@ -260,7 +260,7 @@ std::map<rem::fn, const char*> functions_dictionary= {
  * This map can be expanded or modified to support additional `rem::type` values and their
  * corresponding glyphs and colors as needed.
  */
-std::map<rem::type, std::pair<cat::glyph::value, cat::color::pair>> types_database={
+std::map<rem::type, std::pair<cat::glyph::value, color::pair>> types_database={
 
     {rem::type::none,        {glyph::computer,  {color::aquamarine1         , color::reset }}},
     {rem::type::err,         {glyph::err1,      {color::red4                , color::reset }}},

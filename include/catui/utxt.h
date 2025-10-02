@@ -18,15 +18,15 @@
 
 #pragma once
 
-#include <catui/land/sys/rem.h>
+#include <catui/sys/rem.h>
 
 #include <map>
 #include <vector>
 #include <string>
 #include <string_view>
-#include <catui/land/sys/expect.h>
-#include <catui/land/geometry.h>
-#include <catui/land/vchar.h>
+#include <catui/sys/expect.h>
+#include <catui/ui/geometry.h>
+#include <catui/ui/vchar.h>
 #include <chrono>
 
 namespace cat

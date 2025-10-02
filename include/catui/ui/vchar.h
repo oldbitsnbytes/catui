@@ -19,10 +19,10 @@
 #pragma once
 
 
-#include <catui/land/geometry.h>
-#include <catui/land/border.h>
+#include <catui/ui/geometry.h>
+#include <catui/ui/border.h>
 //#include <RemSys/Sys.h>
-#include <catui/land/glyphes.h>
+#include <catui/ui/glyphes.h>
 //#include <catui/utxt.h>
 
 namespace cat::ui
@@ -64,11 +64,11 @@ struct vchar
     struct pad
     {
         // --- CONFIGS AND INTERNAL DATA--------------
-        color::pair     colors{};
-        crect           geometry{};
-        vchar::string   dc{};           ///< Using one-dimension array of vchar as a two-dimension pad bloc.
+        color::pair     colors{};       ///< default and fallback colors.
+        crect           geometry{};     ///< geometry
+        vchar::string   dc{};           ///< (Display Context/Cell) Using one-dimension array of vchar as a two-dimension pad bloc.
         rem::code       state{rem::code::empty};
-        vchar::iterator  cursor{};
+        vchar::iterator  cursor{};      ///< iterator on the current character
         using shared = std::shared_ptr<vchar::pad>;
 
         ~pad();
@@ -84,8 +84,8 @@ struct vchar
         void                    set_foreground_color(color::value aFg);
         void                    set_background_color(color::value aBg);
         void                    set_colors(color::pair Cp);
-        color::value            fg() const;
-        color::value            bg() const;
+        [[nodiscard]] color::value            fg() const;
+        [[nodiscard]] color::value            bg() const;
         crect                   operator&(const crect &rhs) const;
         crect                   operator/(const crect &rhs) const;
         vchar::iterator          operator[](cpoint P);

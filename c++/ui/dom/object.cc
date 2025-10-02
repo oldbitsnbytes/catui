@@ -1,9 +1,9 @@
 //
-// Created by oldlonecoder on 2025-09-23.
+// Created by Serge Lussier on 2025-10-02.
 //
 
-//#ifndef CATUI_EXPECT_H
-//#define CATUI_EXPECT_H
+#include <catui/ui/dom/object.h>
+
 ////////////////////////////////////////////////////////////////////////////////////////////
 //   Copyright (C) ...,2025,... by Serge Lussier
 //   serge.lussier@oldbitsnbytes.club / lussier.serge@gmail.com
@@ -22,40 +22,53 @@
 //------------------------------------------------------------------------------------------
 
 
-#pragma once
-
-#include <catui/land/sys/rem.h>
-#include <any>
 namespace cat
 {
-template<typename T> class expect
+object::object()
 {
-    rem::code state{rem::code::failed};
-    std::any value{}; ///< < default & copy || POD > - constructible object.
-
-
-public:
-
-    expect(){};
-    expect(T val): state(rem::code::valid), value(val){}
-    expect(rem::code c): state(c){}
-    ~expect(){ value.reset(); }
-    //expect(T&& val) :state(rem::code::valid), value(std::move(val)){}
-
-
-    explicit operator T() const { return value; }
-    explicit operator bool() const {return !!state; }
-
-
-    expect& operator=(T val) { value = val; return *this; }
-    //expect& operator=(T&& val) noexcept { value = std::move(val); return *this; }
-    expect& operator=(const expect& val) { value = val.value; return *this; }
-    expect& operator=(expect&& val) noexcept  { value = std::move(val.value); return *this; }
-    expect& operator=(rem::code c) { state = c; return *this; }
-    //expect& operator=(T& val) { state = rem::code::valid; value = val; return *this; }
-    T operator->() { return std::any_cast<T>(value); }
-    T operator*() { return std::any_cast<T>(value); }
-    rem::code error() {  return state; }
-
-};
+    ;
 }
+
+
+object::~object()
+{
+    ;
+}
+
+
+object& object::operator=(object&&rhs) noexcept
+{
+    _id = rhs._id;
+         rhs._id={};
+    _parent = rhs._parent;
+         rhs._parent = nullptr;
+
+    _children = std::move(rhs._children);
+        rhs._children.clear();
+
+    return *this;
+}
+
+
+object& object::operator=(const object&rhs)
+{
+    _id = rhs._id;
+    _parent = rhs._parent;
+    _children = rhs._children;
+    return *this;
+}
+
+
+object::iterator object::child(const std::string& a_id)
+{
+    return std::find_if(_children.begin(), _children.end(), [&a_id](const object* c) { return c->_id == a_id; } );
+}
+
+
+object::iterator object::child(object* child)
+{
+    return std::find_if(_children.begin(), _children.end(), [&child](const object* c){ return child == c; });
+}
+
+
+} // cat

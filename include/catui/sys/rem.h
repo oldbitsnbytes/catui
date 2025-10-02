@@ -18,9 +18,13 @@
 
 #pragma once
 
-#include <catui/land/colors.h>
-#include <catui/land/glyphes.h>
+#include <catui/ui/colors.h>
+#include <catui/ui/glyphes.h>
 
+
+
+using cat::ui::color;
+using cat::glyph;
 /*!
  * @brief  [ a coherent (decorated with glyphes and colors ] Return Enumeration Mnemonics [ system ]
  *         Also a rem system as "REMarks";
@@ -245,10 +249,10 @@ std::string to_string(rem::type ty);
 std::string to_string(rem::code value);
 std::string to_string(rem::fn fn);
 std::string to_string(rem::action a);
-std::pair<cat::glyph::value,cat::color::pair> type_attributes(rem::type ty);
-std::pair<cat::glyph::value,cat::color::pair> return_code_attributes(rem::code cod);
-std::pair<cat::glyph::value,cat::color::pair> function_attributes(rem::fn fn);
-std::pair<cat::glyph::value,cat::color::pair> action_attributes(rem::action a);
+std::pair<cat::glyph::value,color::pair> type_attributes(rem::type ty);
+std::pair<cat::glyph::value,color::pair> return_code_attributes(rem::code cod);
+std::pair<cat::glyph::value,color::pair> function_attributes(rem::fn fn);
+std::pair<cat::glyph::value,color::pair> action_attributes(rem::action a);
 
 std::string render(rem::code c);
 std::string render(rem::type c);

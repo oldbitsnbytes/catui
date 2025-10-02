@@ -1,3 +1,9 @@
+//
+// Created by Serge Lussier on 2025-10-02.
+//
+
+//#ifndef CATUI_ELEMENT_H
+//#define CATUI_ELEMENT_H
 ////////////////////////////////////////////////////////////////////////////////////////////
 //   Copyright (C) ...,2025,... by Serge Lussier
 //   serge.lussier@oldbitsnbytes.club / lussier.serge@gmail.com
@@ -16,45 +22,24 @@
 //------------------------------------------------------------------------------------------
 
 
-
 #pragma once
-
-#include <functional>
-#include <sys/poll.h>
-#include <catui/sys/sys.h>
-
-
-
-
-namespace cat::io
+#include <catui/ui/vchar.h>
+#include <catui/ui/dom/object.h>
+namespace cat::ui
 {
 
-
-
-struct CATUI_LIB pollin
+class CATUI_LIB element : public object
 {
-    int timeout{-1};
-    pollfd events[1]{};
-    int revents{0};
+    CLASSNAME_DERIVED(element)
+public:
+    element();
+    element(element* parent_element, const std::string& a_id, u16 cls_bits);
 
-    size_t max_bytes{1024};
-    int    input_count{0};
-    std::vector<byte> buffer{};
-
-    std::function<rem::code(pollin&)> callback;
-
-    pollin() = default;
-    pollin(int fd, i16 poll_bits, std::function<rem::code(pollin&)> call_back);
-    pollin(int fd, i16 poll_bits, size_t buffer_size, std::function<rem::code(pollin&)> call_back);
-    pollin(pollfd& _events, size_t buffer_size, std::function<rem::code(pollin&)> call_back);
-    ~pollin();
-
-    rem::code operator()(int _timeout=-1);
+    ~element() override;
+protected:
 
 };
 
+} // namespace cat::ui
 
-
-} // namespace cat::io
-
-//#endif //CATUI_POLL_H
+//#endif //CATUI_ELEMENT_H

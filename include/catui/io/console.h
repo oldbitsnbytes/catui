@@ -18,7 +18,7 @@
 
 #pragma once
 
-#include <catui/land/sys/sys.h>
+#include <catui/sys/sys.h>
 #include <catui/io/polling.h>
 #include <unistd.h>
 

@@ -27,7 +27,7 @@
 #include <source_location>
 
 using namespace cat::integers;
-using cat::color;
+using cat::ui::color;
 using cat::glyph;
 
 

@@ -2,11 +2,11 @@
 // Created by Serge Lussier on 2025-08-18.
 //
 
-#include <catui/land/sys/sys.h>
+#include <catui/sys/sys.h>
 //#include <mutex>
 
 #include <fstream>
-#include <catui/land/glyphes.h>
+#include <catui/ui/glyphes.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 //   Copyright (C) ...,2025,... by Serge Lussier

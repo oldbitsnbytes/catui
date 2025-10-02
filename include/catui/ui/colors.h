@@ -31,7 +31,7 @@
 #include <string>
 #include <map>
 
-namespace cat
+namespace cat::ui
 {
 
  /**

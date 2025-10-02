@@ -1,3 +1,9 @@
+//
+// Created by Serge Lussier on 2025-10-02.
+//
+
+//#ifndef CATUI_OBJECT_H
+//#define CATUI_OBJECT_H
 ////////////////////////////////////////////////////////////////////////////////////////////
 //   Copyright (C) ...,2025,... by Serge Lussier
 //   serge.lussier@oldbitsnbytes.club / lussier.serge@gmail.com
@@ -16,45 +22,55 @@
 //------------------------------------------------------------------------------------------
 
 
-
 #pragma once
 
-#include <functional>
-#include <sys/poll.h>
+
 #include <catui/sys/sys.h>
 
-
-
-
-namespace cat::io
+namespace cat
 {
-
-
-
-struct CATUI_LIB pollin
+class CATUI_LIB object
 {
-    int timeout{-1};
-    pollfd events[1]{};
-    int revents{0};
+    CLASSNAME_START(object)
 
-    size_t max_bytes{1024};
-    int    input_count{0};
-    std::vector<byte> buffer{};
+    std::string _id{"object"};
+    object* _parent{nullptr};
 
-    std::function<rem::code(pollin&)> callback;
+public:
+    using list = std::vector<object*>;
+    using iterator = list::iterator;
+    object();
+    virtual ~object();
 
-    pollin() = default;
-    pollin(int fd, i16 poll_bits, std::function<rem::code(pollin&)> call_back);
-    pollin(int fd, i16 poll_bits, size_t buffer_size, std::function<rem::code(pollin&)> call_back);
-    pollin(pollfd& _events, size_t buffer_size, std::function<rem::code(pollin&)> call_back);
-    ~pollin();
+    object(const std::string& a_id);
+    object(object* parent_object, const std::string& a_id);
 
-    rem::code operator()(int _timeout=-1);
+    object& operator = (object&& rhs) noexcept;
+    object& operator = (const object& rhs);
+
+    object* parent() { return _parent; }
+    [[nodiscard]] object::iterator child(const std::string& id);
+    // object* child(int index);
+    object::iterator child(object* child);
+
+
+protected:
+    object::list _children{};
+
+
+    template<typename T> T* dom_parent()
+    {
+        object* o = this;
+        while (o->_parent)
+        {
+            T* p = dynamic_cast<T*>(o->_parent);
+            if (p) return p;
+        }
+        return nullptr;
+    }
+
 
 };
+} // cat
 
-
-
-} // namespace cat::io
-
-//#endif //CATUI_POLL_H
+//#endif //CATUI_OBJECT_H

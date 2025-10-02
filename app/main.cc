@@ -4,7 +4,7 @@
 #include <catui/io/console.h>
 
 
-using cat::color;
+using cat::ui::color;
 
 int forty_deux = 42;
 

@@ -14,36 +14,34 @@ project(catui
 
 set(HEADERS
     include/${PROJECT_NAME}/root.h
-    include/${PROJECT_NAME}/land/border.h
-    #    include/${PROJECT_NAME}/land/cmdargs.h
-    include/${PROJECT_NAME}/land/colors.h
-    #    include/${PROJECT_NAME}/land/notify.h
-    include/${PROJECT_NAME}/land/sys/expect.h
-    include/${PROJECT_NAME}/land/geometry.h
-    include/${PROJECT_NAME}/land/glyphes.h
-    #    include/${PROJECT_NAME}/land/data/databits.h
-    #    include/${PROJECT_NAME}/land/data/field.h
-    #    include/${PROJECT_NAME}/land/data/table.h
-    include/${PROJECT_NAME}/land/sys/sys.h
-    #    include/${PROJECT_NAME}/land/sys/sys.inc
-    #    include/${PROJECT_NAME}/land/object.h
-    include/${PROJECT_NAME}/land/sys/rem.h
+    include/${PROJECT_NAME}/ui/border.h
+    #    include/${PROJECT_NAME}/ui/cmdargs.h
+    include/${PROJECT_NAME}/ui/colors.h
+    #    include/${PROJECT_NAME}/ui/notify.h
+    include/${PROJECT_NAME}/sys/expect.h
+    include/${PROJECT_NAME}/ui/geometry.h
+    include/${PROJECT_NAME}/ui/glyphes.h
+    #    include/${PROJECT_NAME}/ui/data/databits.h
+    #    include/${PROJECT_NAME}/ui/data/field.h
+    #    include/${PROJECT_NAME}/ui/data/table.h
+    include/${PROJECT_NAME}/sys/sys.h
+    #    include/${PROJECT_NAME}/ui/sys/sys.inc
+    #    include/${PROJECT_NAME}/ui/object.h
+    include/${PROJECT_NAME}/sys/rem.h
     include/${PROJECT_NAME}/utxt.h
-    include/${PROJECT_NAME}/land/sys/sys.h
-    #    include/${PROJECT_NAME}/land/app_base.h
-    include/${PROJECT_NAME}/land/vchar.h
-    #    include/${PROJECT_NAME}/land/strscan.h
-    #    include/${PROJECT_NAME}/land/strscan.numeric_data.value.inc.h
+    #    include/${PROJECT_NAME}/ui/app_base.h
+    include/${PROJECT_NAME}/ui/vchar.h
+    #    include/${PROJECT_NAME}/ui/strscan.h
+    #    include/${PROJECT_NAME}/ui/strscan.numeric_data.value.inc.h
     include/${PROJECT_NAME}/io/polling.h
-    #    include/${PROJECT_NAME}/land/io/listener.h
-    #    include/${PROJECT_NAME}/land/io/tcp_socket.h
-        include/${PROJECT_NAME}/io/kstroke.h
+    #    include/${PROJECT_NAME}/ui/io/listener.h
+    #    include/${PROJECT_NAME}/ui/io/tcp_socket.h
+    include/${PROJECT_NAME}/io/kstroke.h
     include/${PROJECT_NAME}/io/mouse.h
     include/${PROJECT_NAME}/io/console.h
-    c++/io/mouse.cc
-    include/catui/io/mouse.h
-    c++/io/kstroke.cc
-    include/catui/io/kstroke.h
+    include/catui/ui/dom/element.h
+    include/catui/ui/dom/object.h
+
 
 )
 
@@ -53,23 +51,24 @@ add_library(${PROJECT_NAME}
             SHARED
 
             ${HEADERS}
-             c++/land/colors.cc
-             c++/land/geometry.cc
-             c++/land/border.cc
-             c++/land/sys/sys.cc
-             c++/land/sys/rem.cc
-#            c++/land/cadres.cc
-             c++/land/glyphes.cc
-#            c++/land/object.cc
-#             c++/land/cmdargs.cc
+            c++/ui/colors.cc
+            c++/ui/geometry.cc
+            c++/ui/border.cc
+            c++/sys/sys.cc
+            c++/sys/rem.cc
+#            c++/ui/cadres.cc
+            c++/ui/glyphes.cc
+            c++/ui/dom/object.cc
+            c++/ui/dom/element.cc
+#             c++/ui/cmdargs.cc
              c++/utxt.cc
-#            c++/land/app_base.cc
-            c++/land/vchar.cc
-            c++/land/vchar.pad.cc
-#            c++/land/strscan.cc
+#            c++/ui/app_base.cc
+            c++/ui/vchar.cc
+            c++/ui/vchar.pad.cc
+#            c++/ui/strscan.cc
             c++/io/polling.cc
-#            c++/land/io/listener.cc
-#            c++/land/io/tcp_socket.cc
+#            c++/ui/io/listener.cc
+#            c++/ui/io/tcp_socket.cc
             c++/io/kstroke.cc
             c++/io/mouse.cc
             c++/io/console.cc

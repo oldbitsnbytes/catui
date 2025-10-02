@@ -1,3 +1,9 @@
+//
+// Created by oldlonecoder on 2025-09-23.
+//
+
+//#ifndef CATUI_EXPECT_H
+//#define CATUI_EXPECT_H
 ////////////////////////////////////////////////////////////////////////////////////////////
 //   Copyright (C) ...,2025,... by Serge Lussier
 //   serge.lussier@oldbitsnbytes.club / lussier.serge@gmail.com
@@ -16,45 +22,40 @@
 //------------------------------------------------------------------------------------------
 
 
-
 #pragma once
 
-#include <functional>
-#include <sys/poll.h>
-#include <catui/sys/sys.h>
-
-
-
-
-namespace cat::io
+#include <catui/sys/rem.h>
+#include <any>
+namespace cat
 {
-
-
-
-struct CATUI_LIB pollin
+template<typename T> class expect
 {
-    int timeout{-1};
-    pollfd events[1]{};
-    int revents{0};
+    rem::code state{rem::code::failed};
+    std::any value{}; ///< < default & copy || POD > - constructible object.
 
-    size_t max_bytes{1024};
-    int    input_count{0};
-    std::vector<byte> buffer{};
 
-    std::function<rem::code(pollin&)> callback;
+public:
 
-    pollin() = default;
-    pollin(int fd, i16 poll_bits, std::function<rem::code(pollin&)> call_back);
-    pollin(int fd, i16 poll_bits, size_t buffer_size, std::function<rem::code(pollin&)> call_back);
-    pollin(pollfd& _events, size_t buffer_size, std::function<rem::code(pollin&)> call_back);
-    ~pollin();
+    expect(){};
+    expect(T val): state(rem::code::valid), value(val){}
+    expect(rem::code c): state(c){}
+    ~expect(){ value.reset(); }
+    //expect(T&& val) :state(rem::code::valid), value(std::move(val)){}
 
-    rem::code operator()(int _timeout=-1);
+
+    explicit operator T() const { return value; }
+    explicit operator bool() const {return !!state; }
+
+
+    expect& operator=(T val) { value = val; return *this; }
+    //expect& operator=(T&& val) noexcept { value = std::move(val); return *this; }
+    expect& operator=(const expect& val) { value = val.value; return *this; }
+    expect& operator=(expect&& val) noexcept  { value = std::move(val.value); return *this; }
+    expect& operator=(rem::code c) { state = c; return *this; }
+    //expect& operator=(T& val) { state = rem::code::valid; value = val; return *this; }
+    T operator->() { return std::any_cast<T>(value); }
+    T operator*() { return std::any_cast<T>(value); }
+    rem::code error() {  return state; }
 
 };
-
-
-
-} // namespace cat::io
-
-//#endif //CATUI_POLL_H
+}
