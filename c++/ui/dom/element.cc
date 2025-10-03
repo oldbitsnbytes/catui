@@ -40,4 +40,26 @@ element::~element()
 {
     ;
 }
+
+
+rem::code element::draw()
+{
+    if (!_dc)
+    {
+        sys::error() << "Attempt to draw an element that have no dc." << sys::eol;
+        return rem::code::rejected;
+    }
+    //...
+
+    return rem::code::accepted;
+}
+
+
+rem::code element::ealloc(cpoint wxh)
+{
+    _dc = vchar::pad::create(std::move(wxh),{});
+    return rem::code::accepted;
+}
+
+
 } // namespace ca::uit

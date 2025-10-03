@@ -450,33 +450,10 @@ color::data color::query_data(color::value a_code)
 }
 
 
-std::string color::element::operator()()
-{
-    return "not implemented";
-}
-
-
-color::data color::element::get_data()
-{
-    return {};
-}
-
-
-color::elements::elements(const std::string& group_name) : name(group_name){}
-
-
-color::elements::~elements()
-{
-    data.clear(); //...
-}
 
 
 color::element nul_element{};
 
-color::element& color::elements::operator[](std::string_view name)
-{
-    return nul_element;
-}
 
 
 std::string color::pair::operator()() const

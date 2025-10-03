@@ -42,8 +42,8 @@ public:
     object();
     virtual ~object();
 
-    object(const std::string& a_id);
-    object(object* parent_object, const std::string& a_id);
+    object(std::string  a_id);
+    object(object* parent_object, std::string  a_id);
 
     object& operator = (object&& rhs) noexcept;
     object& operator = (const object& rhs);

@@ -38,6 +38,12 @@ class CATUI_LIB sys
     static std::vector<std::string> _ram;
 
 public:
+    enum  fn: u8
+    {
+        eol = 0,
+
+       //...
+    };
 
     static int indent,indentsize;
     struct CATUI_LIB out
@@ -89,6 +95,7 @@ public:
         out& operator << (glyph::value f);
         out& operator << (cat::utxt ut);
         out& operator << (cat::ui::cpoint xy);
+        out& operator << (sys::fn f);
         // Out& operator << (whinfo z);
         out& operator << (cat::ui::crect rect);
         //out& operator << (string2d s2d);

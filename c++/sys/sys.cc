@@ -132,8 +132,8 @@ void sys::out::init_header()
 {
 
     cat::utxt dash;
-    cat::utxt hline;
-    hline << color::r;
+    //cat::utxt hline;
+    //hline << color::r;
     if (type == rem::type::output) return;
     if(header_data.BorderFrame){
         if(header_data.HLine){
@@ -146,41 +146,42 @@ void sys::out::init_header()
         }
     }
 
-    if(header_data.Stamp){
-        auto txt{cat::utxt::now("%H:%M:%S")};
-        auto [ic, a] = rem::function_attributes(rem::fn::stamp);
-        cat::utxt acc;
-        acc << a.fg << glyph::data[ic]  << txt;
-        header << acc() << color::r << " ";
-
-    }
+    // if(header_data.Stamp){
+    //     auto txt{cat::utxt::now("%H:%M:%S")};
+    //     auto [ic, a] = rem::function_attributes(rem::fn::stamp);
+    //     cat::utxt acc;
+    //     acc << a.fg << glyph::data[ic]  << txt;
+    //     header << acc() << color::r << " ";
+    //
+    // }
     if(header_data.Type){
         auto [Icon,Colors] = rem::type_attributes(type);
         header << Colors <<  glyph::data[Icon]  << ' ' << rem::to_string(type) << color::z << ' ';
     }
 
-    if(header_data.File){
-        auto [Icon, Colors] = rem::function_attributes(rem::fn::file);
-        header << color::r << " in " << Colors << glyph::data[Icon] << ' ' <<  location_tail(location.file_name()) << color::r << ' ';
-    }
+    // if(header_data.File){
+    //     auto [Icon, Colors] = rem::function_attributes(rem::fn::file);
+    //     header << color::r << " in " << Colors << glyph::data[Icon] << ' ' <<  location_tail(location.file_name()) << color::r << ' ';
+    // }
 
-    if(header_data.Line){
-        auto [gh, colors] = rem::function_attributes(rem::fn::line);
-        //header << colors << "line: " << std::format("{}", location.line()) << color::reset << ' ';
-        header << colors << "line: " << location.line() << color::r << ' ';
+    // if(header_data.Line){
+    //     auto [gh, colors] = rem::function_attributes(rem::fn::line);
+    //     //header << colors << "line: " << std::format("{}", location.line()) << color::reset << ' ';
+    //     header << colors << "line: " << location.line() << color::r << ' ';
+    //
+    // }
 
-    }
-
-    sys::_ram.push_back(header());
-
-    header = "";
-    if(header_data.Fun && type != rem::type::test){
-        auto [gh, colors] = rem::function_attributes(rem::fn::func);
-        //header << color::r << "Function:" << colors <<  glyph::data[gh]  << location.function_name()<< color::r;
-        header << color::r << "Function:" << colors << location.function_name()<< color::r;
-
-        sys::_ram.push_back(header());
-    }
+    // sys::_ram.push_back(header());
+    //
+    // header = "";
+    // if(header_data.Fun && type != rem::type::test){
+    //     auto [gh, colors] = rem::function_attributes(rem::fn::func);
+    //     //header << color::r << "Function:" << colors <<  glyph::data[gh]  << location.function_name()<< color::r;
+    //     header << color::r << "Function:" << colors << location.function_name()<< color::r;
+    //
+    //     sys::_ram.push_back(header());
+    // }
+    text = header;
     //sys::_ram.push_back(dash());
 }
 
@@ -331,6 +332,20 @@ sys::out& sys::out::operator << (cpoint xy)
     std::lock_guard<std::mutex> lock(LogMTX);
     //sys::_ram.push_back((std::string)xy);
     text << (std::string)xy;
+    return *this;
+}
+
+
+sys::out& sys::out::operator<<(sys::fn f)
+{
+    switch (f)
+    {
+        case fn::eol:
+
+            sys::_ram.emplace_back(text());
+            text="";
+            return *this;
+    }
     return *this;
 }
 

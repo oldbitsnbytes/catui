@@ -4,6 +4,8 @@
 
 #include <catui/ui/dom/object.h>
 
+#include <utility>
+
 ////////////////////////////////////////////////////////////////////////////////////////////
 //   Copyright (C) ...,2025,... by Serge Lussier
 //   serge.lussier@oldbitsnbytes.club / lussier.serge@gmail.com
@@ -34,6 +36,12 @@ object::~object()
 {
     ;
 }
+
+
+object::object(std::string a_id): _id(std::move(a_id)){}
+
+
+object::object(object* parent_object, std::string a_id):_parent(parent_object), _id(std::move(a_id)){}
 
 
 object& object::operator=(object&&rhs) noexcept
@@ -71,4 +79,4 @@ object::iterator object::child(object* child)
 }
 
 
-} // cat
+} // namespace cat
