@@ -180,17 +180,17 @@ cat::io::pollin& poll_fd()
 }
 
 
-mk_event::mk_event(kstroke&& ks)
+mk_event::mk_event(const kstroke& ks)
 {
     k=ks;
-    k = {};
+    event_type = mk_event::type::KEY_EVENT;
 }
 
 
-mk_event::mk_event(mouse&&mev)
+mk_event::mk_event(const mouse& mev)
 {
     m = mev;
-    mev={};
+    event_type = mk_event::type::MOUSE_EVENT;
 }
 
 

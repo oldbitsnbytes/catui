@@ -30,7 +30,7 @@ kstroke kstroke::none{kstroke::NO_KEY, 0, "no key"};
 
 
 
-kstroke::kstroke(kstroke::enums e, u64 c, const std::string& n): mnemonic(e), kcode(c), name(n){}
+kstroke::kstroke(kstroke::enums e, u64 c, std::string n): mnemonic(e), kcode(c), name(n){}
 
 
 
@@ -194,6 +194,7 @@ kstroke kstroke::query(std::string_view s)
     }
     kb.kcode = *byte;
     kb.mnemonic = kstroke::CHARACTER;
+    kb.name = "char input";
 
     return {rem::code::ready,kb};
 }

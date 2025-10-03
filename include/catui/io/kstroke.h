@@ -128,30 +128,20 @@ struct  CATUI_LIB kstroke
     kstroke() = default;
     ~kstroke(){name.clear();}
 
-    kstroke(kstroke::enums e,  u64 c, const std::string& n);
+    kstroke(kstroke::enums e,  u64 c, std::string n);
 
-    kstroke(kstroke&& ks) noexcept{ *this = std::move(ks);}
-    kstroke& operator=(kstroke&& akst)noexcept
-    {
-        kst = akst.kst;
-        mnemonic = akst.mnemonic;
-        kcode = akst.kcode;
-        name = akst.name;
-
-        return *this;
-    }
-    kstroke(const kstroke& akst)
-    {
-        *this = akst;
-    }
-    kstroke& operator=(const kstroke& akst)
-    {
-        kst = akst.kst;
-        mnemonic = akst.mnemonic;
-        kcode = akst.kcode;
-        name = akst.name;
-        return *this;
-    }
+    // kstroke(const kstroke& akst)
+    // {
+    //     *this = akst;
+    // }
+    // kstroke& operator=(kstroke akst)
+    // {
+    //     kst = akst.kst;
+    //     mnemonic = akst.mnemonic;
+    //     kcode = akst.kcode;
+    //     name = akst.name;
+    //     return *this;
+    // }
 
     explicit operator bool() const{ return mnemonic != kstroke::NO_KEY;};
 

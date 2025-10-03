@@ -131,8 +131,8 @@ struct CATUI_LIB mk_event
     }event_type{mk_event::UNSET};
 
     mk_event(){};
-    explicit mk_event(kstroke&& k);
-    explicit mk_event(mouse&& m);
+    explicit mk_event(const kstroke& k);
+    explicit mk_event(const mouse& m);
     ~mk_event();
 
     //mk_event& operator=(mk_event&&) noexcept = default;
