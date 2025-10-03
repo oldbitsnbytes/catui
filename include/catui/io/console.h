@@ -157,6 +157,14 @@ class CATUI_LIB conio
 {
 
 public:
+    enum movfn : u8
+    {
+        up,
+        down,
+        left,
+        right,
+        eol
+    };
 
     conio& operator << (const char* str);
     conio& operator << (color::value clr);
@@ -168,6 +176,7 @@ public:
     conio& operator << (ui::vchar::pad& ui_bloc);
     conio& operator << (ui::crect rect);
     conio& operator << (ui::border::Index idx);
+    conio& operator << (conio::movfn mv);
 
     conio& operator >> (int& i);
 

@@ -61,6 +61,37 @@ rem::code element::update(crect r)
 }
 
 
+rem::code element::set_geometry(const crect&a_geometry)
+{
+    return rem::code::notimplemented;
+}
+
+
+/**
+ * Sets up the user interface for the element by applying the specified color theme.
+ * If the specified theme is unknown, the setup process is rejected.
+ *
+ * @param _theme_name The name of the color theme to be applied to the element.
+ * @return A rem::code value indicating whether the setup operation was successful.
+ *         Returns rem::code::accepted if the theme is applied successfully,
+ *         or rem::code::rejected if the theme is unknown.
+ */
+rem::code element::setup_ui(const std::string&_theme_name)
+{
+    _theme_id = _theme_name;
+    auto& palette = color::db::theme(_theme_id)[class_name()];
+    if (palette.empty())
+    {
+        sys::error() << "Attempt to setup an element with an unknown colors theme: " << _theme_name << sys::eol;
+        return rem::code::rejected;
+    }
+
+    //...
+    return rem::code::accepted;
+
+}
+
+
 /**
  * Allocates a drawing context (_dc) for the element. If the element has a parent,
  * it inherits the parent's drawing context. Otherwise, a new drawing context
@@ -75,6 +106,8 @@ rem::code element::_alloc_dc(cpoint wxh)
         _dc = pr->_dc;
     else
         _dc = vchar::pad::create(std::move(wxh),{});
+    //
+
     return rem::code::accepted;
 }
 

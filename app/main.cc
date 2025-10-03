@@ -9,7 +9,8 @@ using cat::ui::color;
 int forty_deux = 42;
 
 
-
+using cat::conio;
+using cat::ui::cpoint;
 
 auto main(int argc, char** argv, char** env) -> int
 {
@@ -19,27 +20,26 @@ auto main(int argc, char** argv, char** env) -> int
     try
     {
         cat::io::console::start();
-        cat::con << color::aqua << " Hello " << color::r << "from the " << color::yellow << "world of " << color::deeppink8 << "catui" << color::white << "!\r\n";
-        cat::con << rem::code::ready << "\r\n";
-
-
-
-        cat::con << cat::ui::cpoint{2,10} << " 2,10 \r\n";
-
-        auto cev = cat::conio::wait();
-        if (cev.is<cat::io::kstroke>())
+        cat::con << rem::code::ready << conio::eol;
+        bool finit = false;
+        while (!finit)
         {
-            cat::con << "keystroke: " << cat::io::kstroke::name(cev.k.mnemonic) << "\n\r";
-            sys::debug() << "keystroke: " << cat::io::kstroke::name(cev.k.mnemonic) << sys::eol;
+            auto cev = cat::conio::wait();
+            if (cev.is<cat::io::kstroke>())
+            {
+                cat::con << cpoint{1,3} <<  "keystroke (mnemonic name): " << cat::io::kstroke::name(cev.k.mnemonic) << conio::eol;
+                sys::debug() << "keystroke (mnemonic name): " << cat::io::kstroke::name(cev.k.mnemonic) << sys::eol;
+                if (cev.k.mnemonic == cat::io::kstroke::ESCAPE)
+                    finit = true;
+            }
+            else
+            {
+                cat::con << cpoint{1,3} << "mouse event: " << cev.m() << "\n\r";
+                cat::con << cev.m.pos << cat::ui::crect{cev.m.pos.X,cev.m.pos.Y,{20,5}};
+                sys::debug() << "mouse event: " << cev.m() << sys::eol;
+            }
         }
-        else
-        {
-            cat::con << "mouse event: " << cev.m() << "\n\r";
-            cat::con << cev.m.pos << cat::ui::crect{cev.m.pos.X,cev.m.pos.Y,{20,5}};
-            sys::debug() << "mouse event: " << cev.m() << sys::eol;
-        }
-
-        cat::con << cat::ui::cpoint{1,10} << "press " << color::white << glyph::mouse << "|| " << color::skyblue3 << glyph::esc << " to exit...\r\n";
+        cat::con << "press " << color::blue << glyph::mouse << color::r << "|| " << color::skyblue3 << glyph::esc << conio::eol;
         cat::con >> cat::io::console::ignore;
         cat::io::console::end();
     }

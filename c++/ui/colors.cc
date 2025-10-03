@@ -3,7 +3,7 @@
 //
 
 #include <catui/ui/colors.h>
-
+#include <catui/ui/dom/element.h>
 ////////////////////////////////////////////////////////////////////////////////////////////
 //   Copyright (C) ...,2025,... by Serge Lussier
 //   serge.lussier@oldbitsnbytes.club / lussier.serge@gmail.com
@@ -21,13 +21,11 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
 //------------------------------------------------------------------------------------------
 
-#include <iostream>
-#include <cstring>
 // #include <sstream>
 // #include <iomanip>
 // #include <vector>
 // #include <algorithm>
-// #include <cctype>
+// #include <ctypes>
 // #include <cstdlib>
 // #include <ctime>
 // #include <cstdint>
@@ -478,25 +476,358 @@ color::db::palette  themes=
             {
                 "element",
                 {
-                        {0, {color::grey100, color::grey27}},
-                        {1, {color::grey30, color::grey35}}, // keep coherence with widgets base
-                        {2, {color::grey70, color::grey27}},
-                        {3, {color::red4, color::grey27}}
-
+                    {estatus::active, {color::grey100, color::grey27}},
+                    {estatus::disabled, {color::grey30, color::grey35}}, // keep coherence with widgets base
+                    {estatus::normal, {color::grey70, color::grey27}},
+                    {estatus::focussed, {color::red4, color::grey27}}
+                    //...
+                }
+            },
+            {
+                "frame",
+                {
+                    {estatus::active, {color::lightcyan3, color::darkblue}},
+                    {estatus::disabled, {color::grey30, color::darkblue}}, // keep coherence with widgets base
+                    {estatus::normal, {color::grey100, color::darkblue}},
+                    {estatus::focussed, {color::greenyellow, color::darkblue}}
+                    //...
+                }
+            },
+            {
+                "label",
+                {
+                    {estatus::active, {color::indianred, color::blue}},
+                    {estatus::disabled, {color::grey19, color::grey35}}, // keep coherence with widgets base
+                    {estatus::normal, {color::grey70, color::blue}}, // keep coherence with widgets base
+                    {estatus::focussed, {color::yellow, color::blue}}
+                }
+            },
+            {
+                "shortkey",
+                {
+                    {estatus::active, {color::hotpink4, color::grey27}},
+                    {estatus::disabled, {color::grey19, color::grey35}}, // keep coherence with widgets base
+                    {estatus::normal, {color::grey70, color::grey27}},
+                    {estatus::focussed, {color::red4, color::grey27}}
+                }
+            },
+            {
+                "icon",
+                {
+                    {estatus::active, {color::blue1, color::grey27}}, // keep coherence with widgets base
+                    {estatus::disabled, {color::grey19, color::grey35}},
+                    {estatus::normal, {color::blue1, color::grey35}},
+                    {estatus::focussed, {color::aquamarine3, color::grey27}},
+                    //{estatus::success, {color::green5, color::grey27}}
+                }
+            },
+            {
+                "input-area", // widgets::text_input
+                {
+                    {estatus::active, {color::white, color::grey30}}, // keep coherence with widgets base
+                    {estatus::disabled, {color::grey39, color::grey35}},
+                    {estatus::normal, {color::grey37, color::grey30}},
+                    {estatus::focussed, {color::white, color::grey30}}
+                }
+            },
+            {
+                "input-field",
+                {
+                    {estatus::active, {color::grey70, color::grey27}}, // keep coherence with widgets base
+                    {estatus::disabled, {color::grey39, color::grey35}},
+                    {estatus::normal, {color::grey70, color::grey27}},
+                    {estatus::focussed, {color::white, color::grey27}}
+                },
+            },
+            {
+                "input-field:placeholder",
+                {
+                    {estatus::active, {color::darkcyan, color::grey27}}, // keep coherence with widgets base
+                    {estatus::disabled, {color::blue, color::grey27}},
+                    {estatus::normal, {color::blue, color::grey27}},
+                    {estatus::focussed, {color::blue, color::grey27}}
+                }
+            },
+            {
+                "statusbar",
+                {
+                    {estatus::active, {color::lime,      color::grey27}},
+                    {estatus::disabled, {color::grey30,   color::grey27}}, // keep coherence with widgets base
+                    {estatus::normal, {color::grey70,    color::grey27}},
+                    {estatus::focussed, {color::red4,       color::grey27}}
+                  //...
                 }
             }
-        },
+        }
     },
     {
-        "C64",
+        "c64",
         {
             {
                 "element",
                 {
-                    {0, {color::darkturquoise, color::darkblue}},
-                    {1, {color::grey30, color::darkblue}}, // Keep coherence with widgets base
-                    {2, {color::grey70, color::darkblue}},
-                    {3, {color::red4, color::darkblue}}
+                    {estatus::active, {color::darkturquoise, color::darkblue}},
+                    {estatus::disabled, {color::grey30, color::darkblue}}, // keep coherence with widgets base
+                    {estatus::normal, {color::grey70, color::darkblue}},
+                    {estatus::focussed, {color::red4, color::darkblue}}
+                    //...
+                }
+            },
+            {
+                "frame",
+                {
+                    {estatus::active, {color::lightcyan3, color::darkblue}},
+                    {estatus::disabled, {color::grey30, color::darkblue}}, // keep coherence with widgets base
+                    {estatus::normal, {color::grey100, color::darkblue}},
+                    {estatus::focussed, {color::greenyellow, color::darkblue}}
+                    //...
+                }
+            },
+            {
+                "label",
+                {
+                    {estatus::active, {color::lightcyan3, color::darkblue}},
+                    {estatus::disabled, {color::grey19, color::grey35}}, // keep coherence with widgets base
+                    {estatus::normal, {color::grey70, color::darkblue}}, // keep coherence with widgets base
+                    {estatus::focussed, {color::yellow, color::darkblue}}
+                }
+            },
+            {
+                "shortkey",
+                {
+                    {estatus::active, {color::hotpink4, color::darkblue}},
+                    {estatus::disabled, {color::grey19, color::darkblue}}, // keep coherence with widgets base
+                    {estatus::normal, {color::grey70, color::darkblue}},
+                    {estatus::focussed, {color::red4, color::darkblue}}
+                }
+            },
+            {
+                "icon",
+                {
+                    {estatus::active, {color::blue1, color::darkblue}}, // keep coherence with widgets base
+                    {estatus::disabled, {color::grey19, color::darkblue}},
+                    {estatus::normal, {color::blue1, color::darkblue}},
+                    {estatus::focussed, {color::aquamarine3, color::darkblue}},
+                    //{estatus::success, {color::green5, color::darkblue}}
+                }
+            },
+            {
+                "input-area", // widgets::text_input
+                {
+                    {estatus::active, {color::white, color::blue}}, // keep coherence with widgets base
+                    {estatus::disabled, {color::grey39, color::blue}},
+                    {estatus::normal, {color::grey37, color::blue}},
+                    {estatus::focussed, {color::white, color::blue}}
+                }
+            },
+            {
+                "input-field",
+                {
+                    {estatus::active, {color::lightcyan3, color::blue4}}, // keep coherence with widgets base
+                    {estatus::disabled, {color::blue, color::darkblue}},
+                    {estatus::normal, {color::blue, color::darkblue}},
+                    {estatus::focussed, {color::blue, color::darkblue}}
+                },
+
+            },
+            {
+                "input-field:placeholder",
+                {
+                    {estatus::active, {color::darkcyan, color::blue4}}, // keep coherence with widgets base
+                    {estatus::disabled, {color::blue, color::darkblue}},
+                    {estatus::normal, {color::blue, color::darkblue}},
+                    {estatus::focussed, {color::blue, color::darkblue}}
+                },
+            },
+            {
+                "statusbar",
+                {
+                    {estatus::active, {color::lime, color::blue4}},
+                    {estatus::disabled, {color::grey30, color::blue4}}, // keep coherence with widgets base
+                    {estatus::normal, {color::grey70, color::blue4}},
+                    {estatus::focussed, {color::red4, color::blue4}}
+                      //...
+                }
+            }
+        }
+    },
+    {
+        "c128",
+        {
+            {
+                "element",
+                {
+                    {estatus::active, {color::darkseagreen, color::grey15}},
+                    {estatus::disabled, {color::grey30, color::grey15}}, // keep coherence with widgets base
+                    {estatus::normal, {color::grey70, color::grey15}},
+                    {estatus::focussed, {color::red4, color::grey15}}
+                    //...
+                }
+            },
+            {
+                "frame",
+                {
+                    {estatus::active, {color::darkseagreen, color::grey15}},
+                    {estatus::disabled, {color::grey30, color::grey15}}, // keep coherence with widgets base
+                    {estatus::normal, {color::lightcyan3, color::grey15}},
+                    {estatus::focussed, {color::greenyellow, color::grey15}}
+                    //...
+                }
+            },
+            {
+                "label",
+                {
+                    {estatus::active, {color::darkseagreen4, color::grey15}},
+                    {estatus::disabled, {color::grey19, color::grey35}}, // keep coherence with widgets base
+                    {estatus::normal, {color::grey70, color::darkblue}}, // keep coherence with widgets base
+                    {estatus::focussed, {color::yellow, color::darkblue}}
+                }
+            },
+            {
+                "shortkey",
+                {
+                    {estatus::active, {color::hotpink4, color::darkblue}},
+                    {estatus::disabled, {color::grey19, color::darkblue}}, // keep coherence with widgets base
+                    {estatus::normal, {color::grey70, color::darkblue}},
+                    {estatus::focussed, {color::red4, color::darkblue}}
+                }
+            },
+            {
+                "icon",
+                {
+                    {estatus::active, {color::yellow3, color::darkblue}}, // keep coherence with widgets base
+                    {estatus::disabled, {color::grey19, color::darkblue}},
+                    {estatus::normal, {color::blue1, color::darkblue}},
+                    {estatus::focussed, {color::aquamarine3, color::darkblue}},
+                    //{estatus::success, {color::green5, color::darkblue}}
+                }
+            },
+            {
+                "input-area", // widgets::text_input
+                {
+                    {estatus::active, {color::darkseagreen, color::grey15}}, // keep coherence with widgets base
+                    {estatus::disabled, {color::darkseagreen, color::grey15}},
+                    {estatus::normal, {color::darkseagreen, color::grey15}},
+                    {estatus::focussed, {color::darkseagreen, color::grey15}}
+                }
+            },
+            {
+                "input-field",
+                {
+                    {estatus::active, {color::darkseagreen, color::grey11}}, // keep coherence with widgets base
+                    {estatus::disabled, {color::darkseagreen, color::grey15}},
+                    {estatus::normal, {color::darkseagreen, color::grey15}},
+                    {estatus::focussed, {color::darkseagreen, color::grey15}}
+                }
+            },
+            {
+                "input-field:placeholder",
+                {
+                    {estatus::active, {color::grey23, color::grey11}}, // keep coherence with widgets base
+                    {estatus::disabled, {color::darkseagreen, color::grey15}},
+                    {estatus::normal, {color::darkseagreen, color::grey15}},
+                    {estatus::focussed, {color::darkseagreen, color::grey15}}
+                }
+            },
+            {
+                "statusbar",
+                {
+                    {estatus::active, {color::lime, color::grey15}},
+                    {estatus::disabled, {color::grey30, color::grey15}}, // keep coherence with widgets base
+                    {estatus::normal, {color::grey70, color::grey15}},
+                    {estatus::focussed, {color::red4, color::grey15}}
+                    //...
+                }
+            }
+        }
+    },
+    {
+        "cat-latte",
+        {
+            {
+                "element",
+                {
+                    {estatus::active, {color::darkblue, color::grey85}},
+                    {estatus::disabled, {color::grey30, color::grey74}}, // keep coherence with widgets base
+                    {estatus::normal, {color::turquoise2, color::grey78}},
+                    {estatus::focussed, {color::darkblue, color::white}}
+                    //...
+                }
+            },
+            {
+                "frame",
+                {
+                    {estatus::active, {color::lightcyan3, color::darkblue}},
+                    {estatus::disabled, {color::grey30, color::darkblue}}, // keep coherence with widgets base
+                    {estatus::normal, {color::grey100, color::darkblue}},
+                    {estatus::focussed, {color::greenyellow, color::darkblue}}
+                    //...
+                }
+            },
+            {
+                "label",
+                {
+                    {estatus::active, {color::lightcyan3, color::darkblue}},
+                    {estatus::disabled, {color::grey19, color::grey35}}, // keep coherence with widgets base
+                    {estatus::normal, {color::grey70, color::darkblue}}, // keep coherence with widgets base
+                    {estatus::focussed, {color::yellow, color::darkblue}}
+                }
+            },
+            {
+                "shortkey",
+                {
+                    {estatus::active, {color::hotpink4, color::darkblue}},
+                    {estatus::disabled, {color::grey19, color::darkblue}}, // keep coherence with widgets base
+                    {estatus::normal, {color::grey70, color::darkblue}},
+                    {estatus::focussed, {color::red4, color::darkblue}}
+                }
+            },
+            {
+                "icon",
+                {
+                    {estatus::active, {color::blue1, color::darkblue}}, // keep coherence with widgets base
+                    {estatus::disabled, {color::grey19, color::darkblue}},
+                    {estatus::normal, {color::blue1, color::darkblue}},
+                    {estatus::focussed, {color::aquamarine3, color::darkblue}},
+                    //{estatus::success, {color::green5, color::darkblue}}
+                }
+            },
+            {
+                "input-area", // widgets::text_input
+                {
+                    {estatus::active, {color::white, color::blue}}, // keep coherence with widgets base
+                    {estatus::disabled, {color::grey39, color::blue}},
+                    {estatus::normal, {color::grey37, color::blue}},
+                    {estatus::focussed, {color::white, color::blue}}
+                }
+            },
+            {
+                "input-field",
+                {
+                    {estatus::active, {color::lightcyan3, color::blue4}}, // keep coherence with widgets base
+                    {estatus::disabled, {color::blue, color::darkblue}},
+                    {estatus::normal, {color::blue, color::darkblue}},
+                    {estatus::focussed, {color::blue, color::darkblue}}
+                },
+
+            },
+            {
+                "input-field:placeholder",
+                {
+                    {estatus::active, {color::darkcyan, color::blue4}}, // keep coherence with widgets base
+                    {estatus::disabled, {color::blue, color::darkblue}},
+                    {estatus::normal, {color::blue, color::darkblue}},
+                    {estatus::focussed, {color::blue, color::darkblue}}
+                },
+            },
+            {
+                "statusbar",
+                {
+                    {estatus::active, {color::lime, color::blue4}},
+                    {estatus::disabled, {color::grey30, color::blue4}}, // keep coherence with widgets base
+                    {estatus::normal, {color::grey70, color::blue4}},
+                    {estatus::focussed, {color::red4, color::blue4}}
+                      //...
                 }
             }
         }
@@ -504,6 +835,28 @@ color::db::palette  themes=
 };
 
 
+/*!
+ *
+ * @param theme_name
+ * @return
+ * @todo check exist.
+ */
+color::db::element& color::db::theme(const std::string&theme_name)
+{
+    return themes[theme_name];
+}
 
+
+/*!
+ *
+ * @param element_palette
+ * @param element_name
+ * @return reference to items
+ * @todo check exist.
+ */
+color::db::item& color::db::element_item(element& element_palette, const std::string&element_name)
+{
+    return element_palette[element_name];
+}
 
 }

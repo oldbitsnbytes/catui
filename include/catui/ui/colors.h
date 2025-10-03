@@ -363,8 +363,8 @@ namespace cat::ui
         using palette = std::map<std::string, element>;
 
 
-        static db::palette& theme(const std::string& theme_name);
-        static db::element& element_items(db::palette& theme_name, const std::string& element_name);
+        static db::element& theme(const std::string& theme_name);
+        static db::item& element_item(element& element_palette, const std::string& element_name);
 
     };
 

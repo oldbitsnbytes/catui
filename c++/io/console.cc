@@ -321,6 +321,56 @@ conio& conio::operator<<(ui::border::Index idx)
 }
 
 
+conio& conio::operator<<(conio::movfn mv)
+{
+    switch (mv)
+    {
+        case conio::up:
+            std::cout << "\x1b[1A";
+            break;
+        case conio::down:
+            std::cout << "\x1b[1B";
+            break;
+        case conio::left:
+            std::cout << "\x1b[1D";
+            break;
+        case conio::right:
+            std::cout << "\x1b[1C";
+            break;
+        // case conio::home:
+        //     std::cout << "\x1b[1~";
+        //     break;
+        // case conio::end:
+        //     std::cout << "\x1b[4~";
+        //     break;
+        // case conio::page_up:
+        //     std::cout << "\x1b[5~";
+        //     break;
+        // case conio::page_down:
+        //     std::cout << "\x1b[6~";
+        //     break;
+        // case conio::insert:
+        //     std::cout << "\x1b[2~";
+        //     break;
+        // case conio::delete_:
+        //     std::cout << "\x1b[3~";
+        //     break;
+        // case conio::bol:
+        //     std::cout << "\x1b[1G";
+        //     break;
+        // case conio::endl:
+        //     std::cout << "\x1b[0K";
+        //     break;
+        // case conio::to_start_line:
+        //     std::cout << "\x1b[1K";
+        case conio::eol:
+            std::cout << "\r\n";
+            break;
+    }
+    return *this;
+}
+
+
 conio& conio::operator>>(int&i)
 {
     io::console::poll_fd()();

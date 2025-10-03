@@ -171,15 +171,17 @@ public:
     ~element() override;
 
     auto dc() -> vchar::pad::shared { return _dc; }
-    rem::code draw();
+    virtual rem::code draw();
     rem::code update(crect r={});
-
+    rem::code set_geometry(const crect& a_geometry);
 
 protected:
+    virtual rem::code   setup_ui(const std::string& _theme_name);
     vchar::pad::shared  _dc{nullptr};
     crect               _rect{};
-    crect               _dirty_rect{};
+    crect               _dirty_area{};
     color::pair         _theme_colors{};
+    std::string         _theme_id{"default"};
     padding             _padding{};
     margin              _margin{};
     anchor::value       _anchor{anchor::none};
