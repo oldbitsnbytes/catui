@@ -13,8 +13,8 @@ int forty_deux = 42;
 
 auto main(int argc, char** argv, char** env) -> int
 {
-    auto args = cat::utxt::make_view_list(argc,argv,1);
-
+    if (argc>1)
+        auto args = cat::utxt::make_view_list(argc,argv,1);
 
     try
     {

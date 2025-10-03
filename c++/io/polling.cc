@@ -67,12 +67,20 @@ pollin::~pollin()
 rem::code pollin::operator()(int _timeout)
 {
     auto log = sys::debug(); log << " _timeout: " << _timeout << log;
-
+do_poll:
     auto n = ::poll(events, 1, _timeout);
     if (n == 0) return rem::code::timeout;
     if ((n == -1) || (events[0].revents & (POLLERR|POLLHUP)))
     {
-        sys::error() << strerror(errno) << log;
+        if (errno==EINTR)
+        {
+            sys::info() << rem::fn::func << ':' << "EINTR" << sys::eol;
+            if (console::CONSOLE_RESIZE_FLAG)
+            {
+                console::CONSOLE_RESIZE_FLAG = false;
+                goto do_poll;
+            }
+        }
         return rem::code::failed;
     }
 

@@ -136,9 +136,9 @@ static constexpr anchor::value vcenter  = 0x0400;
 }
 
 
-
-
-
+/*!
+ *  Spacing within.
+ */
 struct padding
 {
     i8 top{0};
@@ -147,6 +147,10 @@ struct padding
     i8 right{0};
 };
 
+
+/**
+ *  \brief Spacing from parent.
+ */
 struct margin
 {
     i8 top{0};
@@ -172,18 +176,18 @@ public:
 
 
 protected:
-    vchar::pad::shared _dc{nullptr};
-    crect _rect{};
-    crect _dirty_rect{};
-    color::pair theme_colors{};
-    padding _padding{};
-    margin  _margin{};
-    anchor::value _anchor{anchor::none};
-    estatus::value _status{estatus::none};
-    component::value _component{component::none};
-    e_type::value _type{e_type::none};
+    vchar::pad::shared  _dc{nullptr};
+    crect               _rect{};
+    crect               _dirty_rect{};
+    color::pair         _theme_colors{};
+    padding             _padding{};
+    margin              _margin{};
+    anchor::value       _anchor{anchor::none};
+    estatus::value      _status{estatus::none};
+    component::value    _component{component::none};
+    e_type::value       _type{e_type::none};
 
-    rem::code ealloc(cpoint wxh);
+    rem::code           _alloc_dc(cpoint wxh);
 
 
 };

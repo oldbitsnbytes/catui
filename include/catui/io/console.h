@@ -38,7 +38,7 @@ static constexpr u8 ST_RAW_SET       = 8;
 static constexpr u8 ST_POLL_STARTED  = 0x10;
 static constexpr u8 ST_POLL_CLOSED   = 0x20;
 static constexpr u8 ST_CARET_ON      = 0x40;
-
+inline bool  CONSOLE_RESIZE_FLAG{false};
 
 
 

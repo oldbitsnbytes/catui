@@ -1,9 +1,3 @@
-//
-// Created by Serge Lussier on 2025-10-02.
-//
-
-#include <catui/ui/dom/element.h>
-
 ////////////////////////////////////////////////////////////////////////////////////////////
 //   Copyright (C) ...,2025,... by Serge Lussier
 //   serge.lussier@oldbitsnbytes.club / lussier.serge@gmail.com
@@ -21,7 +15,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
 //------------------------------------------------------------------------------------------
 
-
+#include <catui/ui/dom/element.h>
 namespace cat::ui
 {
 element::element() : object()
@@ -32,13 +26,19 @@ element::element() : object()
 
 element::element(element* parent_element, const std::string&a_id, u16 cls_bits):object(parent_element, a_id)
 {
-    ;
+    if (parent_element)
+    {
+        _theme_colors = parent_element->_theme_colors;
+        parent_element->_children.push_back(this);
+    }
+
 }
 
 
 element::~element()
 {
-    ;
+    //...
+    _children.clear();
 }
 
 
@@ -55,9 +55,26 @@ rem::code element::draw()
 }
 
 
-rem::code element::ealloc(cpoint wxh)
+rem::code element::update(crect r)
 {
-    _dc = vchar::pad::create(std::move(wxh),{});
+    return rem::code::notimplemented;
+}
+
+
+/**
+ * Allocates a drawing context (_dc) for the element. If the element has a parent,
+ * it inherits the parent's drawing context. Otherwise, a new drawing context
+ * is created with the specified dimensions.
+ *
+ * @param wxh The dimensions for the drawing context, represented as a cpoint.
+ * @return A rem::code value indicating whether the operation was accepted.
+ */
+rem::code element::_alloc_dc(cpoint wxh)
+{
+    if (const auto* pr = dom_parent<element>(); pr)
+        _dc = pr->_dc;
+    else
+        _dc = vchar::pad::create(std::move(wxh),{});
     return rem::code::accepted;
 }
 

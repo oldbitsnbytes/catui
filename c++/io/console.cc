@@ -21,7 +21,7 @@
 #include <sys/ioctl.h>
 #include <sys/poll.h>
 #include <unistd.h>
-
+#include <signal.h>
 
 namespace cat::io::console
 {
@@ -42,6 +42,13 @@ pollfd              _con_events={
 cat::io::pollin _pollin(_con_events, 1024, nullptr);
 
 
+void resize_signal(int i)
+{
+    get_geometry();
+    CONSOLE_RESIZE_FLAG = true;
+    //...
+}
+
 
 rem::code start()
 {
@@ -61,7 +68,7 @@ rem::code start()
 
     //sys::write() << " terminal set to raw mode..." << //sys::endl;
 
-    //::signal(SIGWINCH, &terminal::resize_signal); // --> Must be Handled in the thread/proc/ env
+    ::signal(SIGWINCH, &console::resize_signal); // --> Must be Handled in the thread/proc/ env
     //if(_flags & terminal::use_double_buffer)
     //Console::SwitchAlternate();
     caret_off();
@@ -106,10 +113,10 @@ rem::code get_geometry()
     _geometry = {0,0, {win.ws_col, win.ws_row}};
 
     // debug or info:
-    auto log = sys::info(); log << " (new) terminal size: [" // << color::yellow << std::string(std::format("{:>3d}x{:<3d}",_geometry.S.X,_geometry.S.Y)).c_str() << color::r << "]" << log;
+    sys::info() << " console geometry: [" // << color::yellow << std::string(std::format("{:>3d}x{:<3d}",_geometry.S.X,_geometry.S.Y)).c_str() << color::r << "]" << log;
                                 << color::yellow << _geometry.S.X
                                 << color::r << "x"
-                                << color::yellow << _geometry.S.Y << color::r;
+                                << color::yellow << _geometry.S.Y << color::r << sys::eol;
 
     return rem::code::done;
 }
