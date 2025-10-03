@@ -29,12 +29,14 @@ auto main(int argc, char** argv, char** env) -> int
         auto cev = cat::conio::wait();
         if (cev.is<cat::io::kstroke>())
         {
-            cat::con << "keystroke: " << cev.k.name << "\n\r";
+            cat::con << "keystroke: " << cat::io::kstroke::name(cev.k.mnemonic) << "\n\r";
+            sys::debug() << "keystroke: " << cat::io::kstroke::name(cev.k.mnemonic) << sys::eol;
         }
         else
         {
             cat::con << "mouse event: " << cev.m() << "\n\r";
             cat::con << cev.m.pos << cat::ui::crect{cev.m.pos.X,cev.m.pos.Y,{20,5}};
+            sys::debug() << "mouse event: " << cev.m() << sys::eol;
         }
 
         cat::con << cat::ui::cpoint{1,10} << "press " << color::white << glyph::mouse << "|| " << color::skyblue3 << glyph::esc << " to exit...\r\n";
