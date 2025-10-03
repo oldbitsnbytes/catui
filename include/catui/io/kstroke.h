@@ -123,12 +123,12 @@ struct  CATUI_LIB kstroke
 
     kstroke::enums       mnemonic{kstroke::NO_KEY};
     u64 kcode{0};
-    std::string name{"no_key"};
+    static std::string name(kstroke::enums e);
 
     kstroke() = default;
-    ~kstroke(){name.clear();}
+    ~kstroke(){ ; }
 
-    kstroke(kstroke::enums e,  u64 c, std::string n);
+    kstroke(kstroke::enums e,  u64 c);
 
     // kstroke(const kstroke& akst)
     // {
