@@ -68,8 +68,6 @@ protected:
         }
         return nullptr;
     }
-
-
 };
 } // cat
 

@@ -452,7 +452,7 @@ color::data color::query_data(color::value a_code)
 
 
 
-color::element nul_element{};
+//color::element nul_element{};
 
 
 
@@ -466,5 +466,44 @@ color::pair &color::pair::operator>>(std::string &out)
     out = color::render(*this);
     return  *this;
 }
+
+
+
+
+color::db::palette  themes=
+{
+    {
+        "default",
+        {
+            {
+                "element",
+                {
+                        {0, {color::grey100, color::grey27}},
+                        {1, {color::grey30, color::grey35}}, // keep coherence with widgets base
+                        {2, {color::grey70, color::grey27}},
+                        {3, {color::red4, color::grey27}}
+
+                }
+            }
+        },
+    },
+    {
+        "C64",
+        {
+            {
+                "element",
+                {
+                    {0, {color::darkturquoise, color::darkblue}},
+                    {1, {color::grey30, color::darkblue}}, // Keep coherence with widgets base
+                    {2, {color::grey70, color::darkblue}},
+                    {3, {color::red4, color::darkblue}}
+                }
+            }
+        }
+    }
+};
+
+
+
 
 }

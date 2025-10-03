@@ -356,34 +356,15 @@ namespace cat::ui
     static std::string render_html(color::pair a_pair);
     static color::data query_data(color::value a_code);
 
-    struct  element
+    struct db
     {
-        std::string name{};
-        union
-        {
-            color::pair code;
-            std::pair<color::data,color::data> data;
-        }data{{}};
+        using item = std::map<int, color::pair>;
+        using element = std::map<std::string, item>;
+        using palette = std::map<std::string, element>;
 
 
-        enum element_type { num, cust} type{color::element::num};
-
-        std::string operator()();
-        color::data get_data();
-        using list = std::vector<color::element>;
-    };
-
-    struct  elements
-    {
-        std::string name{};
-
-        elements() = default;
-        explicit elements(const std::string& group_name);
-        ~elements();
-
-        using group = std::map<std::string, color::elements>;
-        color::element::list data;
-        color::element&      operator[](std::string_view name);
+        static db::palette& theme(const std::string& theme_name);
+        static db::element& element_items(db::palette& theme_name, const std::string& element_name);
 
     };
 
