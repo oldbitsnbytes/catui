@@ -28,6 +28,7 @@ set(HEADERS
     #    include/${PROJECT_NAME}/ui/sys/sys.inc
     #    include/${PROJECT_NAME}/ui/object.h
     include/${PROJECT_NAME}/sys/rem.h
+    include/${PROJECT_NAME}/sys/application.cc
     include/${PROJECT_NAME}/utxt.h
     #    include/${PROJECT_NAME}/ui/app_base.h
     include/${PROJECT_NAME}/ui/vchar.h
@@ -41,6 +42,8 @@ set(HEADERS
     include/${PROJECT_NAME}/io/console.h
     include/catui/ui/dom/element.h
     include/catui/ui/dom/object.h
+    c++/sys/application.cc
+    include/catui/sys/application.h
 
 
 )
@@ -55,7 +58,7 @@ add_library(${PROJECT_NAME}
             c++/ui/geometry.cc
             c++/ui/border.cc
             c++/sys/sys.cc
-            c++/sys/rem.cc
+            c++/sys/application.cc
 #            c++/ui/cadres.cc
             c++/ui/glyphes.cc
             c++/ui/dom/object.cc

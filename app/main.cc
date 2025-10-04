@@ -34,7 +34,7 @@ auto main(int argc, char** argv, char** env) -> int
             }
             else
             {
-                cat::con << cpoint{1,3} << "mouse event: " << cev.m() << "\n\r";
+                cat::con << cpoint{1,3} << "mouse event: " << cev.m() << conio::eol;
                 cat::con << cev.m.pos << cat::ui::crect{cev.m.pos.X,cev.m.pos.Y,{20,5}};
                 sys::debug() << "mouse event: " << cev.m() << sys::eol;
             }
