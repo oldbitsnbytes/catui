@@ -28,22 +28,17 @@ set(HEADERS
     #    include/${PROJECT_NAME}/ui/sys/sys.inc
     #    include/${PROJECT_NAME}/ui/object.h
     include/${PROJECT_NAME}/sys/rem.h
-    include/${PROJECT_NAME}/sys/application.cc
     include/${PROJECT_NAME}/utxt.h
-    #    include/${PROJECT_NAME}/ui/app_base.h
     include/${PROJECT_NAME}/ui/vchar.h
-    #    include/${PROJECT_NAME}/ui/strscan.h
-    #    include/${PROJECT_NAME}/ui/strscan.numeric_data.value.inc.h
     include/${PROJECT_NAME}/io/polling.h
     #    include/${PROJECT_NAME}/ui/io/listener.h
     #    include/${PROJECT_NAME}/ui/io/tcp_socket.h
     include/${PROJECT_NAME}/io/kstroke.h
     include/${PROJECT_NAME}/io/mouse.h
     include/${PROJECT_NAME}/io/console.h
-    include/catui/ui/dom/element.h
-    include/catui/ui/dom/object.h
-    c++/sys/application.cc
-    include/catui/sys/application.h
+    include/${PROJECT_NAME}/ui/dom/element.h
+    include/${PROJECT_NAME}//ui/dom/object.h
+    include/${PROJECT_NAME}/sys/application.h
 
 
 )
@@ -65,10 +60,8 @@ add_library(${PROJECT_NAME}
             c++/ui/dom/element.cc
 #             c++/ui/cmdargs.cc
              c++/utxt.cc
-#            c++/ui/app_base.cc
             c++/ui/vchar.cc
             c++/ui/vchar.pad.cc
-#            c++/ui/strscan.cc
             c++/io/polling.cc
 #            c++/ui/io/listener.cc
 #            c++/ui/io/tcp_socket.cc

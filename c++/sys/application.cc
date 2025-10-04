@@ -16,7 +16,7 @@
 //------------------------------------------------------------------------------------------
 
 #include <catui/sys/application.h>
-
+#include <catui/io/console.h>
 
 
 
@@ -30,6 +30,12 @@ application::application()
 }
 
 
+application::application(const std::string&app_name, utxt::list_view&&arguments)
+{
+
+}
+
+
 application::~application()
 {
     ;
@@ -38,6 +44,22 @@ application::~application()
 
 rem::code application::setup()
 {
-    return rem::code::notimplemented;
+    io::console::start();
+    return rem::code::done;
+}
+
+
+rem::code application::run()
+{
+    setup();
+
+    return rem::code::success;
+}
+
+
+rem::code application::end()
+{
+    io::console::end();
+    return rem::code::done;
 }
 } // cat

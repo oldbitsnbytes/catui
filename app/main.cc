@@ -19,7 +19,7 @@ auto main(int argc, char** argv, char** env) -> int
 
     try
     {
-        cat::io::console::start();
+
         cat::con << rem::code::ready << conio::eol;
         bool finit = false;
         while (!finit)
