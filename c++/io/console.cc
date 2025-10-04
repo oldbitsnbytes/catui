@@ -66,24 +66,12 @@ rem::code start()
     _this.c_cc[VSTOP] = 0;
     tcsetattr(STDIN_FILENO, TCSAFLUSH, &_this);
 
-    //sys::write() << " terminal set to raw mode..." << //sys::endl;
-
     ::signal(SIGWINCH, &console::resize_signal); // --> Must be Handled in the thread/proc/ env
-    //if(_flags & terminal::use_double_buffer)
-    //Console::SwitchAlternate();
+
     caret_off();
     get_geometry();
     start_mouse();
     save_screen();
-
-    // Fd.SetReadFN([](IO::UFD& Ufd) -> Rem::Action {
-    //     if (auto R =  Console::StdInProc(Ufd); !R)
-    //     {
-    //         Sys::Error(1) << "StdInProc() failed!" << Rem::Fn::Endl;
-    //         return Rem::Action::End;
-    //     }
-    //     return Rem::Action::Continue;
-    // });
 
     return rem::code::done;
 }

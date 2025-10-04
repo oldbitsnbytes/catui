@@ -39,7 +39,7 @@ auto main(int argc, char** argv, char** env) -> int
                 sys::debug() << "mouse event: " << cev.m() << sys::eol;
             }
         }
-        cat::con << "press " << color::blue << glyph::mouse << color::r << "|| " << color::skyblue3 << glyph::esc << conio::eol;
+        cat::con << "press " << color::blue << glyph::mouse << color::r << "| " << color::skyblue3 << glyph::esc << conio::eol;
         cat::con >> cat::io::console::ignore;
         cat::io::console::end();
     }
