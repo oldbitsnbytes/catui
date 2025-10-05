@@ -51,6 +51,21 @@ public:
     using list = std::vector<std::string>;
     using list_view = std::vector<std::string_view>;
 
+#pragma regnion scanner
+    template<typename str_type=std::string_view> struct  location final
+    {
+        ui::crect rect{}; ///< smooth transition
+        integers::u32 line{1};
+        integers::u32 column{1};
+        integers::u32 offset{0};
+        using iterator = typename str_type::iterator;
+        iterator begin{};
+        iterator end{}; ///< not the typename str_type::end() but really the last valid character pointer into the segment.
+        size_t   length{0};
+        std::string operator *() const;
+        using list = std::vector<location>;
+    };
+
     struct CATUI_LIB word
     {
         std::string::iterator begin{};
@@ -69,7 +84,7 @@ public:
 
     }cursor{m_txt};
 
-
+#pragma endregnion scanner
 
 
     utxt() = default;

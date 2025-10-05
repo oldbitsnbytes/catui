@@ -29,6 +29,12 @@
 #include <source_location>
 namespace cat
 {
+template<typename str_type>
+std::string utxt::location<str_type>::operator*() const
+{
+    return  std::string{begin,end};
+}
+
 
 template<typename T> void utxt::append(T&&_blk)
 {

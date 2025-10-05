@@ -20,11 +20,12 @@
 
 #include <catui/ui/colors.h>
 #include <catui/ui/glyphes.h>
-
+#include <catui/ui/border.h>
 
 
 using cat::ui::color;
 using cat::glyph;
+using cat::ui::border;
 /*!
  * @brief  [ a coherent (decorated with glyphes and colors ] Return Enumeration Mnemonics [ system ]
  *         Also a rem system as "REMarks";

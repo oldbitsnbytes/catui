@@ -30,7 +30,10 @@ std::string utxt::word::operator()() const { return {begin, end}; }
 
 rem::code utxt::word::skip_ws()
 {
-    while(begin != end && std::isspace(*begin)) ++begin;
+    while(begin != end && std::isspace(*begin))
+    {
+        ++begin;
+    }
     return rem::code::valid;
 }
 
