@@ -15,9 +15,9 @@ project(catui
 set(HEADERS
     include/${PROJECT_NAME}/root.h
     include/${PROJECT_NAME}/ui/border.h
-    #    include/${PROJECT_NAME}/ui/cmdargs.h
+    include/${PROJECT_NAME}/sys/cmdargs.h
     include/${PROJECT_NAME}/ui/colors.h
-    #    include/${PROJECT_NAME}/ui/notify.h
+    include/${PROJECT_NAME}/sys/notify.h
     include/${PROJECT_NAME}/sys/expect.h
     include/${PROJECT_NAME}/ui/geometry.h
     include/${PROJECT_NAME}/ui/glyphes.h
@@ -53,12 +53,13 @@ add_library(${PROJECT_NAME}
             c++/ui/geometry.cc
             c++/ui/border.cc
             c++/sys/sys.cc
+            c++/sys/cmdargs.cc
             c++/sys/application.cc
-#            c++/ui/cadres.cc
+            c++/sys/rem.cc
             c++/ui/glyphes.cc
             c++/ui/dom/object.cc
             c++/ui/dom/element.cc
-#             c++/ui/cmdargs.cc
+
              c++/utxt.cc
             c++/ui/vchar.cc
             c++/ui/vchar.pad.cc
