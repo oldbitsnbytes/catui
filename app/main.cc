@@ -1,55 +1,23 @@
 //#include <catui/land/sys/expect.h>
 
 #include <iostream>
-#include <catui/io/console.h>
+#include <catui/sys/application.h>
 
 
 using cat::ui::color;
 
-int forty_deux = 42;
 
-
-using cat::conio;
-using cat::ui::cpoint;
 
 auto main(int argc, char** argv, char** env) -> int
 {
     if (argc>1)
-        auto args = cat::utxt::make_view_list(argc,argv,1);
-
-    try
     {
-
-        cat::con << rem::code::ready << conio::eol;
-        bool finit = false;
-        while (!finit)
-        {
-            auto cev = cat::conio::wait();
-            if (cev.is<cat::io::kstroke>())
-            {
-                cat::con << cpoint{1,3} <<  "keystroke (mnemonic name): " << cat::io::kstroke::name(cev.k.mnemonic) << conio::eol;
-                sys::debug() << "keystroke (mnemonic name): " << cat::io::kstroke::name(cev.k.mnemonic) << sys::eol;
-                if (cev.k.mnemonic == cat::io::kstroke::ESCAPE)
-                    finit = true;
-            }
-            else
-            {
-                cat::con << cpoint{1,3} << "mouse event: " << cev.m() << conio::eol;
-                cat::con << cev.m.pos << cat::ui::crect{cev.m.pos.X,cev.m.pos.Y,{20,5}};
-                sys::debug() << "mouse event: " << cev.m() << sys::eol;
-            }
-        }
-        cat::con << "press " << color::blue << glyph::mouse << color::r << "| " << color::skyblue3 << glyph::esc << conio::eol;
-        cat::con >> cat::io::console::ignore;
-        cat::io::console::end();
-    }
-    catch (std::exception& e)
-    {
-        std::cout << "Exception: " << e.what() << std::endl;
+        cat::application app{"catui_test", cat::utxt::make_view_list(argc,argv,1)};
+        return static_cast<int>(app.run());
     }
 
-    sys::flush("test.sys");
-    return 0;
+    cat::application app{"catui_test", {}};
+    return static_cast<int>(app.run());
 }
 
 

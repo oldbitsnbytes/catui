@@ -19,7 +19,8 @@
 #include <catui/io/console.h>
 
 
-
+using cat::ui::cpoint;
+using cat::ui::crect;
 
 namespace cat
 {
@@ -52,7 +53,38 @@ rem::code application::setup()
 rem::code application::run()
 {
     setup();
+    try
+    {
 
+        cat::con << rem::code::ready << conio::eol;
+        bool finit = false;
+        while (!finit)
+        {
+            auto cev = cat::conio::wait();
+            if (cev.is<cat::io::kstroke>())
+            {
+                cat::con << cpoint{1,3} <<  "keystroke (mnemonic name): " << cat::io::kstroke::name(cev.k.mnemonic) << conio::eol;
+                sys::debug() << "keystroke (mnemonic name): " << cat::io::kstroke::name(cev.k.mnemonic) << sys::eol;
+                if (cev.k.mnemonic == cat::io::kstroke::ESCAPE)
+                    finit = true;
+            }
+            else
+            {
+                cat::con << cpoint{1,3} << "mouse event: " << cev.m() << conio::eol;
+                cat::con << cev.m.pos << cat::ui::crect{cev.m.pos.X,cev.m.pos.Y,{20,5}};
+                sys::debug() << "mouse event: " << cev.m() << sys::eol;
+            }
+        }
+        cat::con << "press " << color::blue << glyph::mouse << color::r << "| " << color::skyblue3 << glyph::esc << conio::eol;
+        cat::con >> cat::io::console::ignore;
+        cat::io::console::end();
+    }
+    catch (std::exception& e)
+    {
+        std::cout << "Exception: " << e.what() << std::endl;
+    }
+
+    end();
     return rem::code::success;
 }
 
@@ -60,6 +92,7 @@ rem::code application::run()
 rem::code application::end()
 {
     io::console::end();
+    sys::flush("catui_test.sys");
     return rem::code::done;
 }
 } // cat
