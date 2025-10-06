@@ -113,14 +113,14 @@ string& string::operator=(double v)            num_assign(v)
 
 string& string::operator << (color::value color)
 {
-    _str += color::render(color);
+    _str += color::render_rgb(color);
     return *this;
 }
 
 
 string& string::operator << (color::pair colors)
 {
-    _str += color::render(colors);
+    _str += color::render_rgb(colors);
     return *this;
 }
 

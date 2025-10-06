@@ -336,7 +336,7 @@ std::string color::render(color::pair a_pair)
     if(a_pair.bg == color::reset)
         txt << "\x1b[49";
     else
-        txt << "\033[48;5;" << static_cast<int>(a_pair.bg);
+        txt << "\x1b[48;5;" << static_cast<int>(a_pair.bg);
     // ---------------- foreground ------------------------------------
     if(a_pair.fg == color::reset)
        txt << "\x1b[39m";

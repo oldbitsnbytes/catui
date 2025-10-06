@@ -34,7 +34,7 @@ object::object()
 
 object::~object()
 {
-    ;
+     sys::debug() << rem::fn::func << " class " << color::chartreuse6 << "object[" << color::r << color::yellow << id() << color::r << ']' <<  sys::eol;
 }
 
 

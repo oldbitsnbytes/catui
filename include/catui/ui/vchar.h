@@ -78,9 +78,9 @@ struct vchar
         [[nodiscard]] int       width() const {return geometry.S.X;}
         [[nodiscard]] int       height() const {return geometry.S.Y;}
         static shared           create(cpoint Dxy, color::pair aColors);
-        void                    clear();
+        void                    clear(const crect& subarea={});
         rem::code               copy(vchar::pad& PadDc, crect InnerArea);
-        vchar::iterator          home();
+        vchar::iterator          home(const cpoint&offset={});
         void                    set_foreground_color(color::value aFg);
         void                    set_background_color(color::value aBg);
         void                    set_colors(color::pair Cp);

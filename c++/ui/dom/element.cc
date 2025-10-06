@@ -38,7 +38,7 @@ element::element(element* parent_element, const std::string&a_id, u16 cls_bits):
 element::~element()
 {
     //...
-    _children.clear();
+    sys::debug() << rem::fn::func << " class object<-" << color::chartreuse6 << "element" << color::r << " [" << color::yellow << id() << color::r << ']' << sys::eol;
 }
 
 
@@ -63,7 +63,64 @@ rem::code element::update(crect r)
 
 rem::code element::set_geometry(const crect&a_geometry)
 {
-    return rem::code::notimplemented;
+    _rect = a_geometry;
+    _alloc_dc(_rect.S);
+
+    if (!dom_parent<element>())
+        _dc->geometry = _rect;
+    return rem::code::accepted;
+}
+
+
+rem::code element::set_theme(const std::string&a_theme_name)
+{
+    _theme_id = a_theme_name;
+    _palette = color::db::element_item(color::db::theme(_theme_id), class_name());
+    _theme_colors = _palette[static_cast<int>(_status)];
+
+    return rem::code::accepted;
+}
+
+
+void element::set_padding(padding a_padding)
+{
+    _padding = a_padding;
+    //... Check if we shall redraw.
+}
+
+
+void element::set_margin(margin a_margin)
+{
+    _margin = a_margin;
+    //... Check if we shall redraw.
+}
+
+
+void element::set_anchor(anchor::value a_anchor)
+{
+    _anchor = a_anchor;
+    //... Check if we shall redraw.
+}
+
+
+void element::set_status(estatus::value a_status)
+{
+    _status = a_status;
+    //... Check if we shall redraw.
+}
+
+
+void element::set_component(component::value a_component)
+{
+    _component |= a_component;
+    //... Check if we shall redraw.
+}
+
+
+void element::set_type(e_type::value a_type)
+{
+    _type = a_type;
+    //... Check if we shall redraw.
 }
 
 

@@ -174,12 +174,25 @@ public:
     virtual rem::code draw();
     rem::code update(crect r={});
     rem::code set_geometry(const crect& a_geometry);
+    rem::code set_theme(const std::string& a_theme_name);
+    [[nodiscard]] crect geometry() const { return _rect; }
+    [[nodiscard]] int   width() const { return _rect.Width(); }
+    [[nodiscard]] int   height() const { return _rect.Height(); }
+    void      set_padding(padding a_padding);
+    void      set_margin(margin a_margin);
+    void      set_anchor(anchor::value a_anchor);
+    void      set_status(estatus::value a_status);
+    void      set_component(component::value a_component);
+    void      set_type(e_type::value a_type);
+
+
 
 protected:
     virtual rem::code   setup_ui(const std::string& _theme_name);
     vchar::pad::shared  _dc{nullptr};
     crect               _rect{};
     crect               _dirty_area{};
+    color::db::item     _palette{};
     color::pair         _theme_colors{};
     std::string         _theme_id{"default"};
     padding             _padding{};

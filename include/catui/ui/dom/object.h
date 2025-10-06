@@ -52,7 +52,7 @@ public:
     [[nodiscard]] object::iterator child(const std::string& id);
     // object* child(int index);
     object::iterator child(object* child);
-
+    [[nodiscard]] const std::string& id() const { return _id; }
 
 protected:
     object::list _children{};

@@ -275,9 +275,17 @@ vchar::pad::shared vchar::pad::create(cpoint _dim, color::pair _colours)
 //////////////////////////////////////////////////////////////
 /// \brief vchar::pad::clear
 ///        Clears the buffer with the current colors attributes
-void vchar::pad::clear()
+void vchar::pad::clear(const crect& subarea)
 {
-    std::fill_n(dc.begin(),geometry.S.Area(), vchar(color::pair(colors)));
+    if (!subarea)
+    {
+        std::fill_n(dc.begin(),geometry.S.Area(), vchar(color::pair(colors)));
+        return;
+    }
+
+    for (int y=0;y<subarea.S.Y; ++y)
+        std::fill_n(dc.begin()+subarea.A.X + (subarea.A.Y + y) * geometry.S.X, subarea.S.X, vchar(color::pair(colors)));
+
 }
 
 
@@ -306,9 +314,9 @@ rem::code vchar::pad::copy(vchar::pad&pad_dc, crect inner_area)
 /// \brief vchar::pad::home
 ///     Resets iterator and internal cursor at {0,0};
 ///
-vchar::iterator vchar::pad::home()
+vchar::iterator vchar::pad::home(const cpoint& offset)
 {
-    geometry.SetCursorPos({0,0});
+    geometry.SetCursorPos(offset + cpoint{0,0});
     cursor = dc.begin();
     return cursor;
 }
