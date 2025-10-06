@@ -88,7 +88,7 @@ do_poll:
     {
         buffer.clear();
 
-        if (auto iost = ::ioctl(events[0].fd, FIONREAD, &input_count); iost==-1)
+        if (const auto io_state = ::ioctl(events[0].fd, FIONREAD, &input_count); io_state==-1)
         {
             sys::error() << strerror(errno) << log;
             buffer.clear();

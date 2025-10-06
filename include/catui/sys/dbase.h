@@ -1,3 +1,9 @@
+//
+// Created by oldlonecoder on 2025-10-06.
+//
+
+//#ifndef CATUI_DBASE_H
+//#define CATUI_DBASE_H
 ////////////////////////////////////////////////////////////////////////////////////////////
 //   Copyright (C) ...,2025,... by Serge Lussier
 //   serge.lussier@oldbitsnbytes.club / lussier.serge@gmail.com
@@ -17,52 +23,71 @@
 
 
 #pragma once
+#include <sqlite3.h>
 #include <catui/sys/sys.h>
-#include <catui/sys/strscan.h>
-#include <catui/lexer/token_info.h>
 
-namespace cat::lang
+namespace cat::db
 {
 
 
 
-class CATUI_LIB lexer
+struct CATUI_LIB field
 {
-    //std::string_view text{};
-    strscan scanner{};
-public:
-    struct config_data
+    std::string name{};
+
+    enum class type : u8
     {
-        token_reference_table*  tokens_table{nullptr};
-        token_info::list*       tokens{nullptr};
-        std::string_view        text{};
-    }source;
+        integer,
+        real,
+        text,
+        blob,
+        null,
+    }value_type{field::type::null};
 
-    lexer()=default;
-    lexer(token_reference_table* table, std::string_view a_text);
-    ~lexer()=default;
+    struct relation
+    {
+        u8 FKEY     :1;
+        u8 INDEX    :1;
+        u8 UNIQUE   :1;
+    }rel{0};
 
-    rem::code operator >> (token_info& token); ///< Experimenting with this coding style...
+    std::vector<std::string_view> values;
 
-    lexer::config_data& config() { return source; }
-    lexer& operator=(lexer::config_data& data);
-    std::pair<rem::code, size_t> parse();
+    using shared = std::shared_ptr<field>;
 
-    void debug_dump() const;
-private:
-    bool F4AC = false;
-    rem::code parse_token(token_info& token);
-    rem::code parse_identifier(token_info& token);
-    rem::code parse_numeric(token_info& token);
-    rem::code parse_quotes(token_info& token);
-    rem::code parse_operator(token_info& token);
-    //rem::code parse_keyword(token_info& token);
-    rem::code parse_comment(token_info& token);
-    rem::code parse_line_comment(token_info& token);
-    rem::code parse_block_comment(token_info& token);
-    rem::code parse_f4ac(token_info& token);
-    rem::code push(token_info& token);
-    //...
+    field(std::string  a_name, field::type field_type, field::relation field_rel);
+
+    ~field();
+
+    field& operator = (const field& rhs);
+    field& operator = (field&& rhs) noexcept;
+
+    field& operator << (const std::string& val);
+    field& operator << (const char* val);
+    field& operator << (const std::string_view& val);
+    field& operator << (const std::vector<std::string_view>& val);
+    field& operator << (const std::vector<std::string>& val);
+
+    template<typename T> field& operator << (const T&  val);
+
+
+    template<typename T> T  value();
+    template<typename T> field& operator>>(T& val);
+
+    std::string_view operator [](size_t ind) const;
+
 
 };
-} // namespace cat::ml
+
+
+
+class CATUI_LIB dbase
+{
+    sqlite3 *db{nullptr};
+
+
+};
+} // namespace cat::db
+
+
+#include <catui/sys/dbase_field_impl.h>

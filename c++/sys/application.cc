@@ -55,10 +55,12 @@ rem::code application::run()
     setup();
     try
     {
+        auto element = std::make_shared<ui::element>(nullptr,"First element",0);
+
 
         cat::con << rem::code::ready << conio::eol;
-        bool finit = false;
-        while (!finit)
+        bool fini = false;
+        while (!fini)
         {
             auto cev = cat::conio::wait();
             if (cev.is<cat::io::kstroke>())
@@ -66,7 +68,7 @@ rem::code application::run()
                 cat::con << cpoint{1,3} <<  "keystroke (mnemonic name): " << cat::io::kstroke::name(cev.k.mnemonic) << conio::eol;
                 sys::debug() << "keystroke (mnemonic name): " << cat::io::kstroke::name(cev.k.mnemonic) << sys::eol;
                 if (cev.k.mnemonic == cat::io::kstroke::ESCAPE)
-                    finit = true;
+                    fini = true;
             }
             else
             {

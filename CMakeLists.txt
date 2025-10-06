@@ -21,7 +21,8 @@ set(HEADERS
     include/${PROJECT_NAME}/sys/expect.h
     include/${PROJECT_NAME}/ui/geometry.h
     include/${PROJECT_NAME}/ui/glyphes.h
-    #    include/${PROJECT_NAME}/ui/data/databits.h
+    include/${PROJECT_NAME}/sys/dbase.h
+    include/${PROJECT_NAME}/sys/dbase_field_impl.h
     #    include/${PROJECT_NAME}/ui/data/field.h
     #    include/${PROJECT_NAME}/ui/data/table.h
     include/${PROJECT_NAME}/sys/sys.h
@@ -41,6 +42,7 @@ set(HEADERS
     include/${PROJECT_NAME}/sys/strscan.h
     include/${PROJECT_NAME}/lexer/lang.h
     include/${PROJECT_NAME}/lexer/token_info.h
+    include/${PROJECT_NAME}/lexer/lexer.h
 
 )
 
@@ -61,6 +63,7 @@ add_library(${PROJECT_NAME}
             c++/ui/dom/object.cc
             c++/ui/dom/element.cc
             c++/sys/string.cc
+            c++/sys/dbase.cc
             c++/ui/vchar.cc
             c++/ui/vchar.pad.cc
             c++/io/polling.cc
@@ -71,6 +74,7 @@ add_library(${PROJECT_NAME}
             c++/io/console.cc
             c++/lexer/token_info.cc
             c++/lexer/lang.cc
+            c++/lexer/lexer.cc
             c++/sys/strscan.cc
 )
 

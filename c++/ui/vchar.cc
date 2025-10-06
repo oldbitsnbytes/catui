@@ -32,14 +32,14 @@ vchar &vchar::set_bg(color::value bg) { D = D & ~BGMask | static_cast<U8>(bg) <<
 [[maybe_unused]] vchar &vchar::set_attributes(U32 ch) { D = (D & ~AttrMask) | ch; return *this; }
 //[[maybe_unused]] vchar &vchar::set_colors(color::pair &&Ch) { return set_fg(Ch.fg).set_bg(Ch.bg); }
 
-[[maybe_unused]] vchar &vchar::set_colors(const color::pair &CP)
+[[maybe_unused]] vchar &vchar::set_colors(const color::pair &cp)
 {
-    D = D & ~ColorsMask | static_cast<U8>(CP.fg) << FGShift | static_cast<U8>(CP.bg) << BGShift;
+    D = D & ~ColorsMask | static_cast<U8>(cp.fg) << FGShift | static_cast<U8>(cp.bg) << BGShift;
     return *this;
 }
 
-vchar &vchar::operator=(U32 Ch) { D = Ch; return *this; }
-vchar &vchar::operator=(const U32* Ch) { D = *Ch; return *this; }
+vchar &vchar::operator=(U32 ch) { D = ch; return *this; }
+vchar &vchar::operator=(const U32* ch) { D = *ch; return *this; }
 
 
 
@@ -104,8 +104,7 @@ color::value vchar::background() const { return static_cast<color::value>((D & B
 
 border::Index vchar::border_index() const
 {
-    auto c = D & 0xff;
-    if(c > 11)
+    if((D & 0xff) > 11)
         ;//throw Sys::Exception() [Sys::Except() << Rem::Code::Oob  << " invalid frame index: " << color::Red4 << c];
 
     return static_cast<border::Index>(D & 0xFF);
@@ -115,9 +114,6 @@ char vchar::ascii() const
 { return static_cast<char>(D & 0xff); }
 
 
-/**
- *
- */
 [[maybe_unused]] U16  vchar::attributes() const
 { return (D & AttrMask) >> ATShift; }
 
@@ -133,8 +129,8 @@ vchar& vchar::operator<<(border::Index fr)
 vchar& vchar::operator<<(color::pair cp)
 { D = (D & ~ColorsMask)          | static_cast<U8>(cp.fg) << FGShift | static_cast<U8>(cp.bg) << BGShift; return *this; }
 
-vchar& vchar::operator<<(char Ch)
-{ D = (D & ~(UTFBITS|CharMask))  | (D & (Underline|Stroke|Blink|ColorsMask)) | ASCII | (Ch & 0xff); return *this; }
+vchar& vchar::operator<<(char ch)
+{ D = (D & ~(UTFBITS|CharMask))  | (D & (Underline|Stroke|Blink|ColorsMask)) | ASCII | (ch & 0xff); return *this; }
 
 
 [[maybe_unused]] std::string vchar::render_colors() const

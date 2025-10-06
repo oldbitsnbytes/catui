@@ -135,15 +135,15 @@ struct vchar
     vchar& operator <<(glyph::value gl);
     vchar& operator <<(accent_fr::value ac);
     vchar& operator << (border::Index fr);
-    vchar& operator <<(color::pair Cp);
-    vchar& operator <<(vchar Ch)
+    vchar& operator <<(color::pair cp);
+    vchar& operator <<(vchar ch)
     {
-        D = Ch.D;
+        D = ch.D;
         return *this;
     }
-    static std::string render_line(vchar::iterator _It, std::size_t aCount);
+    static std::string render_line(vchar::iterator _it, std::size_t a_count);
 
-    vchar&     operator <<(char Ch);
+    vchar&     operator <<(char ch);
     [[nodiscard]] std::string render_colors() const;
     explicit    operator std::string() const;
     [[nodiscard]] std::string details() const;
