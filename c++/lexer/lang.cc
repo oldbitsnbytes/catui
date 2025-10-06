@@ -1,6 +1,7 @@
 #include <catui/lexer/lang.h>
-#include <catui/utxt.h>
-
+#include <catui/sys/string.h>
+#include <cstring>
+using namespace cat::integers;
 
 namespace cat::lang
 {
@@ -194,7 +195,7 @@ std::map<lang::mnemonic, ui::color::pair> mnemonics_colors_attr = {
  */
 std::string  component::type_name(lang::type::value lex_type)
 {
-    utxt str;
+    cat::string str;
     u64 bits = lex_type;
     for (u64 n=0;n<64;n++)
     {
@@ -226,8 +227,8 @@ std::string  component::type_name(lang::type::value lex_type)
  */
 lang::type::value   component::type_enum(const std::string& lex_type_name)
 {
-    utxt str = lex_type_name;
-    utxt::word::list list;
+    cat::string str = lex_type_name;
+    cat::string::word::list list;
     integers::u64 typebits = 0;
 
     if(!str.words(list, false,":")) return lang::type::Null;

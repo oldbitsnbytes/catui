@@ -212,7 +212,7 @@ enum class mnemonic : integers::u8
 };
 
 
-namespace lexem
+namespace lexeme
 {
 
 using Value = const char*;//std::string_view;

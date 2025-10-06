@@ -27,11 +27,11 @@ namespace cat
 class CATUI_LIB application
 {
     CLASSNAME_START(application)
-    utxt::list_view _arguments{};
+    cat::string::view_list _arguments{};
 
 public:
     application();
-    application(const std::string& app_name, utxt::list_view&& arguments);
+    application(const std::string& app_name,cat::string::view_list&& arguments);
     virtual ~application();
     virtual rem::code setup();
     virtual rem::code run();

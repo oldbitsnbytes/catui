@@ -26,7 +26,24 @@
 
 #include <catui/sys/rem.h>
 
-#include "ui/geometry.h"
+#include <catui/ui/geometry.h>
+#include <catui/ui/vchar.h>
+
+#include <iostream>
+#include <cstring>
+#include <sstream>
+#include <iomanip>
+#include <vector>
+#include <algorithm>
+#include <cctype>
+#include <cstdlib>
+#include <ctime>
+#include <cstdint>
+#include <cmath>
+#include <functional>
+#include <string>
+#include <chrono>
+#include <stack>
 
 
 namespace cat
@@ -172,6 +189,8 @@ private:
 public:
     static std::string make_str(const char *B, const char *E) { return {B, E}; }
     static std::string make_str(const cat::string::list& _list);
+    static std::vector<std::string_view> make_view_list(int Count, char **s, int offset=0);
+
     static std::string now(const std::string &str_fmt);
     bool empty() { return _str.empty(); }
 
@@ -208,8 +227,9 @@ public:
 
     static std::string bytes(std::string_view a_seq);
     static std::string bytes(std::vector<int> a_seq);
+    static std::string bytes(std::vector<integers::u8> a_seq);
 
-    static std::vector<std::string_view> string_view_list(int Count, char **s, int offset=0);
+
     static cat::string::list make_list(int argc, char** argv, int offset=0);
 };
 

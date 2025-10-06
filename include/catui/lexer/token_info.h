@@ -26,7 +26,7 @@
 #pragma once
 #include <catui/lexer/lang.h>
 #include <catui/ui/dom/object.h>
-
+#include <catui/sys/strscan.h>
 
 namespace cat::lang
 {
@@ -38,7 +38,7 @@ struct token_info
     lang::mnemonic          m{lang::mnemonic::Null};
     std::string_view        name{"mnemonic::Undefined"}; // Pas vraiment le choix d'ajouter ça ici...
     lang::operand::Index    d = lang::operand::Identifier;
-    utxt::location<> cursor{};
+    cat::string::location<> cursor{};
 
     struct propbits
     {
@@ -82,7 +82,7 @@ public:
 
     virtual rem::code set();
     virtual token_info scan(strscan& str_scanner);
-    virtual token_info get_by_mnemonic(tux::lang::mnemonic m);
+    virtual token_info get_by_mnemonic(cat::lang::mnemonic m);
 };
 
 

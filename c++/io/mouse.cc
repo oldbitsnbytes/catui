@@ -184,7 +184,7 @@ std::pair<rem::code,mouse>  mouse::parse(bool brel, std::vector<int> args_)
 
     // pressed 'flag' ignored. relying on the xterm button and meta state byte which reports buttons on the lasts two bits:
     auto l = sys::debug();
-    l << "parsing sequence : " << color::lightskyblue4 << args_.size() << color::r << " arguments [" << color::yellow << utxt::bytes(args_) << "]" << l;
+    l << "parsing sequence : " << color::lightskyblue4 << args_.size() << color::r << " arguments [" << color::yellow << cat::string::bytes(args_) << "]" << l;
     mouse mev{};
     static mouse prev_mev{};
     if (args_.size() != 3){
@@ -234,7 +234,7 @@ std::pair<rem::code,mouse>  mouse::parse(bool brel, std::vector<int> args_)
 ///
 std::string mouse::direction_arrow(ui::cpoint dxy)
 {
-    utxt arrow{};
+    cat::string arrow{};
     bool m[3][3]={
         {dxy.X < 0 && dxy.Y < 0,  dxy.X == 0 && dxy.Y < 0,  dxy.X > 0 && dxy.Y < 0},
         {dxy.X < 0 && dxy.Y == 0, dxy.X == 0 && dxy.Y == 0, dxy.X > 0 && dxy.Y == 0},
@@ -256,8 +256,8 @@ std::string mouse::direction_arrow(ui::cpoint dxy)
 ///
 std::string mouse::operator()() const
 {
-    utxt text{};
-    utxt dir{};
+    cat::string text{};
+    cat::string dir{};
     text << "["
          << color::orangered1 << std::format("{:>3d}", pos.X)
          << color::reset << ','

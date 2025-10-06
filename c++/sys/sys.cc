@@ -131,8 +131,8 @@ std::string sys::out::location_tail(const std::string&Fn)
 void sys::out::init_header()
 {
 
-    cat::utxt dash;
-    //cat::utxt hline;
+    cat::string dash;
+    //cat::string hline;
     //hline << color::r;
     if (type == rem::type::output) return;
     if(header_data.BorderFrame){
@@ -147,9 +147,9 @@ void sys::out::init_header()
     }
 
     // if(header_data.Stamp){
-    //     auto txt{cat::utxt::now("%H:%M:%S")};
+    //     auto txt{cat::string::now("%H:%M:%S")};
     //     auto [ic, a] = rem::function_attributes(rem::fn::stamp);
-    //     cat::utxt acc;
+    //     cat::string acc;
     //     acc << a.fg << glyph::data[ic]  << txt;
     //     header << acc() << color::r << " ";
     //
@@ -240,7 +240,7 @@ sys::out& sys::out::operator << (std::string_view cstr)
 /// \param obstr
 /// \return
 ///
-sys::out& sys::out::operator << (cat::utxt obstr)
+sys::out& sys::out::operator << (cat::string obstr)
 {
     std::lock_guard<std::mutex> lock(LogMTX);
     //_ram.emplace_back(obstr());
@@ -303,7 +303,7 @@ sys::out& sys::out::operator << ( rem::code c)
 {
     std::lock_guard<std::mutex> lock(LogMTX);
     auto [ic,col] = rem::return_code_attributes(c);
-    cat::utxt str;
+    cat::string str;
     str << col << ic << rem::to_string(c);
     //sys::_ram.push_back(str());
     text << str();
@@ -320,7 +320,7 @@ sys::out& sys::out::operator << ( rem::type ty)
 {
     std::lock_guard<std::mutex> lock(LogMTX);
     auto [ic,col] = rem::type_attributes(ty);
-    cat::utxt str;
+    cat::string str;
     str << col << ic << rem::to_string(ty);
     //sys::_ram.push_back(str());
     text << str();
@@ -360,7 +360,7 @@ sys::out& sys::out::operator << (crect r)
 
 // COut::out& COut::out::operator << (ui::string2d s2d)
 // {
-//     utxt str;
+//     string str;
 //     (*OutFilePtr) << s2d.win;
 //     return *this;
 // }
@@ -369,7 +369,7 @@ sys::out& sys::out::operator << (crect r)
 sys::out& sys::out::operator << (rem::fn f)
 {
     std::lock_guard<std::mutex> lock(LogMTX);
-    cat::utxt str;
+    cat::string str;
 
     switch (f) {
         case rem::fn::eol:
@@ -396,10 +396,10 @@ sys::out& sys::out::operator << (rem::fn f)
 
             //std::chrono::zoned_time date{"america/toronto", std::chrono::system_clock::now()};
             //const auto tp{std::chrono::system_clock::now()};
-            //auto txt{utxt::now("{:%h:%m:%s}", tp)};
+            //auto txt{string::now("{:%h:%m:%s}", tp)};
             auto [ic, a] = rem::function_attributes(rem::fn::stamp);
 
-            str << a.fg << glyph::data[ic] << color::z << cat::utxt::now("%H:%M:%S");
+            str << a.fg << glyph::data[ic] << color::z << cat::string::now("%H:%M:%S");
             //sys::_ram.push_back(str());
             text << str();
             return *this;
@@ -419,7 +419,7 @@ sys::out& sys::out::operator << (rem::fn f)
         case rem::fn::weekday: {
             auto [ic, a] = rem::function_attributes(rem::fn::weekday);
             //auto today{std::chrono::system_clock::now()};
-            str << a.fg << cat::utxt::now("%A");
+            str << a.fg << cat::string::now("%A");
             //sys::_ram.emplace_back(str());
             text << str();
             return *this;
@@ -428,7 +428,7 @@ sys::out& sys::out::operator << (rem::fn f)
         case rem::fn::day : {
             auto [ic, a] = rem::function_attributes(rem::fn::day);
             //auto today{std::chrono::system_clock::now()};
-            str << a.fg << cat::utxt::now("%d");
+            str << a.fg << cat::string::now("%d");
             //sys::_ram.emplace_back(str());
             text << str();
             return *this;
@@ -437,7 +437,7 @@ sys::out& sys::out::operator << (rem::fn f)
         case rem::fn::month: {
             auto [ic, a] = rem::function_attributes(rem::fn::month);
             //auto today{std::chrono::system_clock::now()};
-            str << a.fg << cat::utxt::now("%M");
+            str << a.fg << cat::string::now("%M");
             //sys::_ram.emplace_back(str());
             text << str();
             return *this;
@@ -445,7 +445,7 @@ sys::out& sys::out::operator << (rem::fn f)
         case rem::fn::monthnum: {
             auto [ic, a] = rem::function_attributes(rem::fn::month);
             //auto today{std::chrono::system_clock::now()};
-            str << a.fg <<  cat::utxt::now("%b");
+            str << a.fg <<  cat::string::now("%b");
             //sys::_ram.emplace_back(str());
             text << str();
             return *this;
@@ -453,8 +453,8 @@ sys::out& sys::out::operator << (rem::fn f)
         case rem::fn::year: {
             auto [ic, a] = rem::function_attributes(rem::fn::year);
             //auto today{std::chrono::system_clock::now()};
-            cat::utxt acc;
-            acc << /*utf::glyph::data[ic] <<*/ a.fg << cat::utxt::now("%Y");
+            cat::string acc;
+            acc << /*utf::glyph::data[ic] <<*/ a.fg << cat::string::now("%Y");
             //sys::_ram.emplace_back(acc());
             text << acc();
             return *this;

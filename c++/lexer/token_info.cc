@@ -76,8 +76,8 @@ bool token_info::is_numeric_literal() const
  */
 std::string token_info::to_string() const
 {
-    utxt l;
-    utxt mname;
+    cat::string l;
+    cat::string mname;
     mname << "[" << color::cadetblue2 << name << color::r << "]";
     l << color::white << std::format("({:>3d},{:<3d}) ", cursor.line,cursor.column) <<color::r << std::format("{:<30}", mname());
     l << color::r << " \"" << color::yellow  << text() << color::r << "\" [" << color::lime << lang::component::type_name(t) <<
@@ -97,7 +97,7 @@ std::string_view token_info::text() const
 
 std::string token_info::mark() const
 {
-    utxt      text;
+    cat::string text;
 
     ////// Take the address of the beginning of the source text by subtracting the offset from the cursor's begin address.
     ///Preventing out of range access.
@@ -111,7 +111,7 @@ std::string token_info::mark() const
     while (cc && (*cc != '\n') && (*cc != '\r')) ++cc;
     //if (*cc =='\n' || *cc =='\r') --cc;
     const std::string_view line = {line_start, static_cast<size_t>(cc - line_start)};
-    text << line << '\n' << utxt::fill(' ', cursor.begin  - line_start);
+    text << line << '\n' << cat::string::fill(' ', cursor.begin  - line_start);
     text << glyph::c_left_towards_up_arrow;
 
     return text();
@@ -140,7 +140,7 @@ rem::code token_reference_table::set()
         return rem::code::exist;
     //...
     reference = {
-        #include <catui/lexer/default_tokens_reference.hcc>
+        #include <catui/lexer/default_tokens_reference.inc.h>
     };
     return rem::code::done;
 }
@@ -166,13 +166,13 @@ token_info token_reference_table::scan(strscan&str_scanner)
 {
     auto src = str_scanner.cursor;
     if (!src){
-        auto l = sys::error(1); l << "no source." << l;
+        sys::error() << "no source." << sys::eol;
         return {};
     }
 
     if(reference.empty())
     {
-        auto l = sys::warning(1); l << " tokens reference table is empty" << l;
+        sys::warning() << " tokens reference table is empty" << sys::eol;
         return {};
     }
 
@@ -203,7 +203,8 @@ token_info token_reference_table::scan(strscan&str_scanner)
             ++crs;++ref;
             //l << color::yellow << *crs << " <=> " << color::hotpink4 << ref << color::r << l;
         }
-        if (*ref == 0)
+
+        if (ref || (*ref == 0))
         {
 
             if (*crs && !isspace(*crs) && !token.is_operator())
@@ -228,7 +229,7 @@ token_info token_reference_table::scan(strscan&str_scanner)
 }
 
 
-token_info token_reference_table::get_by_mnemonic(tux::lang::mnemonic m)
+token_info token_reference_table::get_by_mnemonic(cat::lang::mnemonic m)
 {
     for (auto token : reference)
         if (token.m == m)

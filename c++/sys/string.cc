@@ -2,7 +2,7 @@
 // Created by oldlonecoder on 2025-10-05.
 //
 
-#include <catui/string.h>
+#include <../include/catui/sys/string.h>
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -400,8 +400,24 @@ std::string string::bytes(std::vector<int> a_seq)
 }
 
 
+std::string string::bytes(std::vector<integers::u8> a_seq)
+{
+    std::string outstr{};
+    int c = 0;
+    for(auto n  : a_seq)
+    {
+        if(std::isprint(n))
+            outstr += std::format("x{:02x}|u{:d}'{}'", n,n, char(n) );
+        else
+            outstr += std::format("x{:02x}|u{:d}", n,n);
+        if(c++ < (a_seq.size()-1)) outstr += ',';
+    }
 
-std::vector<std::string_view> string::string_view_list(int Count, char** s, int offset)
+    return outstr;
+}
+
+
+std::vector<std::string_view> string::make_view_list(int Count, char** s, int offset)
 {
     std::vector<std::string_view> result;
     if (offset == Count) return {};

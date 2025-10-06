@@ -25,11 +25,9 @@ set(HEADERS
     #    include/${PROJECT_NAME}/ui/data/field.h
     #    include/${PROJECT_NAME}/ui/data/table.h
     include/${PROJECT_NAME}/sys/sys.h
-    #    include/${PROJECT_NAME}/ui/sys/sys.inc
-    #    include/${PROJECT_NAME}/ui/object.h
+
     include/${PROJECT_NAME}/sys/rem.h
-    include/${PROJECT_NAME}/utxt.h
-    include/${PROJECT_NAME}/string.h
+    include/${PROJECT_NAME}/sys/string.h
     include/${PROJECT_NAME}/ui/vchar.h
     include/${PROJECT_NAME}/io/polling.h
     #    include/${PROJECT_NAME}/ui/io/listener.h
@@ -40,6 +38,7 @@ set(HEADERS
     include/${PROJECT_NAME}/ui/dom/element.h
     include/${PROJECT_NAME}/ui/dom/object.h
     include/${PROJECT_NAME}/sys/application.h
+    include/${PROJECT_NAME}/sys/strscan.h
     include/${PROJECT_NAME}/lexer/lang.h
     include/${PROJECT_NAME}/lexer/token_info.h
 
@@ -61,8 +60,7 @@ add_library(${PROJECT_NAME}
             c++/ui/glyphes.cc
             c++/ui/dom/object.cc
             c++/ui/dom/element.cc
-            c++/utxt.cc
-            c++/string.cc
+            c++/sys/string.cc
             c++/ui/vchar.cc
             c++/ui/vchar.pad.cc
             c++/io/polling.cc
@@ -73,8 +71,11 @@ add_library(${PROJECT_NAME}
             c++/io/console.cc
             c++/lexer/token_info.cc
             c++/lexer/lang.cc
-
+            c++/sys/strscan.cc
 )
+
+
+
 target_include_directories(${PROJECT_NAME} PUBLIC
                            $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
                            $<INSTALL_INTERFACE:include/${PROJECT_NAME}>

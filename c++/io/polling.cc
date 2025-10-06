@@ -106,7 +106,7 @@ do_poll:
         //    return callback(*this);
         //else
         //{
-            sys::write() << "bytes: [" << color::r << utxt::bytes(buffer) << "]" << log;
+            sys::write() << "bytes: [" << color::r << cat::string::bytes(buffer) << "]" << log;
             return rem::code::accepted;
         //}
     }

@@ -252,7 +252,7 @@ kstroke kstroke::query(std::string_view s)
 
     auto log = sys::debug();
     log << color::yellow << fd.buffer.size() <<  color::r << " bytes waiting." << log;
-    auto str = utxt::bytes(fd.buffer);
+    auto str = cat::string::bytes(fd.buffer);
     log << color::lime << str << color::z << log;
     auto byte = fd.buffer.begin();
     u64 code = *byte;

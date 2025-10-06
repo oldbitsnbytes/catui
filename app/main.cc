@@ -12,7 +12,7 @@ auto main(int argc, char** argv, char** env) -> int
 {
     if (argc>1)
     {
-        cat::application app{"catui_test", cat::utxt::make_view_list(argc,argv,1)};
+        cat::application app{"catui_test", cat::string::make_view_list(argc,argv,1)};
         return static_cast<int>(app.run());
     }
 

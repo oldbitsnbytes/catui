@@ -14,7 +14,7 @@
 
 
 #include <catui/sys/cmdargs.h>
-#include <catui/utxt.h>
+#include <catui/sys/string.h>
 
 namespace cat::cmd
 {
@@ -169,9 +169,9 @@ cmd_switch &line::operator[](const std::string &ArgName)
 
 std::string line::usage()
 {
-    utxt Str;
+    cat::string Str;
     Str << "usage:\n";
-    utxt Unused, Used, Used0;
+    cat::string Unused, Used, Used0;
 
     Unused << color::red1 << glyph::unauth;
     Used   << color::lightgreen2 << glyph::ok;

@@ -2,7 +2,7 @@
 #include <catui/ui/vchar.h>
 #include <iostream>
 
-#include <catui/utxt.h>
+#include <catui/sys/string.h>
 
 namespace cat::ui
 {
@@ -213,8 +213,8 @@ std::string vchar::render_line(vchar::iterator _it, std::size_t count)
 std::string vchar::details() const
 {
 
-    utxt infos;
-    utxt utf_info{};
+    cat::string infos;
+    cat::string utf_info{};
     if(D & UTFBITS)
     {
         switch(D & UTFBITS)

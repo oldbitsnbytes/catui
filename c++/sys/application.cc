@@ -31,7 +31,7 @@ application::application()
 }
 
 
-application::application(const std::string&app_name, utxt::list_view&&arguments)
+application::application(const std::string&app_name, cat::string::view_list&& arguments)
 {
 
 }

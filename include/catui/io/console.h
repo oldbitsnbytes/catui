@@ -184,7 +184,7 @@ public:
     static io::console::mk_event wait();
     template<typename T> conio& operator << (T&& val)
     {
-        cat::utxt s;
+        cat::string s;
         s << std::forward<T>(val);
         std::cout << s();
         return *this;

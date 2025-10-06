@@ -23,7 +23,7 @@
 
 
 #pragma once
-#include <catui/utxt.h>
+#include <catui/sys/string.h>
 #include <source_location>
 
 using namespace cat::integers;
@@ -65,8 +65,8 @@ public:
         rem::code code{};
         std::source_location location{};
         // ---------------------------------
-        cat::utxt  text{};
-        cat::utxt  header{};
+        cat::string  text{};
+        cat::string  header{};
 
         header_component header_data{1,1,1,1,1,1,0,0,0};
         out() = default;
@@ -93,7 +93,7 @@ public:
         out& operator << (rem::type ty);
         out& operator << (rem::fn f);
         out& operator << (glyph::value f);
-        out& operator << (cat::utxt ut);
+        out& operator << (cat::string str);
         out& operator << (cat::ui::cpoint xy);
         out& operator << (sys::fn f);
         // Out& operator << (whinfo z);
