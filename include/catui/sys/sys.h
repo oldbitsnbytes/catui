@@ -94,11 +94,10 @@ public:
         out& operator << (rem::fn f);
         out& operator << (glyph::value f);
         out& operator << (cat::string str);
-        out& operator << (cat::ui::cpoint xy);
+        out& operator << (cat::ui::cxy xy);
         out& operator << (sys::fn f);
-        // Out& operator << (whinfo z);
         out& operator << (cat::ui::crect rect);
-        //out& operator << (string2d s2d);
+
 
         template<typename T> out& operator << (const T& v)
         {

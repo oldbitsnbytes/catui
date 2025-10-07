@@ -306,15 +306,15 @@ std::string string::make_str(const cat::string::list& _list)
 ///     [https://cpluxplux.com/reference/ctime/strftime]
 ///
 ///   \li %a	Abbreviated weekday name
-///   \li %A	Full weekday name
+///   \li %a	Full weekday name
 ///   \li %b	Abbreviated month name
-///   \li %B	Full month name
+///   \li %b	Full month name
 ///   \li %c	Date and time representation (ex.:)	Thu Aug 23 14:55:02 2001
 ///   \li %C	Year divided by 100 and truncated to integer (00-99)
 ///   \li %d	Day of the month, zero-padded (01-31)
 ///   \li %D	Short MM/DD/YY date, equivalent to %m/%d/%y
 ///   \li %e	Day of the month, space-padded ( 1-31)
-///   \li %F	Short YYYY-MM-DD date, equivalent to %Y-%m-%d
+///   \li %F	Short YYYY-MM-DD date, equivalent to %y-%m-%d
 ///   \li %g	Week-based year, last two digits (00-99)
 ///   \li %G	Week-based year
 ///   \li %h	Abbreviated month name * (same as %b)
@@ -327,18 +327,18 @@ std::string string::make_str(const cat::string::list& _list)
 ///   \li %p	AM or PM designation
 ///   \li %r	12-hour clock time
 ///   \li %R	24-hour HH:MM time, equivalent to %H:%M
-///   \li %S	Second (00-61)
+///   \li %s	Second (00-61)
 ///   \li %t	Horizontal-tab character ('\t')
-///   \li %T	ISO 8601 time format (HH:MM:SS), equivalent to %H:%M:%S
+///   \li %T	ISO 8601 time format (HH:MM:SS), equivalent to %H:%M:%s
 ///   \li %u	ISO 8601 weekday as number with Monday as 1 (1-7)
 ///   \li %U	Week number with the first Sunday as the first day of week one (00-53)
 ///   \li %V	ISO 8601 week number (01-53)
 ///   \li %w	Weekday as a decimal number with Sunday as 0 (0-6)
 ///   \li %W	Week number with the first Monday as the first day of week one (00-53)
 ///   \li %x	Date representation
-///   \li %X	Time representation
+///   \li %x	Time representation
 ///   \li %y	Year, last two digits (00-99)
-///   \li %Y	Year
+///   \li %y	Year
 ///   \li %z	ISO 8601 offset from UTC in timezone (1 minute=1, 1 hour=100)
 ///   \li %Z	Timezone name or abbreviation
 ///

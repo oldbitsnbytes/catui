@@ -37,42 +37,42 @@ static constexpr Value Down        = 0x0008; ///< Justify Align vertically at th
 
 
 
-struct cpoint
+struct cxy
 {
-    int X;
-    int Y;
+    int x;
+    int y;
 
-    cpoint(int X, int Y) : X(X), Y(Y){}
-    cpoint() : X(0), Y(0){}
-    cpoint(const cpoint& P) : X(P.X), Y(P.Y){}
-    cpoint(cpoint&& P) noexcept: X(P.X), Y(P.Y){}
-    ~cpoint() = default;
-    cpoint& operator=(const cpoint& P) = default;
-    cpoint& operator=(cpoint&& P) noexcept{ X = P.X; Y = P.Y; return *this; }
-    cpoint operator+(const cpoint& P) const { return {X+P.X, Y+P.Y}; }
-    cpoint operator-(const cpoint& P) const { return {X-P.X, Y-P.Y}; }
-    cpoint operator*(const cpoint& P) const { return {X*P.X, Y*P.Y}; }
-    cpoint operator/(const cpoint& P) const { return {X/P.X, Y/P.Y}; }
-    cpoint operator+(int P) const { return {X+P, Y+P}; }
-    cpoint operator-(int P) const { return {X-P, Y-P}; }
+    cxy(int X, int Y) : x(X), y(Y){}
+    cxy() : x(0), y(0){}
+    cxy(const cxy& P) : x(P.x), y(P.y){}
+    cxy(cxy&& P) noexcept: x(P.x), y(P.y){}
+    ~cxy() = default;
+    cxy& operator=(const cxy& P) = default;
+    cxy& operator=(cxy&& P) noexcept{ x = P.x; y = P.y; return *this; }
+    cxy operator+(const cxy& P) const { return {x+P.x, y+P.y}; }
+    cxy operator-(const cxy& P) const { return {x-P.x, y-P.y}; }
+    cxy operator*(const cxy& P) const { return {x*P.x, y*P.y}; }
+    cxy operator/(const cxy& P) const { return {x/P.x, y/P.y}; }
+    cxy operator+(int P) const { return {x+P, y+P}; }
+    cxy operator-(int P) const { return {x-P, y-P}; }
 
-    bool        operator==(const cpoint& P) const { return X == P.X && Y == P.Y; }
-    bool        operator!=(const cpoint& P) const { return X != P.X || Y != P.Y; }
-    bool        operator<(const cpoint& P) const { return X < P.X || (X == P.X && Y < P.Y); }
-    bool        operator>(const cpoint& P) const { return X > P.X || (X == P.X && Y > P.Y); }
-    bool        operator<=(const cpoint& P) const { return X <= P.X || (X == P.X && Y <= P.Y); }
-    bool        operator>=(const cpoint& P) const { return X >= P.X || (X == P.X && Y >= P.Y); }
-    cpoint&     operator+=(const cpoint& P) { X += P.X; Y += P.Y; return *this; }
-    cpoint&     operator-=(const cpoint& P) { X -= P.X; Y -= P.Y; return *this; }
-    cpoint&     operator*=(const cpoint& P) { X *= P.X; Y *= P.Y; return *this; }
-    cpoint&     operator/=(const cpoint& P) { X /= P.X; Y /= P.Y; return *this; }
-    cpoint&     operator+=(int P) { X += P; Y += P; return *this; }
-    cpoint&     operator-=(int P) { X -= P; Y -= P; return *this; }
-    cpoint&     operator ++();
-    cpoint&     operator ++(int);
-    cpoint&     operator --();
-    cpoint&     operator --(int);
-    I64         Area() const { return static_cast<I64>(X)*static_cast<I64>(Y);}
+    bool        operator==(const cxy& P) const { return x == P.x && y == P.y; }
+    bool        operator!=(const cxy& P) const { return x != P.x || y != P.y; }
+    bool        operator<(const cxy& P) const { return x < P.x || (x == P.x && y < P.y); }
+    bool        operator>(const cxy& P) const { return x > P.x || (x == P.x && y > P.y); }
+    bool        operator<=(const cxy& P) const { return x <= P.x || (x == P.x && y <= P.y); }
+    bool        operator>=(const cxy& P) const { return x >= P.x || (x == P.x && y >= P.y); }
+    cxy&     operator+=(const cxy& P) { x += P.x; y += P.y; return *this; }
+    cxy&     operator-=(const cxy& P) { x -= P.x; y -= P.y; return *this; }
+    cxy&     operator*=(const cxy& P) { x *= P.x; y *= P.y; return *this; }
+    cxy&     operator/=(const cxy& P) { x /= P.x; y /= P.y; return *this; }
+    cxy&     operator+=(int P) { x += P; y += P; return *this; }
+    cxy&     operator-=(int P) { x -= P; y -= P; return *this; }
+    cxy&     operator ++();
+    cxy&     operator ++(int);
+    cxy&     operator --();
+    cxy&     operator --(int);
+    I64         Area() const { return static_cast<I64>(x)*static_cast<I64>(y);}
     explicit    operator std::string() const;
     std::string operator()() const { return std::string(*this); }
 
@@ -80,22 +80,22 @@ struct cpoint
 
 struct crect
 {
-    cpoint A{},         ///< Topleft coords.
-    B{},                ///< BootomRight coords.
-    S{};                ///< Width, Height.
-    cpoint Cursor{};    ///< Internal Cursor - Modifiable by operator --(),++() -> Cursor.X; ++(int),--(int) -> Cursor.Y
-                        ///<  {0 <= Cursor.X <= S.X};  {0 <= Cursor.Y <= S.Y};
+    cxy a{},         ///< Topleft coords.
+    b{},                ///< BootomRight coords.
+    s{};                ///< Width, Height.
+    cxy cursor{};    ///< Internal cursor - Modifiable by operator --(),++() -> cursor.x; ++(int),--(int) -> cursor.y
+                        ///<  {0 <= cursor.x <= s.x};  {0 <= cursor.y <= s.y};
     Direction::Value  ScrollDirection = 0;
     bool NoWrap = false;
     crect() = default;
     crect(int X1, int X2, int Y1, int Y2);
-    crect(cpoint A, cpoint B);
-    crect(int X1, int Y1, cpoint Sz);
+    crect(cxy A, cxy B);
+    crect(int X1, int Y1, cxy Sz);
     crect(const crect& R);
     crect(crect&& R) noexcept;
     ~crect() = default;
 
-    ////////////// ----- Cursor movements :
+    ////////////// ----- cursor movements :
     bool operator++();
     bool operator++(int);
     bool operator--();
@@ -103,47 +103,51 @@ struct crect
     // -------------------------------------
 
     // ------ Displacement operators : -------------
-    crect& operator+=(cpoint P);
-    crect& operator-=(cpoint P);
-    crect& operator*=(cpoint P);
+    crect& operator+=(cxy P);
+    crect& operator-=(cxy P);
+    crect& operator*=(cxy P);
     crect& operator/=(const crect& Rhs);
     // --------------------------------------------
 
-    crect operator - (cpoint P) const;
-    crect operator + (cpoint P) const;
+    crect operator - (cxy P) const;
+    crect operator + (cxy P) const;
     // ---- Intersect operators -------
     crect operator/(const crect& Rhs) const;
     crect operator&(const crect& Rhs) const;
-    crect operator << (crect Rhs);
-    crect operator >> (crect Rhs);
+    crect operator << (const crect&Rhs) const;
+    crect operator >> (const crect&Rhs) const;
+    crect operator | (const crect&rhs) const;
+    crect& operator |= (const crect&rhs);
     // ----------------------------------
 
     // -- Copy and move assignment operatora:
     crect& operator=(const crect& R);
     crect& operator=(crect&& R) noexcept;
+    void assign(int X1, int X2, int Y1, int Y2);
+    void assign(int X1, int X2, cxy dxy);
     //----------------------------------------
 
     explicit operator std::string() const;
     std::string operator()() const { return std::string(*this); }
-    [[nodiscard]] int Width() const { return S.X;}
-    [[nodiscard]] int Height() const { return S.Y;}
+    [[nodiscard]] int Width() const { return s.x;}
+    [[nodiscard]] int Height() const { return s.y;}
 
     void Assign(int X1, int X2, int Y1, int Y2);
-    void Resize(cpoint Sz);
+    void Resize(cxy Sz);
     void Resize(int Dx, int Dy);
 
-    crect Local() const { return (*this)-A; }
+    crect Local() const { return (*this)-a; }
 
-    bool operator[](cpoint P) const;
+    bool operator[](cxy P) const;
     bool operator[](int Ix) const;
-    bool SetCursorPos(cpoint P);
+    bool SetCursorPos(cxy P);
     bool SetCursorPos(int Ix, int Iy);
     bool SetCursorOffset(int Ix);
-    cpoint top_left() const;
-    cpoint top_right() const;
-    cpoint bottom_left() const;
-    cpoint bottom_right() const;
-    operator bool() const { return S.X > 0 && S.Y > 0;}
+    cxy top_left() const;
+    cxy top_right() const;
+    cxy bottom_left() const;
+    cxy bottom_right() const;
+    operator bool() const { return s.x > 0 && s.y > 0;}
 
 };
 

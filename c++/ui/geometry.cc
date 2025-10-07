@@ -11,34 +11,34 @@ namespace cat::ui
 
 #pragma region _cpoint
 
-cpoint::operator std::string() const { return std::format("{},{}",X,Y); }
+cxy::operator std::string() const { return std::format("{},{}",x,y); }
 
 
 
-cpoint& cpoint::operator++()
+cxy& cxy::operator++()
 {
-    ++X;
+    ++x;
     return *this;
 }
 
 
-cpoint& cpoint::operator++(int)
+cxy& cxy::operator++(int)
 {
-    ++Y;
+    ++y;
     return *this;
 }
 
 
-cpoint& cpoint::operator--()
+cxy& cxy::operator--()
 {
-    --X;
+    --x;
     return *this;
 }
 
 
-cpoint& cpoint::operator--(int)
+cxy& cxy::operator--(int)
 {
-    --Y;
+    --y;
     return *this;
 }
 
@@ -47,102 +47,102 @@ cpoint& cpoint::operator--(int)
 
 
 
-crect::crect(int X1, int X2, int Y1, int Y2):A{X1,Y1},B{X2,Y2}
+crect::crect(int X1, int X2, int Y1, int Y2):a{X1,Y1},b{X2,Y2}
 {
-    //@note For now, do not init B with {0,0} ...
-    S.X = B.X - A.X - A.X==0?1:0;
-    S.Y = B.Y - A.Y - A.Y==0?1:0;
-    Cursor = {0,0};
+    //@note For now, do not init b with {0,0} ...
+    s.x = b.x - a.x - a.x==0?1:0;
+    s.y = b.y - a.y - a.y==0?1:0;
+    cursor = {0,0};
 }
 
 
-crect::crect(cpoint Ap, cpoint Bp)
+crect::crect(cxy Ap, cxy Bp)
 {
-    A = Ap;
-    B = Bp;
-    //@note For now, do not init B with {0,0} ...
-    S.X = B.X - A.X - A.X==0?1:0;
-    S.Y = B.Y - A.Y - A.Y==0?1:0;
-    Cursor = {0,0};
+    a = Ap;
+    b = Bp;
+    //@note For now, do not init b with {0,0} ...
+    s.x = b.x - a.x - a.x==0?1:0;
+    s.y = b.y - a.y - a.y==0?1:0;
+    cursor = {0,0};
 }
 
 
-crect::crect(int X1, int Y1, cpoint Sz)
+crect::crect(int X1, int Y1, cxy Sz)
 {
-    A = {X1,Y1};
-    B = A + Sz;
-    S = Sz;
-    Cursor = {0,0};
+    a = {X1,Y1};
+    b = a + Sz;
+    s = Sz;
+    cursor = {0,0};
 }
 
 
-crect::crect(const crect&R): A(R.A), B(R.B), S(R.S), Cursor(R.Cursor){}
+crect::crect(const crect&R): a(R.a), b(R.b), s(R.s), cursor(R.cursor){}
 
 
 crect::crect(crect&&R) noexcept
 {
-    A = R.A;
-    B = R.B;
-    S = R.S;
-    Cursor = R.Cursor;
-    R.A = {0,0};
-    R.B = {0,0};
-    R.S = {0,0};
-    R.Cursor = {0,0};
+    a = R.a;
+    b = R.b;
+    s = R.s;
+    cursor = R.cursor;
+    R.a = {0,0};
+    R.b = {0,0};
+    R.s = {0,0};
+    R.cursor = {0,0};
 }
 
 
 void crect::Assign(int X1, int X2, int Y1, int Y2)
 {
-    //@note For now, do not init B with {0,0} ...
-    S.X = B.X - A.X - A.X==0?1:0;
-    S.Y = B.Y - A.Y - A.Y==0?1:0;
-    Cursor = {0,0};
+    //@note For now, do not init b with {0,0} ...
+    s.x = b.x - a.x - a.x==0?1:0;
+    s.y = b.y - a.y - a.y==0?1:0;
+    cursor = {0,0};
 }
 
 
-void crect::Resize(cpoint Sz)
+void crect::Resize(cxy Sz)
 {
-    S = Sz;
-    Cursor = {0,0};
-    B.X = A.X+B.X+Sz.X + A.X==0?-1:0;
-    B.Y = A.Y+B.Y+Sz.Y + A.Y==0?-1:0;
+    s = Sz;
+    cursor = {0,0};
+    b.x = a.x+b.x+Sz.x + a.x==0?-1:0;
+    b.y = a.y+b.y+Sz.y + a.y==0?-1:0;
 }
 
 
 void crect::Resize(int Dx, int Dy)
 {
-    S = {Dx,Dy};
-    Cursor = {0,0};
-    B.X = A.X+B.X+S.X + A.X==0?-1:0;
-    B.Y = A.Y+B.Y+S.Y + A.Y==0?-1:0;
+    s = {Dx,Dy};
+    cursor = {0,0};
+    b.x = a.x+b.x+s.x + a.x==0?-1:0;
+    b.y = a.y+b.y+s.y + a.y==0?-1:0;
 }
 
 
-bool crect::operator[](cpoint P) const
+bool crect::operator[](cxy P) const
 {
-    return P.X >= A.X && P.X < B.X && P.Y >= A.Y && P.Y < B.Y;
+    return P.x >= a.x && P.x < b.x && P.y >= a.y && P.y < b.y;
 }
 
 
 bool crect::operator[](int Ix) const
 {
-    return Ix >= 0 && Ix <= S.X * S.Y;
+    return Ix >= 0 && Ix <= s.x * s.y;
 }
 
 
-bool crect::SetCursorPos(cpoint P)
+bool crect::SetCursorPos(cxy P)
 {
-    if (! (*this)[P+A]) return false;
-    Cursor = P;
+    if (! (*this)[P+a]) return false;
+    cursor = P;
     return true;
 }
 
 
 bool crect::SetCursorPos(int Ix, int Iy)
 {
-    if (! (*this)[cpoint{Ix,Iy}+A]) return false;
-    Cursor = {Ix,Iy};
+    if (! (*this)[cxy{Ix,Iy}+a]) return false;
+    cursor = {Ix,Iy};
     return true;
 }
 
@@ -152,51 +152,51 @@ bool crect::SetCursorPos(int Ix, int Iy)
  */
 bool crect::SetCursorOffset(int Ix)
 {
-    auto [x,y] = cpoint{Ix%S.X, Ix/S.Y};
-    if (! (*this)[cpoint{x,y}+A]) return false;
-    Cursor = {x,y};
+    auto [x,y] = cxy{Ix%s.x, Ix/s.y};
+    if (! (*this)[cxy{x,y}+a]) return false;
+    cursor = {x,y};
     return true;
 }
 
 
-cpoint crect::top_left() const
+cxy crect::top_left() const
 {
-    return A;
+    return a;
 }
 
 
-cpoint crect::top_right() const
+cxy crect::top_right() const
 {
-    return {B.X,A.Y};
+    return {b.x,a.y};
 }
 
 
-cpoint crect::bottom_left() const
+cxy crect::bottom_left() const
 {
-    return {A.X,B.Y};
+    return {a.x,b.y};
 }
 
 
-cpoint crect::bottom_right() const
+cxy crect::bottom_right() const
 {
-    return B;
+    return b;
 }
 
 
 bool crect::operator++()
 {
     ScrollDirection = 0;
-    ++Cursor.X;
-    if (Cursor.X > S.X) {
+    ++cursor.x;
+    if (cursor.x > s.x) {
         if (NoWrap) {
             ScrollDirection= Direction::Right;
-            --Cursor.X;
+            --cursor.x;
             return false;
         }
-        Cursor.X = 0;
-        ++Cursor.Y;
-        if (Cursor.Y > S.Y) {
-            --Cursor.Y;
+        cursor.x = 0;
+        ++cursor.y;
+        if (cursor.y > s.y) {
+            --cursor.y;
             ScrollDirection = Direction::Down;
             ////sys::status() << " cursor wraps to home.";
             return false;
@@ -209,13 +209,13 @@ bool crect::operator++()
 bool crect::operator++(int)
 {
     ScrollDirection = 0;
-    ++Cursor.Y;
-    if (Cursor.Y > S.Y)
+    ++cursor.y;
+    if (cursor.y > s.y)
     {
         if (NoWrap)
         {
             ScrollDirection = Direction::Down;
-            --Cursor.Y;
+            --cursor.y;
             return false;
         }
     }
@@ -226,24 +226,24 @@ bool crect::operator++(int)
 bool crect::operator--()
 {
     ScrollDirection = 0;
-    --Cursor.X;
-    if (Cursor.X < 0)
+    --cursor.x;
+    if (cursor.x < 0)
     {
         if (NoWrap)
         {
             ScrollDirection = Direction::Left;
-            ++Cursor.X;
+            ++cursor.x;
             return false;
         }
     }
-    --Cursor.Y;
-    Cursor.X=S.X;
-    if (Cursor.Y < 0)
+    --cursor.y;
+    cursor.x=s.x;
+    if (cursor.y < 0)
     {
         if (NoWrap)
         {
             ScrollDirection = Direction::Up;
-            ++Cursor.Y;
+            ++cursor.y;
         }
     }
     return true;
@@ -252,13 +252,13 @@ bool crect::operator--()
 
 bool crect::operator--(int)
 {
-    --Cursor.Y;
-    if (Cursor.Y < 0)
+    --cursor.y;
+    if (cursor.y < 0)
     {
         if (NoWrap)
         {
             ScrollDirection = Direction::Up;
-            ++Cursor.Y;
+            ++cursor.y;
             return false;
         }
     }
@@ -266,28 +266,28 @@ bool crect::operator--(int)
 }
 
 
-crect& crect::operator+=(cpoint P)
+crect& crect::operator+=(cxy P)
 {
-    A += P;
-    B += P;
+    a += P;
+    b += P;
 
     return *this;
 }
 
 
-crect& crect::operator-=(cpoint P)
+crect& crect::operator-=(cxy P)
 {
-    A -= P;
-    B -= P;
+    a -= P;
+    b -= P;
 
     return *this;
 }
 
 
-crect& crect::operator*=(cpoint P)
+crect& crect::operator*=(cxy P)
 {
-    A *= P;
-    B *= P;
+    a *= P;
+    b *= P;
     return *this;
 }
 
@@ -296,29 +296,29 @@ crect& crect::operator/=(const crect&Rhs)
 {
     crect R = *this;
     *this = R / Rhs;
-    *this -= Rhs.A;
+    *this -= Rhs.a;
     return *this;
 }
 
 
-crect crect::operator-(cpoint P) const
+crect crect::operator-(cxy P) const
 {
-    return {A.X-P.X,A.Y-P.Y,B.X-P.X,B.Y-P.Y};
+    return {a.x-P.x,a.y-P.y,b.x-P.x,b.y-P.y};
 }
 
 
-crect crect::operator+(cpoint P) const
+crect crect::operator+(cxy P) const
 {
-    return {A.X+P.X,A.Y+P.Y,B.X+P.X,B.Y+P.Y};
+    return {a.x+P.x,a.y+P.y,b.x+P.x,b.y+P.y};
 }
 
 
 crect& crect::operator=(const crect&R)
 {
-    A = R.A;
-    B = R.B;
-    S = R.S;
-    Cursor = R.Cursor;
+    a = R.a;
+    b = R.b;
+    s = R.s;
+    cursor = R.cursor;
 
     return *this;
 }
@@ -326,15 +326,33 @@ crect& crect::operator=(const crect&R)
 
 crect& crect::operator=(crect&&R) noexcept
 {
-    A = R.A;
-    B = R.B;
-    S = R.S;
-    Cursor = R.Cursor;
-    R.A = {0,0};
-    R.B = {0,0};
-    R.S = {0,0};
-    R.Cursor = {0,0};
+    a = R.a;
+    b = R.b;
+    s = R.s;
+    cursor = R.cursor;
+    R.a = {0,0};
+    R.b = {0,0};
+    R.s = {0,0};
+    R.cursor = {0,0};
     return *this;
+}
+
+
+void crect::assign(int X1, int X2, int Y1, int Y2)
+{
+    a =  {X1,Y1};
+    b =  {X2,Y2};
+    s.x = b.x - a.x - a.x==0?1:0;
+    s.y = b.y - a.y - a.y==0?1:0;
+    cursor = {0,0};
+}
+
+
+void crect::assign(int X1, int Y1, cxy dxy)
+{
+    a =  {X1,Y1};
+    b = {X1+dxy.x-(X1==0?1:0),Y1+dxy.y-(Y1==0?1:0)};
+    s= dxy;
 }
 
 
@@ -358,20 +376,20 @@ crect& crect::operator=(crect&&R) noexcept
     @note to get target's inner coords after intersection, subtract from intersection the r.a of the target rectangle.
     ex: r1 & r2 := inter; inter <- r1 := inter.a - r1.a;
 */
-crect crect::operator&(const crect&Rhs) const
+crect crect::operator&(const crect& Rhs) const
 {
     crect R;
     R.Assign(
-        Rhs.A.X > A.X ? Rhs.A.X : A.X,
-        Rhs.A.Y > A.Y ? Rhs.A.Y : A.Y,
-        Rhs.B.X > B.X ? B.X : Rhs.B.X,
-        Rhs.B.Y > B.Y ? B.Y : Rhs.B.Y
+        Rhs.a.x > a.x ? Rhs.a.x : a.x,
+        Rhs.a.y > a.y ? Rhs.a.y : a.y,
+        Rhs.b.x > b.x ? b.x : Rhs.b.x,
+        Rhs.b.y > b.y ? b.y : Rhs.b.y
     );
     return R;
 }
 
 
-crect crect::operator<<(crect Rhs)
+crect crect::operator<<(const crect& Rhs) const
 {
     crect R = (*this) & Rhs;
     //...
@@ -380,12 +398,28 @@ crect crect::operator<<(crect Rhs)
 }
 
 
-crect crect::operator>>(crect Rhs)
+crect crect::operator>>(const crect& rhs) const
 {
-    crect R = (*this) & Rhs;
+    crect R = (*this) & rhs;
     //...
     //auto Log = //Sys::Warning(1); Log << "Not implemented yet";
     return R;
+}
+
+
+crect crect::operator|(const crect& rhs) const
+{
+    return {a.x+rhs.a.x,b.x+rhs.b.x,{a.y+rhs.a.y,b.y+rhs.b.y}};
+}
+
+
+crect& crect::operator |=(const crect&rhs)
+{
+
+    if(!rhs) return *this;
+    *this = this->operator |(rhs);
+    return *this;
+    return *this;
 }
 
 
@@ -393,17 +427,17 @@ crect crect::operator/(const crect&Rhs) const
 {
     crect R;
     R.Assign(
-        Rhs.A.X < A.X ? Rhs.A.X : A.X,
-        Rhs.A.Y < A.Y ? Rhs.A.Y : A.Y,
-        Rhs.B.X < B.X ? B.X : Rhs.B.X,
-        Rhs.B.Y < B.Y ? B.Y : Rhs.B.Y
+        Rhs.a.x < a.x ? Rhs.a.x : a.x,
+        Rhs.a.y < a.y ? Rhs.a.y : a.y,
+        Rhs.b.x < b.x ? b.x : Rhs.b.x,
+        Rhs.b.y < b.y ? b.y : Rhs.b.y
     );
-    return R - A;
+    return R - a;
 }
 
 crect::operator std::string() const
 {
-    return std::format("({},{}) {},{} {}x{}",Cursor.X, Cursor.Y,A.X,A.Y,S.X,S.Y);
+    return std::format("({},{}) {},{} {}x{}",cursor.x, cursor.y,a.x,a.y,s.x,s.y);
 }
 
 

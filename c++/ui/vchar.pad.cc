@@ -13,7 +13,7 @@ namespace cat::ui
 
 
 
-vchar::iterator vchar::pad::set_position(cpoint _pos)
+vchar::iterator vchar::pad::set_position(cxy _pos)
 {
     if (!geometry.SetCursorPos(_pos))
     {
@@ -22,7 +22,7 @@ vchar::iterator vchar::pad::set_position(cpoint _pos)
     }
 
     state = rem::code::accepted;
-    return dc.begin() + geometry.Width()*_pos.Y + _pos.X;
+    return dc.begin() + geometry.Width()*_pos.y + _pos.x;
 }
 
 
@@ -256,7 +256,7 @@ vchar::pad::~pad()
 }
 
 
-vchar::pad::shared vchar::pad::create(cpoint _dim, color::pair _colours)
+vchar::pad::shared vchar::pad::create(cxy _dim, color::pair _colours)
 {
     auto p  = std::make_shared<vchar::pad>();
 
@@ -264,7 +264,7 @@ vchar::pad::shared vchar::pad::create(cpoint _dim, color::pair _colours)
     p->colors = _colours;
     p->geometry = {0,0,_dim};
     p->clear();
-    //auto l = sys::Info(1); l << " vchar::pad size:" << color::Yellow << p->geometry.S.Area() << l;
+    //auto l = sys::Info(1); l << " vchar::pad size:" << color::Yellow << p->geometry.s.Area() << l;
     return p;
 }
 
@@ -279,12 +279,12 @@ void vchar::pad::clear(const crect& subarea)
 {
     if (!subarea)
     {
-        std::fill_n(dc.begin(),geometry.S.Area(), vchar(color::pair(colors)));
+        std::fill_n(dc.begin(),geometry.s.Area(), vchar(color::pair(colors)));
         return;
     }
 
-    for (int y=0;y<subarea.S.Y; ++y)
-        std::fill_n(dc.begin()+subarea.A.X + (subarea.A.Y + y) * geometry.S.X, subarea.S.X, vchar(color::pair(colors)));
+    for (int y=0;y<subarea.s.y; ++y)
+        std::fill_n(dc.begin()+subarea.a.x + (subarea.a.y + y) * geometry.s.x, subarea.s.x, vchar(color::pair(colors)));
 
 }
 
@@ -302,9 +302,9 @@ void vchar::pad::clear(const crect& subarea)
  */
 rem::code vchar::pad::copy(vchar::pad&pad_dc, crect inner_area)
 {
-    auto rw = inner_area+pad_dc.geometry.A;
-    for (int y = 0;y < rw.S.Y; y++)
-        std::copy_n(pad_dc[inner_area.A+cpoint{0,y}],rw.S.X, (*this)[rw.A+cpoint{0,y}]);
+    auto rw = inner_area+pad_dc.geometry.a;
+    for (int y = 0;y < rw.s.y; y++)
+        std::copy_n(pad_dc[inner_area.a+cxy{0,y}],rw.s.x, (*this)[rw.a+cxy{0,y}]);
 
     return rem::code::accepted;
 }
@@ -314,9 +314,9 @@ rem::code vchar::pad::copy(vchar::pad&pad_dc, crect inner_area)
 /// \brief vchar::pad::home
 ///     Resets iterator and internal cursor at {0,0};
 ///
-vchar::iterator vchar::pad::home(const cpoint& offset)
+vchar::iterator vchar::pad::home(const cxy& offset)
 {
-    geometry.SetCursorPos(offset + cpoint{0,0});
+    geometry.SetCursorPos(offset + cxy{0,0});
     cursor = dc.begin();
     return cursor;
 }
@@ -399,9 +399,9 @@ crect vchar::pad::operator /(const crect& rhs) const { return geometry / rhs; }
 /**
  *
  */
-vchar::iterator vchar::pad::operator[](cpoint P)
+vchar::iterator vchar::pad::operator[](cxy P)
 {
-    return dc.begin() + (P.Y * geometry.S.X) + P.X;
+    return dc.begin() + (P.y * geometry.s.x) + P.x;
 }
 
 

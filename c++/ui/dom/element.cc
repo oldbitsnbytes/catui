@@ -49,6 +49,9 @@ rem::code element::draw()
         sys::error() << "Attempt to draw an element that have no dc." << sys::eol;
         return rem::code::rejected;
     }
+
+    _dc->clear();
+
     //...
 
     return rem::code::accepted;
@@ -57,14 +60,19 @@ rem::code element::draw()
 
 rem::code element::update(crect r)
 {
-    return rem::code::notimplemented;
+    if (!r) r = _rect;
+    if (auto p = dom_parent<element>(); p)
+        return p->update(r);
+    _dirty_area = r | _dirty_area;
+
+    return rem::code::done;
 }
 
 
 rem::code element::set_geometry(const crect&a_geometry)
 {
     _rect = a_geometry;
-    _alloc_dc(_rect.S);
+    _alloc_dc(_rect.s);
 
     if (!dom_parent<element>())
         _dc->geometry = _rect;
@@ -157,12 +165,12 @@ rem::code element::setup_ui(const std::string&_theme_name)
  * @param wxh The dimensions for the drawing context, represented as a cpoint.
  * @return A rem::code value indicating whether the operation was accepted.
  */
-rem::code element::_alloc_dc(cpoint wxh)
+rem::code element::_alloc_dc(cxy wxh)
 {
     if (const auto* pr = dom_parent<element>(); pr)
         _dc = pr->_dc;
     else
-        _dc = vchar::pad::create(std::move(wxh),{});
+        _dc = vchar::pad::create(std::move(wxh),_theme_colors);
     //
 
     return rem::code::accepted;

@@ -341,7 +341,7 @@ namespace operand
 {
 using Index = uint8_t;
 constexpr Index Scope      = 0;
-constexpr Index Assign_rhs = 1; //  A = B = ER!
+constexpr Index Assign_rhs = 1; //  a = b = ER!
 constexpr Index Deref      = 2;
 constexpr Index Prefix     = 3;
 constexpr Index Postfix    = 3;

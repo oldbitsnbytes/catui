@@ -208,7 +208,7 @@ public:
             seq = tableau[nbytes - x];
             if ((x == 1 && !padd && !seq) || (stream.empty() && !padd && !seq))
                 continue;
-            for (int y = 7; y >= 0; y--) { // est-ce que le bit #Y est à 1 ?
+            for (int y = 7; y >= 0; y--) { // est-ce que le bit #y est à 1 ?
                 if (s >= f) {
                     stream += ' ';
                     s = 0;

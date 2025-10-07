@@ -75,12 +75,12 @@ struct vchar
 
         // --- Ui STUFF ------------------------------
 
-        [[nodiscard]] int       width() const {return geometry.S.X;}
-        [[nodiscard]] int       height() const {return geometry.S.Y;}
-        static shared           create(cpoint Dxy, color::pair aColors);
+        [[nodiscard]] int       width() const {return geometry.s.x;}
+        [[nodiscard]] int       height() const {return geometry.s.y;}
+        static shared           create(cxy Dxy, color::pair aColors);
         void                    clear(const crect& subarea={});
         rem::code               copy(vchar::pad& PadDc, crect InnerArea);
-        vchar::iterator          home(const cpoint&offset={});
+        vchar::iterator          home(const cxy&offset={});
         void                    set_foreground_color(color::value aFg);
         void                    set_background_color(color::value aBg);
         void                    set_colors(color::pair Cp);
@@ -88,14 +88,14 @@ struct vchar
         [[nodiscard]] color::value            bg() const;
         crect                   operator&(const crect &rhs) const;
         crect                   operator/(const crect &rhs) const;
-        vchar::iterator          operator[](cpoint P);
+        vchar::iterator          operator[](cxy P);
         vchar::pad&              operator*();
 
         bool         operator ++();    ///< ++geometry (++geometry.cursor.x)
         bool         operator ++(int); ///< geometry++ (++geometry.cursor.y)
         bool         operator --();    ///< --geometry (--geometry.cursor.x)
         bool         operator --(int); ///< geometry-- (++geometry.cursor.x)
-        vchar::iterator set_position(cpoint P);
+        vchar::iterator set_position(cxy P);
     };
 
 

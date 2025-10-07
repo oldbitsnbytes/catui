@@ -635,7 +635,7 @@ rem::code strscan::numeric_data::scan_base8()
     }
 
     loop8:
-    //Rem::Debug() << "loop8: A on '" << Color::Yellow << *A << Color::Reset << '\'';
+    //Rem::Debug() << "loop8: a on '" << Color::Yellow << *a << Color::Reset << '\'';
     while((a != end) && std::isdigit(*a) && (*a <= '7'))
     {
         buf << *a++;

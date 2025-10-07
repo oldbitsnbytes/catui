@@ -70,8 +70,8 @@ struct CATUI_LIB mouse
         u8 win   :1;
     }state{0,0,0};
 
-    ui::cpoint pos{};
-    ui::cpoint dxy{};
+    ui::cxy pos{};
+    ui::cxy dxy{};
 
     bool left   (){return button.left;}
     bool middle (){return button.mid;}
@@ -82,7 +82,7 @@ struct CATUI_LIB mouse
     static mouse smev;
     operator bool();
     std::string operator()() const;
-    static std::string direction_arrow(ui::cpoint xy);
+    static std::string direction_arrow(ui::cxy xy);
     bool pressed = false;
 private:
     static std::pair<rem::code, mouse>  parse(bool arel, std::vector<int> args_);

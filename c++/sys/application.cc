@@ -19,7 +19,7 @@
 #include <catui/io/console.h>
 
 
-using cat::ui::cpoint;
+using cat::ui::cxy;
 using cat::ui::crect;
 
 namespace cat
@@ -56,7 +56,10 @@ rem::code application::run()
     try
     {
         auto element = std::make_shared<ui::element>(nullptr,"First element",0);
-
+        element->set_theme("C128");
+        element->set_geometry(crect{1,1,20,5});
+        element->draw();
+        element->update();
 
         cat::con << rem::code::ready << conio::eol;
         bool fini = false;
@@ -65,15 +68,15 @@ rem::code application::run()
             auto cev = cat::conio::wait();
             if (cev.is<cat::io::kstroke>())
             {
-                cat::con << cpoint{1,3} <<  "keystroke (mnemonic name): " << cat::io::kstroke::name(cev.k.mnemonic) << conio::eol;
+                cat::con << cxy{1,3} <<  "keystroke (mnemonic name): " << cat::io::kstroke::name(cev.k.mnemonic) << conio::eol;
                 sys::debug() << "keystroke (mnemonic name): " << cat::io::kstroke::name(cev.k.mnemonic) << sys::eol;
                 if (cev.k.mnemonic == cat::io::kstroke::ESCAPE)
                     fini = true;
             }
             else
             {
-                cat::con << cpoint{1,3} << "mouse event: " << cev.m() << conio::eol;
-                cat::con << cev.m.pos << cat::ui::crect{cev.m.pos.X,cev.m.pos.Y,{20,5}};
+                cat::con << cxy{1,3} << "mouse event: " << cev.m() << conio::eol;
+                cat::con << cev.m.pos << cat::ui::crect{cev.m.pos.x,cev.m.pos.y,{20,5}};
                 sys::debug() << "mouse event: " << cev.m() << sys::eol;
             }
         }

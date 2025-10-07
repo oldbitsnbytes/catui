@@ -139,8 +139,8 @@ enum class code :cat::integers::U8
     exist            , ///< does already exist
     unexpected       , ///< unexpected
     expected         , ///< expected
-    blocked          , ///< thread trying To lock A mutex has failed because the mutex is already locked into another thread...
-    locked           , ///< thread trying To lock A mutex has become the owner of the lock.
+    blocked          , ///< thread trying To lock a mutex has failed because the mutex is already locked into another thread...
+    locked           , ///< thread trying To lock a mutex has become the owner of the lock.
     overflow         , ///< buffer overflow
     oob              , ///< buffer overflow
     reimplement      ,

@@ -26,7 +26,7 @@
 //------------------------------------------------------------------------------------------
 using namespace cat::integers;
 using cat::glyph;
-using cat::ui::cpoint;
+using cat::ui::cxy;
 using cat::ui::crect;
 std::vector<std::string> sys::_ram{};
 
@@ -147,7 +147,7 @@ void sys::out::init_header()
     }
 
     // if(header_data.Stamp){
-    //     auto txt{cat::string::now("%H:%M:%S")};
+    //     auto txt{cat::string::now("%H:%M:%s")};
     //     auto [ic, a] = rem::function_attributes(rem::fn::stamp);
     //     cat::string acc;
     //     acc << a.fg << glyph::data[ic]  << txt;
@@ -327,7 +327,7 @@ sys::out& sys::out::operator << ( rem::type ty)
     return *this;
 }
 
-sys::out& sys::out::operator << (cpoint xy)
+sys::out& sys::out::operator << (cxy xy)
 {
     std::lock_guard<std::mutex> lock(LogMTX);
     //sys::_ram.push_back((std::string)xy);
@@ -399,7 +399,7 @@ sys::out& sys::out::operator << (rem::fn f)
             //auto txt{string::now("{:%h:%m:%s}", tp)};
             auto [ic, a] = rem::function_attributes(rem::fn::stamp);
 
-            str << a.fg << glyph::data[ic] << color::z << cat::string::now("%H:%M:%S");
+            str << a.fg << glyph::data[ic] << color::z << cat::string::now("%H:%M:%s");
             //sys::_ram.push_back(str());
             text << str();
             return *this;

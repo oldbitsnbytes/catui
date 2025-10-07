@@ -78,7 +78,7 @@ glyph::value direction_arrows[3][3]={
     {glyph::arrow_down_left, glyph::arrow_down,   glyph::arrow_down_right}
 };
 
-// cpoint indexes[3][3]={
+// cxy indexes[3][3]={
 //     {{-1,-1},{0,-1},{1,-1}},
 //     {{-1, 0},{0, 0},{1, 0}},
 //     {{-1, 1},{0, 1},{1, 1}}
@@ -210,8 +210,8 @@ std::pair<rem::code,mouse>  mouse::parse(bool brel, std::vector<int> args_)
     mev.state.win       = (args_[0] & 0x10) != 0;
     mev.pressed = !brel;
     // subtract 1 from the coords. because the terminal starts at 1,1 and our ui system starts 0,0
-    mev.pos.X = args_[1] - 1; //l << " x coord: " << color::yellow << mev.pos.x << color::r << "|" << args_[1] << l;
-    mev.pos.Y = args_[2] - 1; //l << " y coord: " << color::yellow << mev.pos.y << color::r << "|" << args_[2] << l;
+    mev.pos.x = args_[1] - 1; //l << " x coord: " << color::yellow << mev.pos.x << color::r << "|" << args_[1] << l;
+    mev.pos.y = args_[2] - 1; //l << " y coord: " << color::yellow << mev.pos.y << color::r << "|" << args_[2] << l;
     mev.dxy = mev.pos - prev_mev.pos;
     prev_mev.pos = mev.pos;
     mev = mev & prev_mev;
@@ -232,13 +232,13 @@ std::pair<rem::code,mouse>  mouse::parse(bool brel, std::vector<int> args_)
 /// \param dxy
 /// \return
 ///
-std::string mouse::direction_arrow(ui::cpoint dxy)
+std::string mouse::direction_arrow(ui::cxy dxy)
 {
     cat::string arrow{};
     bool m[3][3]={
-        {dxy.X < 0 && dxy.Y < 0,  dxy.X == 0 && dxy.Y < 0,  dxy.X > 0 && dxy.Y < 0},
-        {dxy.X < 0 && dxy.Y == 0, dxy.X == 0 && dxy.Y == 0, dxy.X > 0 && dxy.Y == 0},
-        {dxy.X < 0 && dxy.Y > 0,  dxy.X == 0 && dxy.Y > 0,  dxy.X > 0 && dxy.Y > 0}
+        {dxy.x < 0 && dxy.y < 0,  dxy.x == 0 && dxy.y < 0,  dxy.x > 0 && dxy.y < 0},
+        {dxy.x < 0 && dxy.y == 0, dxy.x == 0 && dxy.y == 0, dxy.x > 0 && dxy.y == 0},
+        {dxy.x < 0 && dxy.y > 0,  dxy.x == 0 && dxy.y > 0,  dxy.x > 0 && dxy.y > 0}
     };
     // there can be only one true value:
     for(int y = 0; y < 3; y++)
@@ -259,9 +259,9 @@ std::string mouse::operator()() const
     cat::string text{};
     cat::string dir{};
     text << "["
-         << color::orangered1 << std::format("{:>3d}", pos.X)
+         << color::orangered1 << std::format("{:>3d}", pos.x)
          << color::reset << ','
-         << color::orangered1 << std::format("{:<3d}", pos.Y)
+         << color::orangered1 << std::format("{:<3d}", pos.y)
          << color::reset << "]";
     if(button.left)
         text << color::lime << (pressed ? 'l' : 'l') << color::r;
@@ -278,11 +278,11 @@ std::string mouse::operator()() const
     else
         text << "r";
     text << '|'
-         << (dxy != ui::cpoint{0,0}          ? color::yellow : color::r) << direction_arrow(dxy)
+         << (dxy != ui::cxy{0,0}          ? color::yellow : color::r) << direction_arrow(dxy)
          << color::reset << "["
-         << color::orangered1 << std::format("{:>3d}",dxy.X)
+         << color::orangered1 << std::format("{:>3d}",dxy.x)
          << color::reset << ','
-         << color::orangered1 << std::format("{:<3d}",dxy.Y) << color::r << "]";
+         << color::orangered1 << std::format("{:<3d}",dxy.y) << color::r << "]";
 
     return text();
 }

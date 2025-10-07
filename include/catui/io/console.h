@@ -171,7 +171,7 @@ public:
     conio& operator << (color::pair  clr);
     conio& operator << (rem::code c);
     conio& operator << (rem::type ty);
-    conio& operator << (ui::cpoint xy);
+    conio& operator << (ui::cxy xy);
     conio& operator << (glyph::value f);
     conio& operator << (ui::vchar::pad& ui_bloc);
     conio& operator << (ui::crect rect);

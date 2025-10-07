@@ -202,7 +202,7 @@ protected:
     component::value    _component{component::none};
     e_type::value       _type{e_type::none};
 
-    rem::code           _alloc_dc(cpoint wxh);
+    rem::code           _alloc_dc(cxy wxh);
 
 
 };

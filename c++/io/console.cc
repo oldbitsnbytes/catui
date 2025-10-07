@@ -101,10 +101,10 @@ rem::code get_geometry()
     _geometry = {0,0, {win.ws_col, win.ws_row}};
 
     // debug or info:
-    sys::info() << " console geometry: [" // << color::yellow << std::string(std::format("{:>3d}x{:<3d}",_geometry.S.X,_geometry.S.Y)).c_str() << color::r << "]" << log;
-                                << color::yellow << _geometry.S.X
+    sys::info() << " console geometry: [" // << color::yellow << std::string(std::format("{:>3d}x{:<3d}",_geometry.s.x,_geometry.s.y)).c_str() << color::r << "]" << log;
+                                << color::yellow << _geometry.s.x
                                 << color::r << "x"
-                                << color::yellow << _geometry.S.Y << color::r << sys::eol;
+                                << color::yellow << _geometry.s.y << color::r << sys::eol;
 
     return rem::code::done;
 }
@@ -249,9 +249,9 @@ conio& conio::operator<<(rem::type ty)
 }
 
 
-conio& conio::operator<<(ui::cpoint xy)
+conio& conio::operator<<(ui::cxy xy)
 {
-    std::cout << std::format(io::console::set_caret_pos, xy.Y,xy.X);//"\x1b[" << xy.Y << ";" << xy.X << "H";
+    std::cout << std::format(io::console::set_caret_pos, xy.y,xy.x);//"\x1b[" << xy.y << ";" << xy.x << "H";
     std::cout.flush();
     return *this;
 }
@@ -267,9 +267,9 @@ conio& conio::operator<<(glyph::value f)
 conio& conio::operator<<(ui::vchar::pad& ui_bloc)
 {
 
-    for (int Y=0; Y<ui_bloc.geometry.S.Y; ++Y)
+    for (int Y=0; Y<ui_bloc.geometry.s.y; ++Y)
     {
-        con << ui_bloc.geometry.A + ui::cpoint{0,Y} << ui_bloc.colors << ui::vchar::render_line(ui_bloc[{0,Y}],ui_bloc.geometry.Width());
+        con << ui_bloc.geometry.a + ui::cxy{0,Y} << ui_bloc.colors << ui::vchar::render_line(ui_bloc[{0,Y}],ui_bloc.geometry.Width());
     }
 
     return *this;
@@ -278,24 +278,24 @@ conio& conio::operator<<(ui::vchar::pad& ui_bloc)
 
 conio& conio::operator<<(ui::crect rect)
 {
-    *this << rect.A << ui::border::TopLeft
-        << rect.B << ui::border::BottomRight
+    *this << rect.a << ui::border::TopLeft
+        << rect.b << ui::border::BottomRight
         << rect.bottom_left() << ui::border::BottomLeft
         << rect.top_right() << ui::border::TopRight;
 
-    *this << rect.A + ui::cpoint{1,0};
-    for (int x = 1; x < rect.S.X; ++x)
+    *this << rect.a + ui::cxy{1,0};
+    for (int x = 1; x < rect.s.x; ++x)
         *this << ui::border::Horizontal;
 
-    *this << rect.bottom_left() + ui::cpoint{1,0};
-    for (int x = 1; x < rect.S.X; ++x)
+    *this << rect.bottom_left() + ui::cxy{1,0};
+    for (int x = 1; x < rect.s.x; ++x)
         *this << ui::border::Horizontal;
 
-    for (int y =1; y < rect.S.Y; ++y)
+    for (int y =1; y < rect.s.y; ++y)
     {
-        *this << rect.top_left() + ui::cpoint{0,y};
+        *this << rect.top_left() + ui::cxy{0,y};
         *this << ui::border::Vertical;
-        *this << rect.top_right() + ui::cpoint{0,y};
+        *this << rect.top_right() + ui::cxy{0,y};
         *this << ui::border::Vertical;
     }
     return *this;

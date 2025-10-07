@@ -295,8 +295,8 @@ struct  glyph
 /*
 
     https://www.instructables.com/Programming--how-to-detect-and-read-UTF-8-charact/
-// utf8 points to A byte of A STMLText string
-// Uni  points to A variable which will store the Unicode
+// utf8 points to a byte of a STMLText string
+// Uni  points to a variable which will store the Unicode
 // the function returns how many byte have been read
 
 int UTF8_to_Unicode ( char * utf8, unsigned int * Uni )
@@ -341,10 +341,10 @@ int UTF8_to_Unicode ( char * utf8, unsigned int * Uni )
                 return 1;
             }
             // we&aposre going to read the following bytes
-        int A;
-        for ( A=1; A<Len; A++ )
+        int a;
+        for ( a=1; a<Len; a++ )
         {
-            if ( ( u[A] >=0 ) || ( (u[A]&0xC0) != 0x80 ) )
+            if ( ( u[a] >=0 ) || ( (u[a]&0xC0) != 0x80 ) )
             {
             // our UTF-8 Code is malformed ...
             // let&aposs return it as an extended-ASCII
@@ -353,7 +353,7 @@ int UTF8_to_Unicode ( char * utf8, unsigned int * Uni )
         }
         // so far, everything seems Ok.
         // we safely build our Unicode
-        *Uni = (*Uni<<6) | (u[A]&0x3F);
+        *Uni = (*Uni<<6) | (u[a]&0x3F);
     }
     // According to Unicode 5.0
     // codes in the range 0xD800 to 0xDFFF
@@ -377,15 +377,15 @@ int UTF8_to_Unicode ( char * utf8, unsigned int * Uni )
 
 Good explanation!
 
-I know this is old, but there are A couple of bugs in your sample Code.
+I know this is old, but there are a couple of bugs in your sample Code.
 
- *u[A] >= 0 always evaluates to true if u is unsigned. You need A cast to char.
-if ((char)*u[A] > 0) ... )
+ *u[a] >= 0 always evaluates to true if u is unsigned. You need a cast to char.
+if ((char)*u[a] > 0) ... )
 
  Checking the range U+D800 0 U+DFFF should use && not ||
 if ((*Uni >= 0xD800) && (*Uni <= 0xDFFF))
 
- There'Code A superfluous semicolon at the End of the while run'Code closing brace in UTF8_strlen
+ There'Code a superfluous semicolon at the End of the while run'Code closing brace in UTF8_strlen
 Also, Uni should be defined As unsigned int IsIn the same function (To match the other function'Code argument.
 
 It would be nice if you could reformat the Code so that line breaks appear correctly. I suppose it got mangled by the editor...
