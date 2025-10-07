@@ -82,15 +82,13 @@ rem::code application::run()
         }
         cat::con << "press " << color::blue << glyph::mouse << color::r << "| " << color::skyblue3 << glyph::esc << conio::eol;
         cat::con >> cat::io::console::ignore;
-        cat::io::console::end();
+        return end();
     }
     catch (std::exception& e)
     {
         std::cout << "Exception: " << e.what() << std::endl;
+        return end();
     }
-
-    end();
-    return rem::code::success;
 }
 
 
