@@ -19,11 +19,11 @@
 #pragma once
 
 
-#include <catui/ui/geometry.h>
+// #include <catui/ui/geometry.h>
 #include <catui/ui/border.h>
-//#include <RemSys/Sys.h>
+#include <catui/sys/rem.h>
 #include <catui/ui/glyphes.h>
-//#include <catui/utxt.h>
+#include <catui/ui/geometry.h>
 
 namespace cat::ui
 {
@@ -65,7 +65,7 @@ struct vchar
     {
         // --- CONFIGS AND INTERNAL DATA--------------
         color::pair     colors{};       ///< default and fallback colors.
-        crect           geometry{};     ///< geometry
+        rectangle           geometry{};     ///< geometry
         vchar::string   dc{};           ///< (Display Context/Cell) Using one-dimension array of vchar as a two-dimension pad bloc.
         rem::code       state{rem::code::empty};
         vchar::iterator  cursor{};      ///< iterator on the current character
@@ -75,19 +75,19 @@ struct vchar
 
         // --- Ui STUFF ------------------------------
 
-        [[nodiscard]] int       width() const {return geometry.s.x;}
-        [[nodiscard]] int       height() const {return geometry.s.y;}
-        static shared           create(cxy Dxy, color::pair aColors);
-        void                    clear(const crect& subarea={});
-        rem::code               copy(vchar::pad& PadDc, crect InnerArea);
+        [[nodiscard]] int       width() const {return geometry.size.w;}
+        [[nodiscard]] int       height() const {return geometry.size.h;}
+        static shared           create(csz sz, color::pair a_colors);
+        void                    clear(const rectangle& subarea={});
+        rem::code               copy(vchar::pad& PadDc, rectangle InnerArea);
         vchar::iterator          home(const cxy&offset={});
         void                    set_foreground_color(color::value aFg);
         void                    set_background_color(color::value aBg);
         void                    set_colors(color::pair Cp);
         [[nodiscard]] color::value            fg() const;
         [[nodiscard]] color::value            bg() const;
-        crect                   operator&(const crect &rhs) const;
-        crect                   operator/(const crect &rhs) const;
+        rectangle                   operator&(const rectangle &rhs) const;
+        rectangle                   operator/(const rectangle &rhs) const;
         vchar::iterator          operator[](cxy P);
         vchar::pad&              operator*();
 

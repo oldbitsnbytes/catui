@@ -20,7 +20,7 @@
 
 
 using cat::ui::cxy;
-using cat::ui::crect;
+using cat::ui::rectangle;
 
 namespace cat
 {
@@ -57,7 +57,7 @@ rem::code application::run()
     {
         auto element = std::make_shared<ui::element>(nullptr,"First element",0);
         element->set_theme("C128");
-        element->set_geometry(crect{1,1,20,5});
+        element->set_geometry(rectangle{1,1,20,5});
         element->draw();
         element->update();
 
@@ -76,7 +76,7 @@ rem::code application::run()
             else
             {
                 cat::con << cxy{1,3} << "mouse event: " << cev.m() << conio::eol;
-                cat::con << cev.m.pos << cat::ui::crect{cev.m.pos.x,cev.m.pos.y,{20,5}};
+                cat::con << cev.m.pos << cat::ui::rectangle{cev.m.pos,ui::csz{20,5}};
                 sys::debug() << "mouse event: " << cev.m() << sys::eol;
             }
         }

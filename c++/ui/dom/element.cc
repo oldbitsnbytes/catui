@@ -58,21 +58,26 @@ rem::code element::draw()
 }
 
 
-rem::code element::update(crect r)
+rem::code element::update(rectangle r)
 {
     if (!r) r = _rect;
     if (auto p = dom_parent<element>(); p)
         return p->update(r);
-    _dirty_area = r | _dirty_area;
+    if (!_dirty_area)
+        _dirty_area = r;
+    else
+        _dirty_area = r | _dirty_area;
 
+    sys::debug() << " element::update: dirty area :" << color::yellow << _dirty_area << color::r << sys::eol;
+    //...
     return rem::code::done;
 }
 
 
-rem::code element::set_geometry(const crect&a_geometry)
+rem::code element::set_geometry(const rectangle&a_geometry)
 {
     _rect = a_geometry;
-    _alloc_dc(_rect.s);
+    _alloc_dc(_rect.size);
 
     if (!dom_parent<element>())
         _dc->geometry = _rect;
@@ -165,7 +170,7 @@ rem::code element::setup_ui(const std::string&_theme_name)
  * @param wxh The dimensions for the drawing context, represented as a cpoint.
  * @return A rem::code value indicating whether the operation was accepted.
  */
-rem::code element::_alloc_dc(cxy wxh)
+rem::code element::_alloc_dc(csz wxh)
 {
     if (const auto* pr = dom_parent<element>(); pr)
         _dc = pr->_dc;

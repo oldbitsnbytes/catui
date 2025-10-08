@@ -27,7 +27,7 @@
 using namespace cat::integers;
 using cat::glyph;
 using cat::ui::cxy;
-using cat::ui::crect;
+using cat::ui::rectangle;
 std::vector<std::string> sys::_ram{};
 
 // #include <obnb/Util/Console/Console.h>
@@ -350,7 +350,7 @@ sys::out& sys::out::operator<<(sys::fn f)
 }
 
 
-sys::out& sys::out::operator << (crect r)
+sys::out& sys::out::operator << (rectangle r)
 {
     std::lock_guard<std::mutex> lock(LogMTX);
     //sys::_ram.push_back ((std::string)r);

@@ -96,7 +96,7 @@ public:
         out& operator << (cat::string str);
         out& operator << (cat::ui::cxy xy);
         out& operator << (sys::fn f);
-        out& operator << (cat::ui::crect rect);
+        out& operator << (cat::ui::rectangle rect);
 
 
         template<typename T> out& operator << (const T& v)

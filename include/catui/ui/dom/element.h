@@ -172,12 +172,12 @@ public:
 
     auto dc() -> vchar::pad::shared { return _dc; }
     virtual rem::code draw();
-    rem::code update(crect r={});
-    rem::code set_geometry(const crect& a_geometry);
+    rem::code update(rectangle r={});
+    rem::code set_geometry(const rectangle& a_geometry);
     rem::code set_theme(const std::string& a_theme_name);
-    [[nodiscard]] crect geometry() const { return _rect; }
-    [[nodiscard]] int   width() const { return _rect.Width(); }
-    [[nodiscard]] int   height() const { return _rect.Height(); }
+    [[nodiscard]] rectangle geometry() const { return _rect; }
+    [[nodiscard]] int   width() const { return _rect.width(); }
+    [[nodiscard]] int   height() const { return _rect.height(); }
     void      set_padding(padding a_padding);
     void      set_margin(margin a_margin);
     void      set_anchor(anchor::value a_anchor);
@@ -190,8 +190,8 @@ public:
 protected:
     virtual rem::code   setup_ui(const std::string& _theme_name);
     vchar::pad::shared  _dc{nullptr};
-    crect               _rect{};
-    crect               _dirty_area{};
+    rectangle               _rect{};
+    rectangle               _dirty_area{};
     color::db::item     _palette{};
     color::pair         _theme_colors{};
     std::string         _theme_id{"default"};
@@ -202,7 +202,7 @@ protected:
     component::value    _component{component::none};
     e_type::value       _type{e_type::none};
 
-    rem::code           _alloc_dc(cxy wxh);
+    rem::code           _alloc_dc(csz wxh);
 
 
 };

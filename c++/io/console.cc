@@ -27,7 +27,7 @@ namespace cat::io::console
 {
 
 termios _saved, _this;
-ui::crect       _geometry{};
+ui::rectangle       _geometry{};
 color::pair     _colors{};
 
 u8                  _flags{0};
@@ -98,13 +98,13 @@ rem::code get_geometry()
     if((!win.ws_col)||(!win.ws_row))
         return rem::code::rejected;
 
-    _geometry = {0,0, {win.ws_col, win.ws_row}};
+    _geometry = {{0,0}, ui::csz{win.ws_col, win.ws_row}};
 
     // debug or info:
-    sys::info() << " console geometry: [" // << color::yellow << std::string(std::format("{:>3d}x{:<3d}",_geometry.s.x,_geometry.s.y)).c_str() << color::r << "]" << log;
-                                << color::yellow << _geometry.s.x
+    sys::info() << " console geometry: [" // << color::yellow << std::string(std::format("{:>3d}x{:<3d}",_geometry.size.h,_geometry.size.y)).c_str() << color::r << "]" << log;
+                                << color::yellow << _geometry.size.h
                                 << color::r << "x"
-                                << color::yellow << _geometry.s.y << color::r << sys::eol;
+                                << color::yellow << _geometry.size.h << color::r << sys::eol;
 
     return rem::code::done;
 }
@@ -267,16 +267,16 @@ conio& conio::operator<<(glyph::value f)
 conio& conio::operator<<(ui::vchar::pad& ui_bloc)
 {
 
-    for (int Y=0; Y<ui_bloc.geometry.s.y; ++Y)
+    for (int Y=0; Y<ui_bloc.geometry.size.h; ++Y)
     {
-        con << ui_bloc.geometry.a + ui::cxy{0,Y} << ui_bloc.colors << ui::vchar::render_line(ui_bloc[{0,Y}],ui_bloc.geometry.Width());
+        con << ui_bloc.geometry.a + ui::cxy{0,Y} << ui_bloc.colors << ui::vchar::render_line(ui_bloc[{0,Y}],ui_bloc.geometry.size.w);
     }
 
     return *this;
 }
 
 
-conio& conio::operator<<(ui::crect rect)
+conio& conio::operator<<(ui::rectangle rect)
 {
     *this << rect.a << ui::border::TopLeft
         << rect.b << ui::border::BottomRight
@@ -284,14 +284,14 @@ conio& conio::operator<<(ui::crect rect)
         << rect.top_right() << ui::border::TopRight;
 
     *this << rect.a + ui::cxy{1,0};
-    for (int x = 1; x < rect.s.x; ++x)
+    for (int x = 1; x < rect.size.h; ++x)
         *this << ui::border::Horizontal;
 
     *this << rect.bottom_left() + ui::cxy{1,0};
-    for (int x = 1; x < rect.s.x; ++x)
+    for (int x = 1; x < rect.size.h; ++x)
         *this << ui::border::Horizontal;
 
-    for (int y =1; y < rect.s.y; ++y)
+    for (int y =1; y < rect.size.h; ++y)
     {
         *this << rect.top_left() + ui::cxy{0,y};
         *this << ui::border::Vertical;

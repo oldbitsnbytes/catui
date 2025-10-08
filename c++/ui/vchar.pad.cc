@@ -15,14 +15,14 @@ namespace cat::ui
 
 vchar::iterator vchar::pad::set_position(cxy _pos)
 {
-    if (!geometry.SetCursorPos(_pos))
+    if (!geometry[_pos])
     {
         state = rem::code::oob;
         return cursor;
     }
 
     state = rem::code::accepted;
-    return dc.begin() + geometry.Width()*_pos.y + _pos.x;
+    return dc.begin() + geometry.width()*_pos.y + _pos.x;
 }
 
 
@@ -58,7 +58,7 @@ vchar::pad& vchar::pad::operator<<(glyph::type _glyph)
 {
     // if (!++geometry)
     // {
-    //     auto l = sys::error(1); l << " vchar::pad::operator<<(glyph::type) : request area:" << geometry.dwh << l;
+    //     auto l = sys::error(1); l << " vchar::pad::operator<<(glyph::type) : request area:" << geometry.size << l;
     //     return *this;
     // }
     **cursor_ptr++ << colors << _glyph;
@@ -127,9 +127,9 @@ vchar::pad& vchar::pad::operator<<(char c)
 ///
 rem::code vchar::pad::clear(ui::rectangle r, color::pair cp)
 {
-    auto rw = geometry.tolocal() & (r);
+    auto rw = geometry.to_local() & (r);
     if(!rw){
-        auto l = sys::status(); l << rem::code::oob << " : request area:" << r << "; within " << geometry.dwh << l;
+        auto l = sys::status(); l << rem::code::oob << " : request area:" << r << "; within " << geometry.size << l;
         return rem::code::rejected;
     }
 
@@ -207,11 +207,11 @@ bool vchar::pad::operator--()
 //
 //
 //     gotoxy(ui::cxy{1,0}); // Real assign from here.
-//     std::fill(cursor_ptr,cursor_ptr + geometry.dwh.w-2, vchar(colors) << cadre::Horizontal);
+//     std::fill(cursor_ptr,cursor_ptr + geometry.size.w-2, vchar(colors) << cadre::Horizontal);
 //     gotoxy(ui::cxy{1,geometry.b.y});
-//     std::fill(cursor_ptr,cursor_ptr + geometry.dwh.w-2, vchar(colors) << cadre::Horizontal);
+//     std::fill(cursor_ptr,cursor_ptr + geometry.size.w-2, vchar(colors) << cadre::Horizontal);
 //
-//     for(int y=1; y < geometry.dwh.h-1; y++)
+//     for(int y=1; y < geometry.size.h-1; y++)
 //         *this << ui::cxy{0,y} << cadre::Vertical << ui::cxy{geometry.b.x,y} << cadre::Vertical;
 //
 //     return rem::code::done;
@@ -222,7 +222,7 @@ bool vchar::pad::operator--()
 // {
 //     if (w<0)
 //     {
-//         w = geometry.dwh.w;
+//         w = geometry.size.w;
 //         set_pos({0,geometry.cursor.y});
 //     }
 //     for(int i=0; i < w; i++)
@@ -256,15 +256,15 @@ vchar::pad::~pad()
 }
 
 
-vchar::pad::shared vchar::pad::create(cxy _dim, color::pair _colours)
+vchar::pad::shared vchar::pad::create(csz sz, color::pair a_colours)
 {
     auto p  = std::make_shared<vchar::pad>();
 
-    p->dc = vchar::string(_dim.Area(),vchar(color::pair(_colours)));
-    p->colors = _colours;
-    p->geometry = {0,0,_dim};
+    p->dc = vchar::string(sz.area(),vchar(color::pair(a_colours)));
+    p->colors = a_colours;
+    p->geometry = {{0,0},sz};
     p->clear();
-    //auto l = sys::Info(1); l << " vchar::pad size:" << color::Yellow << p->geometry.s.Area() << l;
+    //auto l = sys::Info(1); l << " vchar::pad size:" << color::Yellow << p->geometry.size.Area() << l;
     return p;
 }
 
@@ -275,16 +275,16 @@ vchar::pad::shared vchar::pad::create(cxy _dim, color::pair _colours)
 //////////////////////////////////////////////////////////////
 /// \brief vchar::pad::clear
 ///        Clears the buffer with the current colors attributes
-void vchar::pad::clear(const crect& subarea)
+void vchar::pad::clear(const rectangle& subarea)
 {
     if (!subarea)
     {
-        std::fill_n(dc.begin(),geometry.s.Area(), vchar(color::pair(colors)));
+        std::fill_n(dc.begin(),geometry.size.area(), vchar(color::pair(colors)));
         return;
     }
 
-    for (int y=0;y<subarea.s.y; ++y)
-        std::fill_n(dc.begin()+subarea.a.x + (subarea.a.y + y) * geometry.s.x, subarea.s.x, vchar(color::pair(colors)));
+    for (int y=0;y<subarea.size.h; ++y)
+        std::fill_n(dc.begin()+subarea.a.x + (subarea.a.y + y) * geometry.size.h, subarea.size.h, vchar(color::pair(colors)));
 
 }
 
@@ -300,11 +300,11 @@ void vchar::pad::clear(const crect& subarea)
  *  @param inner_area The rectangular region within the source pad that is to be copied.
  *  @return rem::code::accepted if the operation completes successfully.
  */
-rem::code vchar::pad::copy(vchar::pad&pad_dc, crect inner_area)
+rem::code vchar::pad::copy(vchar::pad&pad_dc, rectangle inner_area)
 {
     auto rw = inner_area+pad_dc.geometry.a;
-    for (int y = 0;y < rw.s.y; y++)
-        std::copy_n(pad_dc[inner_area.a+cxy{0,y}],rw.s.x, (*this)[rw.a+cxy{0,y}]);
+    for (int y = 0;y < rw.size.h; y++)
+        std::copy_n(pad_dc[inner_area.a+cxy{0,y}],rw.size.w, (*this)[rw.a+cxy{0,y}]);
 
     return rem::code::accepted;
 }
@@ -316,7 +316,7 @@ rem::code vchar::pad::copy(vchar::pad&pad_dc, crect inner_area)
 ///
 vchar::iterator vchar::pad::home(const cxy& offset)
 {
-    geometry.SetCursorPos(offset + cxy{0,0});
+    geometry[offset + cxy{0,0}];
     cursor = dc.begin();
     return cursor;
 }
@@ -383,7 +383,7 @@ color::value vchar::pad::bg() const { return colors.bg; }
 /// \return resulting of the intersection.
 /// \note \arg rhs origin must be on the same origin of this pad.
 ///
-crect vchar::pad::operator &(const crect& rhs) const { return geometry & rhs; }
+rectangle vchar::pad::operator &(const rectangle& rhs) const { return geometry & rhs; }
 
 
 ////////////////////////////////////////////////////////////////////////
@@ -393,7 +393,7 @@ crect vchar::pad::operator &(const crect& rhs) const { return geometry & rhs; }
 /// \return resulting of the intersection shifted to the inner origin {0,0}.
 /// \note \arg rhs must be on the same origin scale of this pad. So the resulting rectangle will have its offset moved to the relative geometry of this pad
 ///
-crect vchar::pad::operator /(const crect& rhs) const { return geometry / rhs; }
+rectangle vchar::pad::operator /(const rectangle& rhs) const { return geometry / rhs; }
 
 
 /**
@@ -401,7 +401,7 @@ crect vchar::pad::operator /(const crect& rhs) const { return geometry / rhs; }
  */
 vchar::iterator vchar::pad::operator[](cxy P)
 {
-    return dc.begin() + (P.y * geometry.s.x) + P.x;
+    return dc.begin() + (P.y * geometry.size.h) + P.x;
 }
 
 

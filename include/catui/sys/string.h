@@ -154,7 +154,7 @@ public:
      */
     template<typename str_type=std::string_view> struct  location final
     {
-        ui::crect rect{}; ///< smooth transition
+        ui::rectangle rect{}; ///< smooth transition
         integers::u32 line{1};
         integers::u32 column{1};
         integers::u32 offset{0};

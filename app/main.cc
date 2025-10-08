@@ -162,10 +162,10 @@ rem::code app::setup_ui()
     window = new window_dc("Root",windowtype::Toplevel);
     label = new label_dc(window, "Hello world");
     window->set_theme("C128");
-    window->set_geometry({{1,1},ui::whinfo{80,20}});
+    window->set_geometry({{1,1},ui::csz{80,20}});
     window->set_anchor(anchor::Center);
     screen_dc::anchor_element(window);
-    label->set_geometry({{2,1},ui::whinfo{50,1}});
+    label->set_geometry({{2,1},ui::csz{50,1}});
     label->set_anchor(anchor::Width|anchor::Bottom);
 
     screen_dc::push(window);
@@ -241,7 +241,7 @@ rem::code app::alu_playground()
 rem::code app::geometry_playground()
 {
     ui::rectangle ra,rb,rc;
-    ra = {{10,10}, whinfo{30,20}};
+    ra = {{10,10}, csz{30,20}};
     rb = ra + ui::cxy{-3,-1};
     rc = ra & rb;
     auto l = sys::test(1); l << "ra{" << ra << "};" << l;
@@ -249,7 +249,7 @@ rem::code app::geometry_playground()
     l = sys::test(1); l << "rc = ra & rb: {" << rc << "};" << l;
     rc = ra /rb;
     l = sys::test(1); l << "rc = ra / rb: {" << rc << "};" << l;
-    rc.moveat(ra.a - rb.a);
+    rc.move_at(ra.a - rb.a);
     l = sys::test(1); l << "rc = ra.a-rb.a{" << rc << "};" << l;
     return rem::code::success;
 }
