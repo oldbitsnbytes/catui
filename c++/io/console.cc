@@ -278,24 +278,25 @@ conio& conio::operator<<(ui::vchar::pad& ui_bloc)
 
 conio& conio::operator<<(ui::rectangle rect)
 {
-    *this << rect.a << ui::border::TopLeft
-        << rect.b << ui::border::BottomRight
+    *this << rect.top_left() << ui::border::TopLeft
+        << rect.top_right() << ui::border::TopRight
         << rect.bottom_left() << ui::border::BottomLeft
-        << rect.top_right() << ui::border::TopRight;
+        << rect.bottom_right() << ui::border::BottomRight;
 
-    *this << rect.a + ui::cxy{1,0};
-    for (int x = 1; x < rect.size.h; ++x)
-        *this << ui::border::Horizontal;
 
-    *this << rect.bottom_left() + ui::cxy{1,0};
-    for (int x = 1; x < rect.size.h; ++x)
-        *this << ui::border::Horizontal;
-
-    for (int y =1; y < rect.size.h; ++y)
+    for (int x = 1; x < rect.size.w-1; ++x)
     {
-        *this << rect.top_left() + ui::cxy{0,y};
+        *this << rect.a + ui::cxy{x,0};
+        *this << ui::border::Horizontal;
+        *this << ui::cxy{rect.a.x+x,rect.b.y};
+        *this << ui::border::Horizontal;
+    }
+
+    for (int y =1; y < rect.size.h-1; ++y)
+    {
+        *this << rect.a + ui::cxy{0,y};
         *this << ui::border::Vertical;
-        *this << rect.top_right() + ui::cxy{0,y};
+        *this << ui::cxy{rect.b.x,rect.a.y+y};
         *this << ui::border::Vertical;
     }
     return *this;
