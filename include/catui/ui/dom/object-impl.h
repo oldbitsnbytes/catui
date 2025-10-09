@@ -1,9 +1,3 @@
-//
-// Created by Serge Lussier on 2025-10-09.
-//
-
-//#ifndef CATUI_OBJECT_IMPL_H
-//#define CATUI_OBJECT_IMPL_H
 ////////////////////////////////////////////////////////////////////////////////////////////
 //   Copyright (C) ...,2025,... by Serge Lussier
 //   serge.lussier@oldbitsnbytes.club / lussier.serge@gmail.com

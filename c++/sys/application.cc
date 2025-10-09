@@ -55,12 +55,6 @@ rem::code application::run()
     setup();
     try
     {
-        auto element = std::make_shared<ui::element>(nullptr,"First element",0);
-        element->set_theme("C128");
-        element->set_geometry(rectangle{1,1,20,5});
-        element->draw();
-        element->update();
-
         cat::con << rem::code::ready << conio::eol;
         bool fini = false;
         while (!fini)

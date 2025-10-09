@@ -36,7 +36,6 @@ set(HEADERS
     include/${PROJECT_NAME}/io/kstroke.h
     include/${PROJECT_NAME}/io/mouse.h
     include/${PROJECT_NAME}/io/console.h
-    include/${PROJECT_NAME}/ui/dom/element.h
     include/${PROJECT_NAME}/ui/dom/object.h
     include/${PROJECT_NAME}/sys/application.h
     include/${PROJECT_NAME}/sys/strscan.h
@@ -62,7 +61,6 @@ add_library(${PROJECT_NAME}
             c++/sys/rem.cc
             c++/ui/glyphes.cc
             c++/ui/dom/object.cc
-            c++/ui/dom/element.cc
             c++/sys/string.cc
             c++/sys/dbase.cc
             c++/ui/vchar.cc

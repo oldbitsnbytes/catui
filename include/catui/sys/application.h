@@ -18,7 +18,7 @@
 
 #pragma once
 #include <catui/io/console.h>
-#include <catui/ui/dom/element.h>
+#include <catui/ui/dom/object.h>
 
 namespace cat
 {

@@ -72,13 +72,13 @@ struct token_info
 
 
 
-class token_reference_table : public object
+class token_reference_table
 {
 protected:
     token_info::list reference{};
 public:
     token_reference_table() = default;
-    ~token_reference_table() override;
+    ~token_reference_table();
 
     virtual rem::code set();
     virtual token_info scan(strscan& str_scanner);

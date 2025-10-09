@@ -161,18 +161,6 @@ struct margin
     i8 right{0};
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
 class CATUI_LIB object
 {
     CLASSNAME_START(object)
@@ -225,8 +213,7 @@ protected:
         return nullptr;
     }
 
-    virtual rem::code   setup_ui(const std::string& _theme_name);
-    ui::vchar::bloc::shared  _dc{nullptr};
+    //virtual rem::code   setup_ui(const std::string& _theme_name);
     ui::rectangle               _rect{};
     ui::rectangle               _dirty_area{};
     color::db::item     _palette{};
@@ -239,8 +226,8 @@ protected:
     component::value    _component{component::none};
     e_type::value       _type{e_type::none};
 
-    rem::code           _alloc_dc(csz wxh);
+    rem::code           _alloc_dc(ui::csz wxh);
 };
 } // cat::dom
 
-#include <catui/ui/dom/object.h>
+#include <catui/ui/dom/object-impl.h>
