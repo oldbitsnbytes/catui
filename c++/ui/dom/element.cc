@@ -16,6 +16,7 @@
 //------------------------------------------------------------------------------------------
 
 #include <catui/ui/dom/element.h>
+#include <catui/io/console.h>
 namespace cat::ui
 {
 element::element() : object()
@@ -68,8 +69,15 @@ rem::code element::update(rectangle r)
     else
         _dirty_area = r | _dirty_area;
 
-    sys::debug() << " element::update: dirty area :" << color::yellow << _dirty_area << color::r << sys::eol;
+    auto rend = _dirty_area.to_local();
+
+    sys::debug() << "render tests, element::update: dirty area :" << color::yellow << _dirty_area << color::r << sys::eol;
     //...
+    for (int y =0; y <rend.size.h; ++y)
+    {
+        con << (_dc->geometry.local() + rend.a + cxy{0,y});
+        std::cout << vchar::render_line(_dc->peek(y,0),rend.size.w);
+    }
     return rem::code::done;
 }
 
@@ -77,6 +85,7 @@ rem::code element::update(rectangle r)
 rem::code element::set_geometry(const rectangle&a_geometry)
 {
     _rect = a_geometry;
+    sys::debug() << "set_geometry: " << color::yellow << _rect << color::r << sys::eol;
     _alloc_dc(_rect.size);
 
     if (!dom_parent<element>())
@@ -90,7 +99,8 @@ rem::code element::set_theme(const std::string&a_theme_name)
     _theme_id = a_theme_name;
     _palette = color::db::element_item(color::db::theme(_theme_id), class_name());
     _theme_colors = _palette[static_cast<int>(_status)];
-
+    sys::debug() << "theme: '" << color::chartreuse6 << _theme_id << color::r << "' for element: " << color::yellow << id() << color::r << sys::eol;
+    sys::write() << " colors: " << color::chartreuse6 << _theme_colors.name() << color::r << sys::eol;
     return rem::code::accepted;
 }
 
@@ -175,7 +185,7 @@ rem::code element::_alloc_dc(csz wxh)
     if (const auto* pr = dom_parent<element>(); pr)
         _dc = pr->_dc;
     else
-        _dc = vchar::pad::create(std::move(wxh),_theme_colors);
+        _dc = vchar::bloc::create(std::move(wxh),_theme_colors);
     //
 
     return rem::code::accepted;

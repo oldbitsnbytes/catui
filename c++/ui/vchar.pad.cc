@@ -3,7 +3,7 @@
 //
 #include <catui/ui/vchar.h>
 
-
+#include "catui/sys/sys.h"
 
 
 namespace cat::ui
@@ -13,7 +13,7 @@ namespace cat::ui
 
 
 
-vchar::iterator vchar::pad::set_position(cxy _pos)
+vchar::iterator vchar::bloc::set_position(cxy _pos)
 {
     if (!geometry[_pos])
     {
@@ -26,6 +26,15 @@ vchar::iterator vchar::pad::set_position(cxy _pos)
 }
 
 
+vchar::iterator vchar::bloc::peek(int l, int column)
+{
+    if (l>=geometry.size.h)
+    {
+        throw sys::exception()[sys::error() << rem::code::oob << " vchar::pad::line(int) : request line:" << l << "; within 0-" << color::hotpink4 << geometry.size.h];
+        //return dc.end();
+    }
+    return (*this)[cxy{column,l}];
+}
 
 
 /**
@@ -154,7 +163,7 @@ rem::code vchar::pad::clear(ui::rectangle r, color::pair cp)
  */
 
 
-bool vchar::pad::operator++()
+bool vchar::bloc::operator++()
 {
     if (++geometry)
     {
@@ -170,7 +179,7 @@ bool vchar::pad::operator++()
  * @return true if the cursor is within the boundaries  false otherwise.
  * @author Serge luxsier (oldlonecoder)
  */
-bool vchar::pad::operator++(int)
+bool vchar::bloc::operator++(int)
 {
     if (++geometry)
     {
@@ -187,7 +196,7 @@ bool vchar::pad::operator++(int)
  * @return true if the cursor is within the boundaries  false otherwise.
  * @author Serge luxsier (oldlonecoder)
  */
-bool vchar::pad::operator--()
+bool vchar::bloc::operator--()
 {
     if (--geometry)
     {
@@ -237,7 +246,7 @@ bool vchar::pad::operator--()
  * @return true if the cursor is within the boundaries  false otherwise.
  * @author Serge luxsier (oldlonecoder)
  */
-bool vchar::pad::operator--(int)
+bool vchar::bloc::operator--(int)
 {
     if (--geometry)
     {
@@ -249,16 +258,16 @@ bool vchar::pad::operator--(int)
 
 
 
-vchar::pad::~pad()
+vchar::bloc::~bloc()
 {
     dc.clear();
     geometry={};
 }
 
 
-vchar::pad::shared vchar::pad::create(csz sz, color::pair a_colours)
+vchar::bloc::shared vchar::bloc::create(csz sz, color::pair a_colours)
 {
-    auto p  = std::make_shared<vchar::pad>();
+    auto p  = std::make_shared<vchar::bloc>();
 
     p->dc = vchar::string(sz.area(),vchar(color::pair(a_colours)));
     p->colors = a_colours;
@@ -275,7 +284,7 @@ vchar::pad::shared vchar::pad::create(csz sz, color::pair a_colours)
 //////////////////////////////////////////////////////////////
 /// \brief vchar::pad::clear
 ///        Clears the buffer with the current colors attributes
-void vchar::pad::clear(const rectangle& subarea)
+void vchar::bloc::clear(const rectangle& subarea)
 {
     if (!subarea)
     {
@@ -300,7 +309,7 @@ void vchar::pad::clear(const rectangle& subarea)
  *  @param inner_area The rectangular region within the source pad that is to be copied.
  *  @return rem::code::accepted if the operation completes successfully.
  */
-rem::code vchar::pad::copy(vchar::pad&pad_dc, rectangle inner_area)
+rem::code vchar::bloc::copy(vchar::bloc&pad_dc, rectangle inner_area)
 {
     auto rw = inner_area+pad_dc.geometry.a;
     for (int y = 0;y < rw.size.h; y++)
@@ -314,7 +323,7 @@ rem::code vchar::pad::copy(vchar::pad&pad_dc, rectangle inner_area)
 /// \brief vchar::pad::home
 ///     Resets iterator and internal cursor at {0,0};
 ///
-vchar::iterator vchar::pad::home(const cxy& offset)
+vchar::iterator vchar::bloc::home(const cxy& offset)
 {
     geometry[offset + cxy{0,0}];
     cursor = dc.begin();
@@ -333,7 +342,7 @@ vchar::iterator vchar::pad::home(const cxy& offset)
 /// \brief vchar::pad::set_foreground_color
 /// \param fg
 /// \group pad-colors
-void vchar::pad::set_foreground_color(color::value fg)
+void vchar::bloc::set_foreground_color(color::value fg)
 {
     colors.fg = fg;
     cursor->set_fg(fg);
@@ -343,7 +352,7 @@ void vchar::pad::set_foreground_color(color::value fg)
 /// \brief vchar::pad::set_background_color
 /// \param bg
 /// \group pad-colors
-void vchar::pad::set_background_color(color::value bg)
+void vchar::bloc::set_background_color(color::value bg)
 {
     colors.bg = bg;
     cursor->set_bg(bg);
@@ -353,7 +362,7 @@ void vchar::pad::set_background_color(color::value bg)
 /// \brief vchar::pad::set_colors
 /// \param cp
 /// \group pad-colors
-void vchar::pad::set_colors(color::pair cp)
+void vchar::bloc::set_colors(color::pair cp)
 {
     colors = cp;
     cursor->set_colors(cp);
@@ -364,7 +373,7 @@ void vchar::pad::set_colors(color::pair cp)
 /// \return color code
 /// \group pad-colors
 /// \note Statusquo sur lire la couleur de la cellule au cursor_ptr ou donner la couleur courante a appliquer
-color::value vchar::pad::fg() const { return colors.fg; }
+color::value vchar::bloc::fg() const { return colors.fg; }
 
 ////////////////////////////////////////////////////////////
 /// \brief vchar::pad::bg
@@ -372,7 +381,7 @@ color::value vchar::pad::fg() const { return colors.fg; }
 /// \group pad-colors
 /// \note Statusquo sur lire la couleur de la cellule au cursor_ptr ou donner la couleur courante a appliquer
 ///
-color::value vchar::pad::bg() const { return colors.bg; }
+color::value vchar::bloc::bg() const { return colors.bg; }
 
 
 
@@ -383,7 +392,7 @@ color::value vchar::pad::bg() const { return colors.bg; }
 /// \return resulting of the intersection.
 /// \note \arg rhs origin must be on the same origin of this pad.
 ///
-rectangle vchar::pad::operator &(const rectangle& rhs) const { return geometry & rhs; }
+rectangle vchar::bloc::operator &(const rectangle& rhs) const { return geometry & rhs; }
 
 
 ////////////////////////////////////////////////////////////////////////
@@ -393,20 +402,20 @@ rectangle vchar::pad::operator &(const rectangle& rhs) const { return geometry &
 /// \return resulting of the intersection shifted to the inner origin {0,0}.
 /// \note \arg rhs must be on the same origin scale of this pad. So the resulting rectangle will have its offset moved to the relative geometry of this pad
 ///
-rectangle vchar::pad::operator /(const rectangle& rhs) const { return geometry / rhs; }
+rectangle vchar::bloc::operator /(const rectangle& rhs) const { return geometry / rhs; }
 
 
 /**
  *
  */
-vchar::iterator vchar::pad::operator[](cxy P)
+vchar::iterator vchar::bloc::operator[](cxy P)
 {
     return dc.begin() + (P.y * geometry.size.h) + P.x;
 }
 
 
 
-vchar::pad& vchar::pad::operator *() { return *this; }
+vchar::bloc& vchar::bloc::operator *() { return *this; }
 
 
 

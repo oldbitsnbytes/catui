@@ -229,7 +229,12 @@ public:
     static std::string bytes(std::vector<int> a_seq);
     static std::string bytes(std::vector<integers::u8> a_seq);
 
-
+    template <typename T>  std::string hex(const T& num)
+    {
+        std::stringstream ss;
+        ss << "0x" << std::hex << num;
+        return ss.str();
+    }
     static cat::string::list make_list(int argc, char** argv, int offset=0);
 };
 

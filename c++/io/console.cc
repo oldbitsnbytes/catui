@@ -264,7 +264,7 @@ conio& conio::operator<<(glyph::value f)
 }
 
 
-conio& conio::operator<<(ui::vchar::pad& ui_bloc)
+conio& conio::operator<<(ui::vchar::bloc& ui_bloc)
 {
 
     for (int Y=0; Y<ui_bloc.geometry.size.h; ++Y)

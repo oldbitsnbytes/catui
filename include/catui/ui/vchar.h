@@ -61,7 +61,7 @@ struct vchar
     static constexpr int ATShift = 0x18;
 
 
-    struct pad
+    struct bloc
     {
         // --- CONFIGS AND INTERNAL DATA--------------
         color::pair     colors{};       ///< default and fallback colors.
@@ -69,9 +69,9 @@ struct vchar
         vchar::string   dc{};           ///< (Display Context/Cell) Using one-dimension array of vchar as a two-dimension pad bloc.
         rem::code       state{rem::code::empty};
         vchar::iterator  cursor{};      ///< iterator on the current character
-        using shared = std::shared_ptr<vchar::pad>;
+        using shared = std::shared_ptr<vchar::bloc>;
 
-        ~pad();
+        ~bloc();
 
         // --- Ui STUFF ------------------------------
 
@@ -79,7 +79,7 @@ struct vchar
         [[nodiscard]] int       height() const {return geometry.size.h;}
         static shared           create(csz sz, color::pair a_colors);
         void                    clear(const rectangle& subarea={});
-        rem::code               copy(vchar::pad& PadDc, rectangle InnerArea);
+        rem::code               copy(vchar::bloc& PadDc, rectangle InnerArea);
         vchar::iterator          home(const cxy&offset={});
         void                    set_foreground_color(color::value aFg);
         void                    set_background_color(color::value aBg);
@@ -89,13 +89,16 @@ struct vchar
         rectangle                   operator&(const rectangle &rhs) const;
         rectangle                   operator/(const rectangle &rhs) const;
         vchar::iterator          operator[](cxy P);
-        vchar::pad&              operator*();
+        vchar::bloc&              operator*();
 
         bool         operator ++();    ///< ++geometry (++geometry.cursor.x)
         bool         operator ++(int); ///< geometry++ (++geometry.cursor.y)
         bool         operator --();    ///< --geometry (--geometry.cursor.x)
         bool         operator --(int); ///< geometry-- (++geometry.cursor.x)
         vchar::iterator set_position(cxy P);
+        vchar::iterator peek(int l, int column=0);
+
+
     };
 
 
@@ -109,18 +112,12 @@ struct vchar
     vchar& set_fg(color::value aFg);
     vchar& set_bg(color::value aBg);
     vchar& set_attributes(U32 Ch);
-    //vchar& set_colors(color::pair&&Ch);
-    // vchar& ResetAttributes(vchar::value_type bits_);
     vchar& set_colors(const color::pair& Cp);
     vchar& operator=(U32 Ch);
     vchar& operator=(const vchar& Ch) = default;
     vchar& operator=(const U32* Ch);
     vchar& operator=(char Ch);
-    vchar& operator=(int Ch)
-    {
-        D = Ch;
-        return *this;
-    };
+    vchar& operator=(int Ch) { D = Ch; return *this; };
 
     [[nodiscard]] std::string     get_utf_string() const;
     [[nodiscard]] color::value     foreground() const;

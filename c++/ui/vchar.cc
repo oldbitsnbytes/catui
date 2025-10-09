@@ -2,7 +2,7 @@
 #include <catui/ui/vchar.h>
 #include <iostream>
 
-#include <catui/sys/string.h>
+#include <catui/sys/sys.h>
 
 namespace cat::ui
 {
@@ -160,7 +160,7 @@ vchar::operator std::string() const { return details(); }
 std::string vchar::render_line(vchar::iterator _it, std::size_t count)
 {
     color::pair current_colors = _it->colors();
-    //auto l = Sys::Debug(1); l << "iterator details:" << _it->Details() << l;
+    sys::debug() << "col 1 : details:" << _it->details() << color::r << sys::eol;
     std::string _o = current_colors();
     std::cout << _o;
     auto c = _it;
@@ -210,6 +210,7 @@ std::string vchar::details() const
 {
 
     cat::string infos;
+    infos << color::white << infos.hex(D) << "{";
     cat::string utf_info{};
     if(D & UTFBITS)
     {
@@ -230,12 +231,12 @@ std::string vchar::details() const
     }
     else
         utf_info << ascii();
-    infos << "| foreground color:" << foreground() << color::name(foreground()) << color::r << "| background color:" << background() << color::name(background()) << color::r;
+    infos << "| " << colors().name() << color::r;
     infos << " char:['" << colors() << utf_info() << color::r <<  "']";
     if(D & Underline) infos << "|Underline";
     if(D & Stroke) infos << "|Stroke";
     if(D & Blink) infos << "|Blink";
-
+    infos << "}";
     return infos();
 }
 

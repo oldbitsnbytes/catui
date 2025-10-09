@@ -173,7 +173,7 @@ public:
     conio& operator << (rem::type ty);
     conio& operator << (ui::cxy xy);
     conio& operator << (glyph::value f);
-    conio& operator << (ui::vchar::pad& ui_bloc);
+    conio& operator << (ui::vchar::bloc& ui_bloc);
     conio& operator << (ui::rectangle rect);
     conio& operator << (ui::border::Index idx);
     conio& operator << (conio::movfn mv);

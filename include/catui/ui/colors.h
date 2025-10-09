@@ -329,6 +329,7 @@ namespace cat::ui
 
         std::string operator()() const;
         color::pair &operator>>(std::string &out);
+        std::string name() const;
     };
 
     struct  data

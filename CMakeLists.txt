@@ -43,6 +43,7 @@ set(HEADERS
     include/${PROJECT_NAME}/lexer/lang.h
     include/${PROJECT_NAME}/lexer/token_info.h
     include/${PROJECT_NAME}/lexer/lexer.h
+    include/catui/ui/dom/object-impl.h
 
 )
 

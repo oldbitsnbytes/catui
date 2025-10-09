@@ -331,18 +331,19 @@ std::string color::render(color::pair a_pair)
 {
 
     std::ostringstream txt;
-
+    txt << "\x1b[";
     // ---------------- background ------------------------------------
     if(a_pair.bg == color::reset)
-        txt << "\x1b[49";
+        txt << "49";
     else
-        txt << "\x1b[48;5;" << static_cast<int>(a_pair.bg);
+        txt << "48;5;" << static_cast<int>(a_pair.bg);
     // ---------------- foreground ------------------------------------
     if(a_pair.fg == color::reset)
-       txt << "\x1b[39m";
+        txt << "39";
     else
-        txt << "\033[38;5;" << static_cast<int>(a_pair.fg) << 'm';
+        txt << "38;5;" << static_cast<int>(a_pair.fg);
 
+    txt << "m";
 
     return txt.str();
 }
@@ -376,21 +377,25 @@ std::string color::render_rgb(color::value a_code)
 std::string color::render_rgb(color::pair a_pair)
 {
     std::ostringstream txt;
+    txt << "\x1b[";
+
     if (a_pair.fg == 255)
-        txt << "\x1b[39;";
+        txt << "39;";
     else
     {
         auto rgb_data  = color::colors_db[a_pair.fg];
-        txt << "\x1b[38;2;" << rgb_data.R << ';' << rgb_data.G << ';' << rgb_data.B << ';';
+        txt << "38;2;" << rgb_data.R << ';' << rgb_data.G << ';' << rgb_data.B << ';';
     }
 
     if (a_pair.bg == 255)
-        txt << "49m";
+        txt << "49";
     else
     {
         auto rgb_data  = color::colors_db[a_pair.bg];
-        txt << "48;2;" << rgb_data.R << ';' << rgb_data.G << ';' << rgb_data.B << 'm';
+        txt << "48;2;" << rgb_data.R << ';' << rgb_data.G << ';' << rgb_data.B;
     }
+
+    txt << 'm';
     return txt.str();
 }
 
@@ -466,6 +471,12 @@ color::pair &color::pair::operator>>(std::string &out)
 }
 
 
+std::string color::pair::name() const
+{
+    std::ostringstream txt;
+    txt << "[fg:" << color::name(fg) << " bg:" << color::name(bg) << ']';
+    return txt.str();
+}
 
 
 color::db::palette  themes=
