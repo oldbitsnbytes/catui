@@ -30,7 +30,7 @@
 namespace cat::dom
 {
 
-namespace e_type
+namespace type_enums
 {
     using value = u32;
     static constexpr value none      = 0x0000;
@@ -55,6 +55,7 @@ static constexpr value suffix_glyph    = 0x0040;
 static constexpr value prefix_glyph    = 0x0080;
 static constexpr value menubar       = 0x0100;
 static constexpr value menu          = 0x0200;
+
 //...
 }
 
@@ -93,7 +94,7 @@ static constexpr value button_apply  = 0x20000000;
 
 }
 
-namespace estatus
+namespace dom_status_enums
 {
 using value = u32;
 static constexpr value none      = 0x0000;
@@ -166,7 +167,7 @@ class CATUI_LIB object
     CLASSNAME_START(object)
 
     std::string _id{"object"};
-    object* _parent{nullptr};
+
 
     #pragma region dom_element_private
     //----------------------------------------------------------------------------------------------------------------------------
@@ -175,21 +176,26 @@ class CATUI_LIB object
     #pragma endregion dom_element_private
 
 public:
-    using list = std::vector<object*>;
+
+    using shared = std::shared_ptr<object>;
+    using weak = std::weak_ptr<object>;
+
+    using list = std::vector<object::shared>;
     using iterator = list::iterator;
+
     object();
     virtual ~object();
 
     object(std::string  a_id);
-    object(object* parent_object, std::string  a_id);
+    object(const object::shared&parent_object, std::string  a_id);
 
     object& operator = (object&& rhs) noexcept;
     object& operator = (const object& rhs);
 
-    object* parent() { return _parent; }
+    object* parent() { return _parent.get(); }
     [[nodiscard]] object::iterator child(const std::string& id);
     // object* child(int index);
-    object::iterator child(object* child);
+    object::iterator child(const object::shared& child);
     [[nodiscard]] const std::string& id() const { return _id; }
     object&  operator *() { return *this; }
     #pragma region public_dom_element
@@ -221,6 +227,21 @@ public:
     object&    operator << (cat::ui::rectangle rect);
     object&    operator << (cat::ui::border::Index idx);
 
+
+    void set_dom_status(dom_status_enums::value status);
+    void set_dom_type(type_enums::value type);
+    void set_dom_component(component::value component);
+    void set_dom_anchor(anchor::value anchor);
+    void set_dom_padding(padding padding);
+    void set_dom_margin(margin margin);
+
+    std::pair<std::string, dom_status_enums::value> dom_status() const;
+    std::pair<std::string, type_enums::value> dom_type() const;
+    std::pair<std::string, component::value> dom_component() const;
+    std::pair<std::string, anchor::value> dom_anchor() const;
+    padding& dom_padding();
+    margin&  dom_margin();
+
     //----------------------------------------------------------------------------------------------------------------------------
     #pragma endregion public_dom_element
 
@@ -231,17 +252,17 @@ protected:
     //----------------------------------------------------------------------------------------------------------------------------
 
     //virtual rem::code   setup_ui(const std::string& _theme_name);
-    ui::rectangle       _rect{};
-    ui::rectangle       _dirty_area{};
-    color::db::item     _palette{};
-    color::pair         _theme_colors{};
-    std::string         _theme_id{"default"};
-    padding             _padding{};
-    margin              _margin{};
-    anchor::value       _anchor{anchor::none};
-    estatus::value      _dom_status{estatus::normal};
-    component::value    _component{component::none};
-    e_type::value       _type{e_type::none};
+    ui::rectangle           _rect{};
+    ui::rectangle           _dirty_area{};
+    color::db::item         _palette{};
+    color::pair             _theme_colors{};
+    std::string             _theme_id{"default"};
+    padding                 _padding{};
+    margin                  _margin{};
+    anchor::value           _anchor{anchor::none};
+    dom_status_enums::value _dom_status{dom_status_enums::normal};
+    component::value        _component{component::none};
+    type_enums::value       _dom_type{type_enums::none};
 
 
     ui::vchar::bloc::shared _alloc_bloc_dc(ui::csz wxh);
@@ -250,6 +271,9 @@ protected:
     //ui::vchar::iterator     _home();
     //----------------------------------------------------------------------------------------------------------------------------
     #pragma endregion dom_element_protected
+
+private:
+    object::shared _parent{nullptr};
 };
 } // cat::dom
 

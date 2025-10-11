@@ -28,6 +28,7 @@ class CATUI_LIB application
 {
     CLASSNAME_START(application)
     cat::string::view_list _arguments{};
+    dom::object::shared _root{nullptr};
 
 public:
     application();

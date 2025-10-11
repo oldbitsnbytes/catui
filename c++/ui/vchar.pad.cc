@@ -2,8 +2,8 @@
 // Created by oldlonecoder on 2025-08-18.
 //
 #include <catui/ui/vchar.h>
-
 #include "catui/sys/sys.h"
+#include <catui/io/console.h>
 
 
 namespace cat::ui
@@ -34,6 +34,18 @@ vchar::iterator vchar::bloc::peek(int l, int column)
         //return dc.end();
     }
     return (*this)[cxy{column,l}];
+}
+
+
+rem::code vchar::bloc::render(const rectangle&area)
+{
+    if (!area)
+        return rem::code::rejected;
+
+
+
+    return rem::code::accepted;
+
 }
 
 
@@ -323,13 +335,20 @@ rem::code vchar::bloc::copy(vchar::bloc&pad_dc, rectangle inner_area)
 /// \brief vchar::pad::home
 ///     Resets iterator and internal cursor at {0,0};
 ///
-vchar::iterator vchar::bloc::home(const cxy& offset)
+vchar::iterator vchar::bloc::at(const cxy& offset)
 {
-    geometry[offset + cxy{0,0}];
-    cursor = dc.begin();
+    if (geometry[offset])
+        return dc.begin() + geometry.width()*offset.y + offset.x;
+
     return cursor;
 }
 
+
+rem::code vchar::bloc::goto_xy(const cxy&offset)
+{
+    geometry.move_at(offset);
+    return rem::code::accepted;
+}
 
 
 ////////////////////////////////////////

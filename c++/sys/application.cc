@@ -17,11 +17,12 @@
 
 #include <catui/sys/application.h>
 #include <catui/io/console.h>
+#include <catui/ui/dom/object.h>
 
 
 using cat::ui::cxy;
 using cat::ui::rectangle;
-
+using namespace cat::ui;
 namespace cat
 {
 
@@ -39,13 +40,20 @@ application::application(const std::string&app_name, cat::string::view_list&& ar
 
 application::~application()
 {
-    ;
+    sys::info() << "application::~application(); terminate interactive console and flush remaining application logs{ catui_tests.sys." << sys::eol;
+    io::console::end();
+    sys::flush("catui_test.sys");
 }
 
 
 rem::code application::setup()
 {
     io::console::start();
+    _root = std::make_shared<dom::object>(nullptr, "root");
+    _root->set_theme("C128");
+    _root->set_dom_status(dom::dom_status_enums::active);
+
+
     return rem::code::done;
 }
 
@@ -88,8 +96,10 @@ rem::code application::run()
 
 rem::code application::end()
 {
-    io::console::end();
-    sys::flush("catui_test.sys");
-    return rem::code::done;
+    // io::console::end();
+    // sys::flush("catui_test.sys");
+    // return rem::code::done;
+    return rem::code::ok;
 }
+
 } // cat

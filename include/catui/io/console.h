@@ -119,7 +119,7 @@ struct CATUI_LIB mk_event
 {
     union
     {
-        kstroke k;
+        kstroke k{};
         mouse   m;
     };
 

@@ -80,16 +80,17 @@ struct vchar
         static shared           create(csz sz, color::pair a_colors);
         void                    clear(const rectangle& subarea={});
         rem::code               copy(vchar::bloc& PadDc, rectangle InnerArea);
-        vchar::iterator          home(const cxy&offset={});
+        vchar::iterator         at(const cxy&offset={});
+        rem::code               goto_xy(const cxy&offset={});
         void                    set_foreground_color(color::value aFg);
         void                    set_background_color(color::value aBg);
         void                    set_colors(color::pair Cp);
         [[nodiscard]] color::value            fg() const;
         [[nodiscard]] color::value            bg() const;
-        rectangle                   operator&(const rectangle &rhs) const;
-        rectangle                   operator/(const rectangle &rhs) const;
-        vchar::iterator          operator[](cxy P);
-        vchar::bloc&              operator*();
+        rectangle               operator&(const rectangle &rhs) const;
+        rectangle               operator/(const rectangle &rhs) const;
+        vchar::iterator         operator[](cxy P);
+        vchar::bloc&            operator*();
 
         bool         operator ++();    ///< ++geometry (++geometry.cursor.x)
         bool         operator ++(int); ///< geometry++ (++geometry.cursor.y)
@@ -97,7 +98,7 @@ struct vchar
         bool         operator --(int); ///< geometry-- (++geometry.cursor.x)
         vchar::iterator set_position(cxy P);
         vchar::iterator peek(int l, int column=0);
-
+        rem::code render(const rectangle& area);
 
     };
 

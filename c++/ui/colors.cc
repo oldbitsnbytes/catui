@@ -487,85 +487,85 @@ color::db::palette  themes=
             {
                 "object",
                 {
-                    {cat::dom::estatus::active, {color::grey100, color::grey27}},
-                    {cat::dom::estatus::disabled, {color::grey30, color::grey35}}, // keep coherence with widgets base
-                    {cat::dom::estatus::normal, {color::grey70, color::grey27}},
-                    {cat::dom::estatus::focussed, {color::red4, color::grey27}}
+                    {cat::dom::dom_status_enums::active, {color::grey100, color::grey27}},
+                    {cat::dom::dom_status_enums::disabled, {color::grey30, color::grey35}}, // keep coherence with widgets base
+                    {cat::dom::dom_status_enums::normal, {color::grey70, color::grey27}},
+                    {cat::dom::dom_status_enums::focussed, {color::red4, color::grey27}}
                     //...
                 }
             },
             {
                 "frame",
                 {
-                    {cat::dom::estatus::active, {color::lightcyan3, color::darkblue}},
-                    {cat::dom::estatus::disabled, {color::grey30, color::darkblue}}, // keep coherence with widgets base
-                    {cat::dom::estatus::normal, {color::grey100, color::darkblue}},
-                    {cat::dom::estatus::focussed, {color::greenyellow, color::darkblue}}
+                    {cat::dom::dom_status_enums::active, {color::lightcyan3, color::darkblue}},
+                    {cat::dom::dom_status_enums::disabled, {color::grey30, color::darkblue}}, // keep coherence with widgets base
+                    {cat::dom::dom_status_enums::normal, {color::grey100, color::darkblue}},
+                    {cat::dom::dom_status_enums::focussed, {color::greenyellow, color::darkblue}}
                     //...
                 }
             },
             {
                 "label",
                 {
-                    {cat::dom::estatus::active, {color::indianred, color::blue}},
-                    {cat::dom::estatus::disabled, {color::grey19, color::grey35}}, // keep coherence with widgets base
-                    {cat::dom::estatus::normal, {color::grey70, color::blue}}, // keep coherence with widgets base
-                    {cat::dom::estatus::focussed, {color::yellow, color::blue}}
+                    {cat::dom::dom_status_enums::active, {color::indianred, color::blue}},
+                    {cat::dom::dom_status_enums::disabled, {color::grey19, color::grey35}}, // keep coherence with widgets base
+                    {cat::dom::dom_status_enums::normal, {color::grey70, color::blue}}, // keep coherence with widgets base
+                    {cat::dom::dom_status_enums::focussed, {color::yellow, color::blue}}
                 }
             },
             {
                 "shortkey",
                 {
-                    {cat::dom::estatus::active, {color::hotpink4, color::grey27}},
-                    {cat::dom::estatus::disabled, {color::grey19, color::grey35}}, // keep coherence with widgets base
-                    {cat::dom::estatus::normal, {color::grey70, color::grey27}},
-                    {cat::dom::estatus::focussed, {color::red4, color::grey27}}
+                    {cat::dom::dom_status_enums::active, {color::hotpink4, color::grey27}},
+                    {cat::dom::dom_status_enums::disabled, {color::grey19, color::grey35}}, // keep coherence with widgets base
+                    {cat::dom::dom_status_enums::normal, {color::grey70, color::grey27}},
+                    {cat::dom::dom_status_enums::focussed, {color::red4, color::grey27}}
                 }
             },
             {
                 "icon",
                 {
-                    {cat::dom::estatus::active, {color::blue1, color::grey27}}, // keep coherence with widgets base
-                    {cat::dom::estatus::disabled, {color::grey19, color::grey35}},
-                    {cat::dom::estatus::normal, {color::blue1, color::grey35}},
-                    {cat::dom::estatus::focussed, {color::aquamarine3, color::grey27}},
-                    //{cat::dom::estatus::success, {color::green5, color::grey27}}
+                    {cat::dom::dom_status_enums::active, {color::blue1, color::grey27}}, // keep coherence with widgets base
+                    {cat::dom::dom_status_enums::disabled, {color::grey19, color::grey35}},
+                    {cat::dom::dom_status_enums::normal, {color::blue1, color::grey35}},
+                    {cat::dom::dom_status_enums::focussed, {color::aquamarine3, color::grey27}},
+                    //{cat::dom::dom_status_enums::success, {color::green5, color::grey27}}
                 }
             },
             {
                 "input-area", // widgets::text_input
                 {
-                    {cat::dom::estatus::active, {color::white, color::grey30}}, // keep coherence with widgets base
-                    {cat::dom::estatus::disabled, {color::grey39, color::grey35}},
-                    {cat::dom::estatus::normal, {color::grey37, color::grey30}},
-                    {cat::dom::estatus::focussed, {color::white, color::grey30}}
+                    {cat::dom::dom_status_enums::active, {color::white, color::grey30}}, // keep coherence with widgets base
+                    {cat::dom::dom_status_enums::disabled, {color::grey39, color::grey35}},
+                    {cat::dom::dom_status_enums::normal, {color::grey37, color::grey30}},
+                    {cat::dom::dom_status_enums::focussed, {color::white, color::grey30}}
                 }
             },
             {
                 "input-field",
                 {
-                    {cat::dom::estatus::active, {color::grey70, color::grey27}}, // keep coherence with widgets base
-                    {cat::dom::estatus::disabled, {color::grey39, color::grey35}},
-                    {cat::dom::estatus::normal, {color::grey70, color::grey27}},
-                    {cat::dom::estatus::focussed, {color::white, color::grey27}}
+                    {cat::dom::dom_status_enums::active, {color::grey70, color::grey27}}, // keep coherence with widgets base
+                    {cat::dom::dom_status_enums::disabled, {color::grey39, color::grey35}},
+                    {cat::dom::dom_status_enums::normal, {color::grey70, color::grey27}},
+                    {cat::dom::dom_status_enums::focussed, {color::white, color::grey27}}
                 },
             },
             {
                 "input-field:placeholder",
                 {
-                    {cat::dom::estatus::active, {color::darkcyan, color::grey27}}, // keep coherence with widgets base
-                    {cat::dom::estatus::disabled, {color::blue, color::grey27}},
-                    {cat::dom::estatus::normal, {color::blue, color::grey27}},
-                    {cat::dom::estatus::focussed, {color::blue, color::grey27}}
+                    {cat::dom::dom_status_enums::active, {color::darkcyan, color::grey27}}, // keep coherence with widgets base
+                    {cat::dom::dom_status_enums::disabled, {color::blue, color::grey27}},
+                    {cat::dom::dom_status_enums::normal, {color::blue, color::grey27}},
+                    {cat::dom::dom_status_enums::focussed, {color::blue, color::grey27}}
                 }
             },
             {
                 "statusbar",
                 {
-                    {cat::dom::estatus::active, {color::lime,      color::grey27}},
-                    {cat::dom::estatus::disabled, {color::grey30,   color::grey27}}, // keep coherence with widgets base
-                    {cat::dom::estatus::normal, {color::grey70,    color::grey27}},
-                    {cat::dom::estatus::focussed, {color::red4,       color::grey27}}
+                    {cat::dom::dom_status_enums::active, {color::lime,      color::grey27}},
+                    {cat::dom::dom_status_enums::disabled, {color::grey30,   color::grey27}}, // keep coherence with widgets base
+                    {cat::dom::dom_status_enums::normal, {color::grey70,    color::grey27}},
+                    {cat::dom::dom_status_enums::focussed, {color::red4,       color::grey27}}
                   //...
                 }
             }
@@ -577,86 +577,86 @@ color::db::palette  themes=
             {
                 "object",
                 {
-                    {cat::dom::estatus::active, {color::darkturquoise, color::darkblue}},
-                    {cat::dom::estatus::disabled, {color::grey30, color::darkblue}}, // keep coherence with widgets base
-                    {cat::dom::estatus::normal, {color::grey70, color::darkblue}},
-                    {cat::dom::estatus::focussed, {color::red4, color::darkblue}}
+                    {cat::dom::dom_status_enums::active, {color::darkturquoise, color::darkblue}},
+                    {cat::dom::dom_status_enums::disabled, {color::grey30, color::darkblue}}, // keep coherence with widgets base
+                    {cat::dom::dom_status_enums::normal, {color::grey70, color::darkblue}},
+                    {cat::dom::dom_status_enums::focussed, {color::red4, color::darkblue}}
                     //...
                 }
             },
             {
                 "frame",
                 {
-                    {cat::dom::estatus::active, {color::lightcyan3, color::darkblue}},
-                    {cat::dom::estatus::disabled, {color::grey30, color::darkblue}}, // keep coherence with widgets base
-                    {cat::dom::estatus::normal, {color::grey100, color::darkblue}},
-                    {cat::dom::estatus::focussed, {color::greenyellow, color::darkblue}}
+                    {cat::dom::dom_status_enums::active, {color::lightcyan3, color::darkblue}},
+                    {cat::dom::dom_status_enums::disabled, {color::grey30, color::darkblue}}, // keep coherence with widgets base
+                    {cat::dom::dom_status_enums::normal, {color::grey100, color::darkblue}},
+                    {cat::dom::dom_status_enums::focussed, {color::greenyellow, color::darkblue}}
                     //...
                 }
             },
             {
                 "label",
                 {
-                    {cat::dom::estatus::active, {color::lightcyan3, color::darkblue}},
-                    {cat::dom::estatus::disabled, {color::grey19, color::grey35}}, // keep coherence with widgets base
-                    {cat::dom::estatus::normal, {color::grey70, color::darkblue}}, // keep coherence with widgets base
-                    {cat::dom::estatus::focussed, {color::yellow, color::darkblue}}
+                    {cat::dom::dom_status_enums::active, {color::lightcyan3, color::darkblue}},
+                    {cat::dom::dom_status_enums::disabled, {color::grey19, color::grey35}}, // keep coherence with widgets base
+                    {cat::dom::dom_status_enums::normal, {color::grey70, color::darkblue}}, // keep coherence with widgets base
+                    {cat::dom::dom_status_enums::focussed, {color::yellow, color::darkblue}}
                 }
             },
             {
                 "shortkey",
                 {
-                    {cat::dom::estatus::active, {color::hotpink4, color::darkblue}},
-                    {cat::dom::estatus::disabled, {color::grey19, color::darkblue}}, // keep coherence with widgets base
-                    {cat::dom::estatus::normal, {color::grey70, color::darkblue}},
-                    {cat::dom::estatus::focussed, {color::red4, color::darkblue}}
+                    {cat::dom::dom_status_enums::active, {color::hotpink4, color::darkblue}},
+                    {cat::dom::dom_status_enums::disabled, {color::grey19, color::darkblue}}, // keep coherence with widgets base
+                    {cat::dom::dom_status_enums::normal, {color::grey70, color::darkblue}},
+                    {cat::dom::dom_status_enums::focussed, {color::red4, color::darkblue}}
                 }
             },
             {
                 "icon",
                 {
-                    {cat::dom::estatus::active, {color::blue1, color::darkblue}}, // keep coherence with widgets base
-                    {cat::dom::estatus::disabled, {color::grey19, color::darkblue}},
-                    {cat::dom::estatus::normal, {color::blue1, color::darkblue}},
-                    {cat::dom::estatus::focussed, {color::aquamarine3, color::darkblue}},
-                    //{cat::dom::estatus::success, {color::green5, color::darkblue}}
+                    {cat::dom::dom_status_enums::active, {color::blue1, color::darkblue}}, // keep coherence with widgets base
+                    {cat::dom::dom_status_enums::disabled, {color::grey19, color::darkblue}},
+                    {cat::dom::dom_status_enums::normal, {color::blue1, color::darkblue}},
+                    {cat::dom::dom_status_enums::focussed, {color::aquamarine3, color::darkblue}},
+                    //{cat::dom::dom_status_enums::success, {color::green5, color::darkblue}}
                 }
             },
             {
                 "input-area", // widgets::text_input
                 {
-                    {cat::dom::estatus::active, {color::white, color::blue}}, // keep coherence with widgets base
-                    {cat::dom::estatus::disabled, {color::grey39, color::blue}},
-                    {cat::dom::estatus::normal, {color::grey37, color::blue}},
-                    {cat::dom::estatus::focussed, {color::white, color::blue}}
+                    {cat::dom::dom_status_enums::active, {color::white, color::blue}}, // keep coherence with widgets base
+                    {cat::dom::dom_status_enums::disabled, {color::grey39, color::blue}},
+                    {cat::dom::dom_status_enums::normal, {color::grey37, color::blue}},
+                    {cat::dom::dom_status_enums::focussed, {color::white, color::blue}}
                 }
             },
             {
                 "input-field",
                 {
-                    {cat::dom::estatus::active, {color::lightcyan3, color::blue4}}, // keep coherence with widgets base
-                    {cat::dom::estatus::disabled, {color::blue, color::darkblue}},
-                    {cat::dom::estatus::normal, {color::blue, color::darkblue}},
-                    {cat::dom::estatus::focussed, {color::blue, color::darkblue}}
+                    {cat::dom::dom_status_enums::active, {color::lightcyan3, color::blue4}}, // keep coherence with widgets base
+                    {cat::dom::dom_status_enums::disabled, {color::blue, color::darkblue}},
+                    {cat::dom::dom_status_enums::normal, {color::blue, color::darkblue}},
+                    {cat::dom::dom_status_enums::focussed, {color::blue, color::darkblue}}
                 },
 
             },
             {
                 "input-field:placeholder",
                 {
-                    {cat::dom::estatus::active, {color::darkcyan, color::blue4}}, // keep coherence with widgets base
-                    {cat::dom::estatus::disabled, {color::blue, color::darkblue}},
-                    {cat::dom::estatus::normal, {color::blue, color::darkblue}},
-                    {cat::dom::estatus::focussed, {color::blue, color::darkblue}}
+                    {cat::dom::dom_status_enums::active, {color::darkcyan, color::blue4}}, // keep coherence with widgets base
+                    {cat::dom::dom_status_enums::disabled, {color::blue, color::darkblue}},
+                    {cat::dom::dom_status_enums::normal, {color::blue, color::darkblue}},
+                    {cat::dom::dom_status_enums::focussed, {color::blue, color::darkblue}}
                 },
             },
             {
                 "statusbar",
                 {
-                    {cat::dom::estatus::active, {color::lime, color::blue4}},
-                    {cat::dom::estatus::disabled, {color::grey30, color::blue4}}, // keep coherence with widgets base
-                    {cat::dom::estatus::normal, {color::grey70, color::blue4}},
-                    {cat::dom::estatus::focussed, {color::red4, color::blue4}}
+                    {cat::dom::dom_status_enums::active, {color::lime, color::blue4}},
+                    {cat::dom::dom_status_enums::disabled, {color::grey30, color::blue4}}, // keep coherence with widgets base
+                    {cat::dom::dom_status_enums::normal, {color::grey70, color::blue4}},
+                    {cat::dom::dom_status_enums::focussed, {color::red4, color::blue4}}
                       //...
                 }
             }
@@ -668,85 +668,85 @@ color::db::palette  themes=
             {
                 "element",
                 {
-                    {cat::dom::estatus::active, {color::darkseagreen, color::grey15}},
-                    {cat::dom::estatus::disabled, {color::grey30, color::grey15}}, // keep coherence with widgets base
-                    {cat::dom::estatus::normal, {color::grey70, color::grey15}},
-                    {cat::dom::estatus::focussed, {color::red4, color::grey15}}
+                    {cat::dom::dom_status_enums::active, {color::darkseagreen, color::grey15}},
+                    {cat::dom::dom_status_enums::disabled, {color::grey30, color::grey15}}, // keep coherence with widgets base
+                    {cat::dom::dom_status_enums::normal, {color::grey70, color::grey15}},
+                    {cat::dom::dom_status_enums::focussed, {color::red4, color::grey15}}
                     //...
                 }
             },
             {
                 "frame",
                 {
-                    {cat::dom::estatus::active, {color::darkseagreen, color::grey15}},
-                    {cat::dom::estatus::disabled, {color::grey30, color::grey15}}, // keep coherence with widgets base
-                    {cat::dom::estatus::normal, {color::lightcyan3, color::grey15}},
-                    {cat::dom::estatus::focussed, {color::greenyellow, color::grey15}}
+                    {cat::dom::dom_status_enums::active, {color::darkseagreen, color::grey15}},
+                    {cat::dom::dom_status_enums::disabled, {color::grey30, color::grey15}}, // keep coherence with widgets base
+                    {cat::dom::dom_status_enums::normal, {color::lightcyan3, color::grey15}},
+                    {cat::dom::dom_status_enums::focussed, {color::greenyellow, color::grey15}}
                     //...
                 }
             },
             {
                 "label",
                 {
-                    {cat::dom::estatus::active, {color::darkseagreen4, color::grey15}},
-                    {cat::dom::estatus::disabled, {color::grey19, color::grey35}}, // keep coherence with widgets base
-                    {cat::dom::estatus::normal, {color::grey70, color::darkblue}}, // keep coherence with widgets base
-                    {cat::dom::estatus::focussed, {color::yellow, color::darkblue}}
+                    {cat::dom::dom_status_enums::active, {color::darkseagreen4, color::grey15}},
+                    {cat::dom::dom_status_enums::disabled, {color::grey19, color::grey35}}, // keep coherence with widgets base
+                    {cat::dom::dom_status_enums::normal, {color::grey70, color::darkblue}}, // keep coherence with widgets base
+                    {cat::dom::dom_status_enums::focussed, {color::yellow, color::darkblue}}
                 }
             },
             {
                 "shortkey",
                 {
-                    {cat::dom::estatus::active, {color::hotpink4, color::darkblue}},
-                    {cat::dom::estatus::disabled, {color::grey19, color::darkblue}}, // keep coherence with widgets base
-                    {cat::dom::estatus::normal, {color::grey70, color::darkblue}},
-                    {cat::dom::estatus::focussed, {color::red4, color::darkblue}}
+                    {cat::dom::dom_status_enums::active, {color::hotpink4, color::darkblue}},
+                    {cat::dom::dom_status_enums::disabled, {color::grey19, color::darkblue}}, // keep coherence with widgets base
+                    {cat::dom::dom_status_enums::normal, {color::grey70, color::darkblue}},
+                    {cat::dom::dom_status_enums::focussed, {color::red4, color::darkblue}}
                 }
             },
             {
                 "icon",
                 {
-                    {cat::dom::estatus::active, {color::yellow3, color::darkblue}}, // keep coherence with widgets base
-                    {cat::dom::estatus::disabled, {color::grey19, color::darkblue}},
-                    {cat::dom::estatus::normal, {color::blue1, color::darkblue}},
-                    {cat::dom::estatus::focussed, {color::aquamarine3, color::darkblue}},
-                    //{cat::dom::estatus::success, {color::green5, color::darkblue}}
+                    {cat::dom::dom_status_enums::active, {color::yellow3, color::darkblue}}, // keep coherence with widgets base
+                    {cat::dom::dom_status_enums::disabled, {color::grey19, color::darkblue}},
+                    {cat::dom::dom_status_enums::normal, {color::blue1, color::darkblue}},
+                    {cat::dom::dom_status_enums::focussed, {color::aquamarine3, color::darkblue}},
+                    //{cat::dom::dom_status_enums::success, {color::green5, color::darkblue}}
                 }
             },
             {
                 "input-area", // widgets::text_input
                 {
-                    {cat::dom::estatus::active, {color::darkseagreen, color::grey15}}, // keep coherence with widgets base
-                    {cat::dom::estatus::disabled, {color::darkseagreen, color::grey15}},
-                    {cat::dom::estatus::normal, {color::darkseagreen, color::grey15}},
-                    {cat::dom::estatus::focussed, {color::darkseagreen, color::grey15}}
+                    {cat::dom::dom_status_enums::active, {color::darkseagreen, color::grey15}}, // keep coherence with widgets base
+                    {cat::dom::dom_status_enums::disabled, {color::darkseagreen, color::grey15}},
+                    {cat::dom::dom_status_enums::normal, {color::darkseagreen, color::grey15}},
+                    {cat::dom::dom_status_enums::focussed, {color::darkseagreen, color::grey15}}
                 }
             },
             {
                 "input-field",
                 {
-                    {cat::dom::estatus::active, {color::darkseagreen, color::grey11}}, // keep coherence with widgets base
-                    {cat::dom::estatus::disabled, {color::darkseagreen, color::grey15}},
-                    {cat::dom::estatus::normal, {color::darkseagreen, color::grey15}},
-                    {cat::dom::estatus::focussed, {color::darkseagreen, color::grey15}}
+                    {cat::dom::dom_status_enums::active, {color::darkseagreen, color::grey11}}, // keep coherence with widgets base
+                    {cat::dom::dom_status_enums::disabled, {color::darkseagreen, color::grey15}},
+                    {cat::dom::dom_status_enums::normal, {color::darkseagreen, color::grey15}},
+                    {cat::dom::dom_status_enums::focussed, {color::darkseagreen, color::grey15}}
                 }
             },
             {
                 "input-field:placeholder",
                 {
-                    {cat::dom::estatus::active, {color::grey23, color::grey11}}, // keep coherence with widgets base
-                    {cat::dom::estatus::disabled, {color::darkseagreen, color::grey15}},
-                    {cat::dom::estatus::normal, {color::darkseagreen, color::grey15}},
-                    {cat::dom::estatus::focussed, {color::darkseagreen, color::grey15}}
+                    {cat::dom::dom_status_enums::active, {color::grey23, color::grey11}}, // keep coherence with widgets base
+                    {cat::dom::dom_status_enums::disabled, {color::darkseagreen, color::grey15}},
+                    {cat::dom::dom_status_enums::normal, {color::darkseagreen, color::grey15}},
+                    {cat::dom::dom_status_enums::focussed, {color::darkseagreen, color::grey15}}
                 }
             },
             {
                 "statusbar",
                 {
-                    {cat::dom::estatus::active, {color::lime, color::grey15}},
-                    {cat::dom::estatus::disabled, {color::grey30, color::grey15}}, // keep coherence with widgets base
-                    {cat::dom::estatus::normal, {color::grey70, color::grey15}},
-                    {cat::dom::estatus::focussed, {color::red4, color::grey15}}
+                    {cat::dom::dom_status_enums::active, {color::lime, color::grey15}},
+                    {cat::dom::dom_status_enums::disabled, {color::grey30, color::grey15}}, // keep coherence with widgets base
+                    {cat::dom::dom_status_enums::normal, {color::grey70, color::grey15}},
+                    {cat::dom::dom_status_enums::focussed, {color::red4, color::grey15}}
                     //...
                 }
             }
@@ -758,86 +758,86 @@ color::db::palette  themes=
             {
                 "object",
                 {
-                    {cat::dom::estatus::active, {color::darkblue, color::grey85}},
-                    {cat::dom::estatus::disabled, {color::grey30, color::grey74}}, // keep coherence with widgets base
-                    {cat::dom::estatus::normal, {color::turquoise2, color::grey78}},
-                    {cat::dom::estatus::focussed, {color::darkblue, color::white}}
+                    {cat::dom::dom_status_enums::active, {color::darkblue, color::grey85}},
+                    {cat::dom::dom_status_enums::disabled, {color::grey30, color::grey74}}, // keep coherence with widgets base
+                    {cat::dom::dom_status_enums::normal, {color::turquoise2, color::grey78}},
+                    {cat::dom::dom_status_enums::focussed, {color::darkblue, color::white}}
                     //...
                 }
             },
             {
                 "frame",
                 {
-                    {cat::dom::estatus::active, {color::lightcyan3, color::darkblue}},
-                    {cat::dom::estatus::disabled, {color::grey30, color::darkblue}}, // keep coherence with widgets base
-                    {cat::dom::estatus::normal, {color::grey100, color::darkblue}},
-                    {cat::dom::estatus::focussed, {color::greenyellow, color::darkblue}}
+                    {cat::dom::dom_status_enums::active, {color::lightcyan3, color::darkblue}},
+                    {cat::dom::dom_status_enums::disabled, {color::grey30, color::darkblue}}, // keep coherence with widgets base
+                    {cat::dom::dom_status_enums::normal, {color::grey100, color::darkblue}},
+                    {cat::dom::dom_status_enums::focussed, {color::greenyellow, color::darkblue}}
                     //...
                 }
             },
             {
                 "label",
                 {
-                    {cat::dom::estatus::active, {color::lightcyan3, color::darkblue}},
-                    {cat::dom::estatus::disabled, {color::grey19, color::grey35}}, // keep coherence with widgets base
-                    {cat::dom::estatus::normal, {color::grey70, color::darkblue}}, // keep coherence with widgets base
-                    {cat::dom::estatus::focussed, {color::yellow, color::darkblue}}
+                    {cat::dom::dom_status_enums::active, {color::lightcyan3, color::darkblue}},
+                    {cat::dom::dom_status_enums::disabled, {color::grey19, color::grey35}}, // keep coherence with widgets base
+                    {cat::dom::dom_status_enums::normal, {color::grey70, color::darkblue}}, // keep coherence with widgets base
+                    {cat::dom::dom_status_enums::focussed, {color::yellow, color::darkblue}}
                 }
             },
             {
                 "shortkey",
                 {
-                    {cat::dom::estatus::active, {color::hotpink4, color::darkblue}},
-                    {cat::dom::estatus::disabled, {color::grey19, color::darkblue}}, // keep coherence with widgets base
-                    {cat::dom::estatus::normal, {color::grey70, color::darkblue}},
-                    {cat::dom::estatus::focussed, {color::red4, color::darkblue}}
+                    {cat::dom::dom_status_enums::active, {color::hotpink4, color::darkblue}},
+                    {cat::dom::dom_status_enums::disabled, {color::grey19, color::darkblue}}, // keep coherence with widgets base
+                    {cat::dom::dom_status_enums::normal, {color::grey70, color::darkblue}},
+                    {cat::dom::dom_status_enums::focussed, {color::red4, color::darkblue}}
                 }
             },
             {
                 "icon",
                 {
-                    {cat::dom::estatus::active, {color::blue1, color::darkblue}}, // keep coherence with widgets base
-                    {cat::dom::estatus::disabled, {color::grey19, color::darkblue}},
-                    {cat::dom::estatus::normal, {color::blue1, color::darkblue}},
-                    {cat::dom::estatus::focussed, {color::aquamarine3, color::darkblue}},
-                    //{cat::dom::estatus::success, {color::green5, color::darkblue}}
+                    {cat::dom::dom_status_enums::active, {color::blue1, color::darkblue}}, // keep coherence with widgets base
+                    {cat::dom::dom_status_enums::disabled, {color::grey19, color::darkblue}},
+                    {cat::dom::dom_status_enums::normal, {color::blue1, color::darkblue}},
+                    {cat::dom::dom_status_enums::focussed, {color::aquamarine3, color::darkblue}},
+                    //{cat::dom::dom_status_enums::success, {color::green5, color::darkblue}}
                 }
             },
             {
                 "input-area", // widgets::text_input
                 {
-                    {cat::dom::estatus::active, {color::white, color::blue}}, // keep coherence with widgets base
-                    {cat::dom::estatus::disabled, {color::grey39, color::blue}},
-                    {cat::dom::estatus::normal, {color::grey37, color::blue}},
-                    {cat::dom::estatus::focussed, {color::white, color::blue}}
+                    {cat::dom::dom_status_enums::active, {color::white, color::blue}}, // keep coherence with widgets base
+                    {cat::dom::dom_status_enums::disabled, {color::grey39, color::blue}},
+                    {cat::dom::dom_status_enums::normal, {color::grey37, color::blue}},
+                    {cat::dom::dom_status_enums::focussed, {color::white, color::blue}}
                 }
             },
             {
                 "input-field",
                 {
-                    {cat::dom::estatus::active, {color::lightcyan3, color::blue4}}, // keep coherence with widgets base
-                    {cat::dom::estatus::disabled, {color::blue, color::darkblue}},
-                    {cat::dom::estatus::normal, {color::blue, color::darkblue}},
-                    {cat::dom::estatus::focussed, {color::blue, color::darkblue}}
+                    {cat::dom::dom_status_enums::active, {color::lightcyan3, color::blue4}}, // keep coherence with widgets base
+                    {cat::dom::dom_status_enums::disabled, {color::blue, color::darkblue}},
+                    {cat::dom::dom_status_enums::normal, {color::blue, color::darkblue}},
+                    {cat::dom::dom_status_enums::focussed, {color::blue, color::darkblue}}
                 },
 
             },
             {
                 "input-field:placeholder",
                 {
-                    {cat::dom::estatus::active, {color::darkcyan, color::blue4}}, // keep coherence with widgets base
-                    {cat::dom::estatus::disabled, {color::blue, color::darkblue}},
-                    {cat::dom::estatus::normal, {color::blue, color::darkblue}},
-                    {cat::dom::estatus::focussed, {color::blue, color::darkblue}}
+                    {cat::dom::dom_status_enums::active, {color::darkcyan, color::blue4}}, // keep coherence with widgets base
+                    {cat::dom::dom_status_enums::disabled, {color::blue, color::darkblue}},
+                    {cat::dom::dom_status_enums::normal, {color::blue, color::darkblue}},
+                    {cat::dom::dom_status_enums::focussed, {color::blue, color::darkblue}}
                 },
             },
             {
                 "statusbar",
                 {
-                    {cat::dom::estatus::active, {color::lime, color::blue4}},
-                    {cat::dom::estatus::disabled, {color::grey30, color::blue4}}, // keep coherence with widgets base
-                    {cat::dom::estatus::normal, {color::grey70, color::blue4}},
-                    {cat::dom::estatus::focussed, {color::red4, color::blue4}}
+                    {cat::dom::dom_status_enums::active, {color::lime, color::blue4}},
+                    {cat::dom::dom_status_enums::disabled, {color::grey30, color::blue4}}, // keep coherence with widgets base
+                    {cat::dom::dom_status_enums::normal, {color::grey70, color::blue4}},
+                    {cat::dom::dom_status_enums::focussed, {color::red4, color::blue4}}
                       //...
                 }
             }
