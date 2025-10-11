@@ -368,6 +368,26 @@ conio& conio::operator>>(int&i)
 }
 
 
+rem::code conio::render(ui::vchar::bloc& ui_bloc, const ui::rectangle& rect)
+{
+    ui::rectangle area;
+    if (rect)
+        area = io::console::_geometry & (rect + io::console::_geometry.a);
+    else
+        area = io::console::_geometry;
+
+    if (!area)
+        return rem::code::rejected;
+
+    for (int y = 0; y < area.height(); ++y)
+    {
+        con << ui_bloc.colors << area.a  << ui::vchar::render_line( ui_bloc[area.a+ui::cxy{0,y}], area.width());
+    }
+    return rem::code::accepted;
+
+}
+
+
 io::console::mk_event conio::wait()
 {
     if (!!io::console::poll_fd()())

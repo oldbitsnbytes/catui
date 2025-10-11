@@ -180,6 +180,7 @@ public:
 
     conio& operator >> (int& i);
 
+    rem::code render(ui::vchar::bloc& ui_bloc, const ui::rectangle& rect);
 
     static io::console::mk_event wait();
     template<typename T> conio& operator << (T&& val)

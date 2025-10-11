@@ -207,6 +207,7 @@ public:
     ui::vchar::bloc::shared bloc_dc() { return _dc; }
     [[nodiscard]] ui::vchar::bloc& dc() const { return **_dc; }
     ui::vchar::iterator operator[](ui::cxy pos) const;
+    rem::code set_geometry(const ui::rectangle& rect);
 
     template<typename T> object& write(const T& content);
     template<typename T> T* dom_parent();
@@ -265,7 +266,8 @@ protected:
     type_enums::value       _dom_type{type_enums::none};
 
 
-    ui::vchar::bloc::shared _alloc_bloc_dc(ui::csz wxh);
+    rem::code               _alloc_bloc_dc(ui::csz wxh);
+
     ui::vchar::bloc::shared _dc{nullptr};
     ui::rectangle           _geometry{};
     //ui::vchar::iterator     _home();
