@@ -128,7 +128,7 @@ public:
 
     string& fill(size_t n, char c=0x20);
     static std::string fill(char c, size_t n);
-    [[nodiscard]] auto len() const { return _str.length(); }
+    [[nodiscard]] auto len() const -> size_t { return _str.length(); }
     std::string operator()()const  { return _str; }
     explicit operator std::string() { return _str; }
     explicit operator std::string() const { return _str; }
@@ -236,14 +236,22 @@ public:
         return ss.str();
     }
     static cat::string::list make_list(int argc, char** argv, int offset=0);
+
+
+
+
+
 };
 
 
-template<typename str_type>
-std::string string::location<str_type>::operator*() const
+template<typename str_type> std::string string::location<str_type>::operator*() const
 {
     cat::string str;
     str << "{ line #" << line << " column #" << column << " offset :" << offset << " length :" << length << "}";
     return str();
 }
+
 } // namespace cat
+
+
+#include <catui/sys/string-impl.h>

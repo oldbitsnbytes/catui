@@ -26,9 +26,9 @@ set(HEADERS
     #    include/${PROJECT_NAME}/ui/data/field.h
     #    include/${PROJECT_NAME}/ui/data/table.h
     include/${PROJECT_NAME}/sys/sys.h
-
     include/${PROJECT_NAME}/sys/rem.h
     include/${PROJECT_NAME}/sys/string.h
+    include/${PROJECT_NAME}/sys/string-impl.h
     include/${PROJECT_NAME}/ui/vchar.h
     include/${PROJECT_NAME}/io/polling.h
     #    include/${PROJECT_NAME}/ui/io/listener.h
@@ -42,7 +42,7 @@ set(HEADERS
     include/${PROJECT_NAME}/lexer/lang.h
     include/${PROJECT_NAME}/lexer/token_info.h
     include/${PROJECT_NAME}/lexer/lexer.h
-    include/catui/ui/dom/object-impl.h
+    include/${PROJECT_NAME}/ui/dom/object-impl.h
 
 )
 

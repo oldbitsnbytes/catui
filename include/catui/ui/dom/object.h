@@ -167,8 +167,12 @@ class CATUI_LIB object
 
     std::string _id{"object"};
     object* _parent{nullptr};
-    ui::vchar::bloc::shared _dc{nullptr};
-    ui::rectangle _geometry{};
+
+    #pragma region dom_element_private
+    //----------------------------------------------------------------------------------------------------------------------------
+
+    //----------------------------------------------------------------------------------------------------------------------------
+    #pragma endregion dom_element_private
 
 public:
     using list = std::vector<object*>;
@@ -187,46 +191,65 @@ public:
     // object* child(int index);
     object::iterator child(object* child);
     [[nodiscard]] const std::string& id() const { return _id; }
-
-    #pragma region dom_element
     object&  operator *() { return *this; }
-    object* operator ->() { return this; }
+    #pragma region public_dom_element
+    //----------------------------------------------------------------------------------------------------------------------------
+
+    rem::code set_theme(const std::string& theme_name);
+
+    //object* operator ->() { return this; }
     ui::vchar::bloc::shared bloc_dc() { return _dc; }
     [[nodiscard]] ui::vchar::bloc& dc() const { return **_dc; }
+    ui::vchar::iterator operator[](ui::cxy pos) const;
 
     template<typename T> object& write(const T& content);
+    template<typename T> T* dom_parent();
+    object&  dom_clear();
+    object&  home();
+    object&    operator << (const std::string& str);
+    object&    operator << (const char* str);
+    object&    operator << (const std::string_view& str);
+    object&    operator << (const std::vector<std::string_view>& str);
+    object&    operator << (const std::vector<std::string>& str);
+    object&    operator << (const ui::rectangle& frame_dim);
+    object&    operator << (color::pair clr);
+    object&    operator << (color::value clr);
+    object&    operator << (glyph::value f);
+    object&    operator << (cat::string str);
+    object&    operator << (cat::ui::cxy xy);
+    object&    operator << (sys::fn f);
+    object&    operator << (cat::ui::rectangle rect);
+    object&    operator << (cat::ui::border::Index idx);
 
-    #pragma endregion dom_element
+    //----------------------------------------------------------------------------------------------------------------------------
+    #pragma endregion public_dom_element
 
 protected:
     object::list _children{};
 
-
-    template<typename T> T* dom_parent()
-    {
-        object* o = this;
-        while (o->_parent)
-        {
-            T* p = dynamic_cast<T*>(o->_parent);
-            if (p) return p;
-        }
-        return nullptr;
-    }
+    #pragma region dom_element_protected
+    //----------------------------------------------------------------------------------------------------------------------------
 
     //virtual rem::code   setup_ui(const std::string& _theme_name);
-    ui::rectangle               _rect{};
-    ui::rectangle               _dirty_area{};
+    ui::rectangle       _rect{};
+    ui::rectangle       _dirty_area{};
     color::db::item     _palette{};
     color::pair         _theme_colors{};
     std::string         _theme_id{"default"};
     padding             _padding{};
     margin              _margin{};
     anchor::value       _anchor{anchor::none};
-    estatus::value      _status{estatus::normal};
+    estatus::value      _dom_status{estatus::normal};
     component::value    _component{component::none};
     e_type::value       _type{e_type::none};
 
-    rem::code           _alloc_dc(ui::csz wxh);
+
+    ui::vchar::bloc::shared _alloc_bloc_dc(ui::csz wxh);
+    ui::vchar::bloc::shared _dc{nullptr};
+    ui::rectangle           _geometry{};
+    //ui::vchar::iterator     _home();
+    //----------------------------------------------------------------------------------------------------------------------------
+    #pragma endregion dom_element_protected
 };
 } // cat::dom
 

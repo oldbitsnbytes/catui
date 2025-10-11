@@ -17,33 +17,14 @@
 
 
 #pragma once
-#include <catui/ui/dom/object.h>
+
+#include <catui/sys/string.h>
 
 
 
-namespace cat::dom
+namespace cat
 {
 
-template<typename T> object& object::write(const T& content)
-{
-    std::ostringstream ss;
-    ss<<content;
-
-    return *this;
-}
-
-
-
-template<typename T> T* object::dom_parent()
-{
-    object* o = this;
-    while (o->_parent)
-    {
-        T* p = dynamic_cast<T*>(o->_parent);
-        if (p) return p;
-    }
-    return nullptr;
-}
 
 
 }

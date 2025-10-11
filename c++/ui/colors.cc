@@ -485,7 +485,7 @@ color::db::palette  themes=
         "default",
         {
             {
-                "element",
+                "object",
                 {
                     {cat::dom::estatus::active, {color::grey100, color::grey27}},
                     {cat::dom::estatus::disabled, {color::grey30, color::grey35}}, // keep coherence with widgets base
@@ -575,7 +575,7 @@ color::db::palette  themes=
         "c64",
         {
             {
-                "element",
+                "object",
                 {
                     {cat::dom::estatus::active, {color::darkturquoise, color::darkblue}},
                     {cat::dom::estatus::disabled, {color::grey30, color::darkblue}}, // keep coherence with widgets base
@@ -756,7 +756,7 @@ color::db::palette  themes=
         "cat-latte",
         {
             {
-                "element",
+                "object",
                 {
                     {cat::dom::estatus::active, {color::darkblue, color::grey85}},
                     {cat::dom::estatus::disabled, {color::grey30, color::grey74}}, // keep coherence with widgets base
