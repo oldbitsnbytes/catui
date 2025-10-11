@@ -61,6 +61,11 @@ struct vchar
     static constexpr int ATShift = 0x18;
 
 
+   /**
+    * @brief vchar::block is a block-dc on which objects draw. vchar::block is always relative to the console's absolute geometric offset.
+    * The block's logical coordinates are visible or hidden. Each (child) object is clipped and confined to its top-level parent.
+    * When rendering an object, its local coordinates are chained offsets from the chained parent objects to the top-level parent.
+   */
     struct bloc
     {
         // --- CONFIGS AND INTERNAL DATA--------------

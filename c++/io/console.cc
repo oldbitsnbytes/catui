@@ -104,7 +104,7 @@ rem::code get_geometry()
     sys::info() << " console geometry: [" // << color::yellow << std::string(std::format("{:>3d}x{:<3d}",_geometry.size.h,_geometry.size.y)).c_str() << color::r << "]" << log;
                                 << color::yellow << _geometry.size.h
                                 << color::r << "x"
-                                << color::yellow << _geometry.size.h << color::r << sys::eol;
+                                << color::yellow << _geometry.size.h << color::r << ']' << sys::eol;
 
     return rem::code::done;
 }
@@ -368,13 +368,34 @@ conio& conio::operator>>(int&i)
 }
 
 
+/**
+ * @brief Renders a UI block within a specified rectangular area.
+ *
+ * This function calculates the intersection of the provided UI block geometry
+ * and the current console geometry. If a rectangle is specified, it further
+ * intersects it with the offset adjusted by the block's geometry. The rendering
+ * is performed line-by-line within the determined area.
+ *
+ * @param ui_bloc Reference to the UI block (of type `ui::vchar::bloc`) that
+ *        contains the content and color information for rendering.
+ * @param rect Optional rectangle (of type `ui::rectangle`). If provided, it defines
+ *        the clipping area for rendering relative to the block geometry.
+ *
+ * @return `rem::code::accepted` if the rendering succeeds within the calculated area.
+ *         `rem::code::rejected` if the UI block or rectangle does not intersect
+ *         with the console geometry.
+ */
 rem::code conio::render(ui::vchar::bloc& ui_bloc, const ui::rectangle& rect)
 {
     ui::rectangle area;
+    ui::rectangle area_clip = io::console::_geometry & ui_bloc.geometry;
+    if (!area_clip)
+        return rem::code::rejected;
+
     if (rect)
-        area = io::console::_geometry & (rect + io::console::_geometry.a);
+        area = io::console::_geometry & (rect + ui_bloc.geometry.a);
     else
-        area = io::console::_geometry;
+        area = ui_bloc.geometry;
 
     if (!area)
         return rem::code::rejected;

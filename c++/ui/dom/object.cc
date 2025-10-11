@@ -43,9 +43,8 @@ object::object(std::string a_id): _id(std::move(a_id)){}
 
 object::object(const object::shared& parent_object, std::string a_id):  _id(std::move(a_id)),_parent(parent_object)
 {
-    if (_parent)
+    if (_parent.get())
         _parent->_children.push_back(std::shared_ptr<object>(this));
-
 }
 
 

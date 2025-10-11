@@ -50,8 +50,8 @@ application::~application()
 
 rem::code application::setup()
 {
-    application::install_signals();
     io::console::start();
+    install_signals();
     _root = std::make_shared<dom::object>(nullptr, "root");
     _root->set_theme("C128");
     _root->set_dom_status(dom::dom_status_enums::active);
