@@ -70,10 +70,10 @@ struct vchar
     {
         // --- CONFIGS AND INTERNAL DATA--------------
         color::pair     colors{};       ///< default and fallback colors.
-        rectangle           geometry{};     ///< geometry
+        rectangle       geometry{};     ///< geometry
         vchar::string   dc{};           ///< (Display Context/Cell) Using one-dimension array of vchar as a two-dimension pad bloc.
         rem::code       state{rem::code::empty};
-        vchar::iterator  cursor{};      ///< iterator on the current character
+        vchar::iterator cursor{};      ///< iterator on the current character
         using shared = std::shared_ptr<vchar::bloc>;
 
         ~bloc();
@@ -90,6 +90,15 @@ struct vchar
         void                    set_foreground_color(color::value aFg);
         void                    set_background_color(color::value aBg);
         void                    set_colors(color::pair Cp);
+
+
+        rem::code               print(const std::string& str);
+        //rem::code               print(const char* str);
+        //rem::code               print(const std::string_view& str);
+        //rem::code               print(const vchar& ch);
+
+
+
         [[nodiscard]] color::value            fg() const;
         [[nodiscard]] color::value            bg() const;
         rectangle               operator&(const rectangle &rhs) const;

@@ -461,7 +461,7 @@ color::data color::query_data(color::value a_code)
 
 std::string color::pair::operator()() const
 {
-    return color::render(*this);
+    return color::render_rgb(*this);
 }
 
 color::pair &color::pair::operator>>(std::string &out)

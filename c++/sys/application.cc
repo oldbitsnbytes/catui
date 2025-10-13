@@ -42,7 +42,7 @@ application::application(const std::string&app_name, cat::string::view_list&& ar
 
 application::~application()
 {
-    sys::info() << "application::~application(); terminate interactive console and flush remaining application logs{ catui_tests.sys." << sys::eol;
+    sys::info() << "application::~application(); terminate interactive console and flush remaining application logs{ file ./catui_tests.sys }." << sys::eol;
     io::console::end();
     sys::flush("catui_test.sys");
 }
@@ -52,11 +52,12 @@ rem::code application::setup()
 {
     io::console::start();
     install_signals();
-    _root = std::make_shared<dom::object>(nullptr, "root");
-    _root->set_theme("C128");
-    _root->set_dom_status(dom::dom_status_enums::active);
-    _root->set_geometry({cxy{2,5},ui::csz{40,5}});
-    con.render(*_root->bloc_dc(), {});
+    // _root = std::make_shared<dom::object>(nullptr, "root");
+    // _root->set_theme("C128");
+    // _root->set_dom_status(dom::dom_status_enums::active);
+    // _root->set_geometry({cxy{2,5},ui::csz{40,5}});
+    // con.render(*_root->bloc_dc(), {});
+
     return rem::code::done;
 }
 
@@ -64,6 +65,7 @@ rem::code application::setup()
 rem::code application::run()
 {
     setup();
+    setup_ui();
     try
     {
 
@@ -107,9 +109,29 @@ rem::code application::end()
     return rem::code::ok;
 }
 
+
+rem::code application::setup_ui()
+{
+    auto coords1 = cxy{1,11};
+    auto coords2 = cxy{1,12};
+    auto rect = rectangle{cxy{30,20}, csz{10,10}};
+    con << color::hotpink4 <<  rect << color::r;
+    con << coords1 << color::yellow << (std::string) coords1 << "|catui enormous library!" <<  coords2 << (std::string)coords2 << color::lightgoldenrod5 << "====================="  << color::r << conio::eol;
+
+
+
+    auto bloc = vchar::bloc::create(csz{40,10}, color::pair{color::yellow,color::blue});
+    bloc->goto_xy({1,1});
+    bloc->print("vchar::bloc.");
+    con.render(**bloc);
+
+    return rem::code::done;
+}
+
+
 void application::install_signals()
 {
-        std::signal(SIGSEGV, &application::sig_crash);
+        std::signal(SIGSEGV, &application::sig_segv);
         sys::info()  << "signal SIGSEV installed."  << sys::eol;
         std::signal(SIGABRT, &application::sig_aborted);
         sys::info() << "signal SIGABRT installed."  << sys::eol;
@@ -125,7 +147,7 @@ void application::install_signals()
 }
 
 
-void application::sig_crash(int)
+void application::sig_segv(int)
 {
     sys::segfault() << "SIGSEGV" << sys::eol;
     sys::flush("catui_test.sys");

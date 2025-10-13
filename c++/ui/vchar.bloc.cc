@@ -11,6 +11,8 @@ namespace cat::ui
 
 
 
+#define MIN(a,b) ((a)<(b)?(a):(b))
+#define MAX(a,b) ((a)>(b)?(a):(b))
 
 
 vchar::iterator vchar::bloc::set_position(cxy _pos)
@@ -346,7 +348,10 @@ vchar::iterator vchar::bloc::at(const cxy& offset)
 
 rem::code vchar::bloc::goto_xy(const cxy&offset)
 {
-    geometry.move_at(offset);
+    if (!geometry[offset])
+        return rem::code::oob;
+
+    cursor = dc.begin() + geometry.width() * geometry.cursor.y + geometry.cursor.x;
     return rem::code::accepted;
 }
 
@@ -386,6 +391,20 @@ void vchar::bloc::set_colors(color::pair cp)
     colors = cp;
     cursor->set_colors(cp);
 }
+
+
+rem::code vchar::bloc::print(const std::string& str)
+{
+    auto size = str.length();
+    // Re-assure syncing iterator position with the cursor position
+    //cursor = (*this)[geometry.cursor];
+    auto count = MIN(size, (dc.end() - cursor));
+    for (int x=0; x < count; x++)
+        *cursor++ << str[x];
+
+    return rem::code::accepted;
+}
+
 
 ////////////////////////////////////////////////////////////
 /// \brief vchar::pad::fg
@@ -429,7 +448,11 @@ rectangle vchar::bloc::operator /(const rectangle& rhs) const { return geometry 
  */
 vchar::iterator vchar::bloc::operator[](cxy P)
 {
-    return dc.begin() + (P.y * geometry.size.h) + P.x;
+    auto r = geometry;
+    if (!r[P])
+        return cursor;
+
+    return dc.begin() + (P.y * geometry.size.w) + P.x;
 }
 
 

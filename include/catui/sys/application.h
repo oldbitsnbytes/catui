@@ -37,10 +37,13 @@ public:
     virtual rem::code setup();
     virtual rem::code run();
     virtual rem::code end();
+
+    virtual rem::code setup_ui();
+
 protected:
     static void install_signals();
 
-    static void sig_crash(int);
+    static void sig_segv(int);
     static void sig_aborted(int);
     static void sig_interrupted(int);
     static void sig_winch(int);
@@ -48,7 +51,7 @@ protected:
     static void sig_term(int);
     static void sig_kill(int);
     static void sig_pipe(int);
-    static void sig_segv(int);
+
     // static void sig_usr1(int);
     // static void sig_usr2(int);
     // static void sig_chld(int);

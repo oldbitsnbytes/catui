@@ -130,7 +130,9 @@ vchar& vchar::operator<<(color::pair cp)
 { D = (D & ~ColorsMask)          | static_cast<U8>(cp.fg) << FGShift | static_cast<U8>(cp.bg) << BGShift; return *this; }
 
 vchar& vchar::operator<<(char ch)
-{ D = (D & ~(UTFBITS|CharMask))  | (D & (Underline|Stroke|Blink|ColorsMask)) | ASCII | (ch & 0xff); return *this; }
+{ D = (D & ~(UTFBITS|CharMask))  | (D | ASCII | (ch & 0xff)); return *this; }
+// { D = (D & ~(UTFBITS|CharMask))  | (D & (Underline|Stroke|Blink|ColorsMask)) | ASCII | (ch & 0xff); return *this; }
+
 
 
 [[maybe_unused]] std::string vchar::render_colors() const
@@ -160,7 +162,7 @@ vchar::operator std::string() const { return details(); }
 std::string vchar::render_line(vchar::iterator _it, std::size_t count)
 {
     color::pair current_colors = _it->colors();
-    sys::debug() << "col 1 : details:" << _it->details() << color::r << sys::eol;
+    sys::debug() << "col 1's detail:" << _it->details() << color::r << sys::eol;
     std::string _o = current_colors();
     std::cout << _o;
     auto c = _it;
@@ -179,6 +181,11 @@ std::string vchar::render_line(vchar::iterator _it, std::size_t count)
             current_colors.fg = fg;
             _o += color::render_rgb(current_colors.fg);
         }
+        if (ch.D&ASCII)
+        {
+            _o += ch.ascii();
+            continue;
+        }
         if(ch.D & UTFBITS)
         {
             if(ch.D & Frame)
@@ -196,8 +203,6 @@ std::string vchar::render_line(vchar::iterator _it, std::size_t count)
                         //l << "sizeof " << color::Yellow << w << color::R << "=" << std::strlen(w) << l;
                     }
         }
-        else
-            _o += ch.ascii();
     }
     _o += _eol_;
     return _o;

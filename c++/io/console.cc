@@ -385,25 +385,22 @@ conio& conio::operator>>(int&i)
  *         `rem::code::rejected` if the UI block or rectangle does not intersect
  *         with the console geometry.
  */
-rem::code conio::render(ui::vchar::bloc& ui_bloc, const ui::rectangle& rect)
+rem::code conio::render(ui::vchar::bloc& ui_bloc, const ui::rectangle& local_area)
 {
-    ui::rectangle area;
-    ui::rectangle area_clip = io::console::_geometry & ui_bloc.geometry;
-    if (!area_clip)
-        return rem::code::rejected;
 
-    if (rect)
-        area = io::console::_geometry & (rect + ui_bloc.geometry.a);
-    else
-        area = ui_bloc.geometry;
+    ui::rectangle ui_area = ui_bloc.geometry.to_local();
 
-    if (!area)
-        return rem::code::rejected;
-
-    for (int y = 0; y < area.height(); ++y)
+    if (local_area)
     {
-        con << ui_bloc.colors << area.a  << ui::vchar::render_line( ui_bloc[area.a+ui::cxy{0,y}], area.width());
+        ui_area = ui_bloc.geometry.to_local() & local_area;
+        if (!ui_area) return rem::code::rejected;
     }
+
+    for (int y = 0; y < ui_area.height(); ++y)
+    {
+        con << ui_bloc.geometry.a+ui_area.a+ui::cxy{0,y}  << ui::vchar::render_line( ui_bloc[ui_area.a+ui::cxy{0,y}], ui_area.width());
+    }
+    con << eol;
     return rem::code::accepted;
 
 }

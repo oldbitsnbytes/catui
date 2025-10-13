@@ -64,7 +64,7 @@ add_library(${PROJECT_NAME}
             c++/sys/string.cc
             c++/sys/dbase.cc
             c++/ui/vchar.cc
-            c++/ui/vchar.pad.cc
+            c++/ui/vchar.bloc.cc
             c++/io/polling.cc
 #            c++/ui/io/listener.cc
 #            c++/ui/io/tcp_socket.cc
