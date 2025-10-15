@@ -50,6 +50,59 @@ rem::code vchar::bloc::render(const rectangle&area)
 
 }
 
+#define _eol_ color::pair(color::r, color::r)()
+
+std::string vchar::bloc::render(cxy xy, int w)
+{
+    auto c = at(xy);
+    color::pair current_colors = c->colors();
+    sys::debug() << "col 1's detail:" << c->details() << color::r << sys::eol;
+    std::string _o = current_colors();
+    std::cout << _o;
+
+    for(int x =0; x< w; x++)
+    {
+        vchar ch = *c++;
+
+        auto  [fg, bg] = ch.colors();
+        if(current_colors.bg != bg)
+        {
+            current_colors.bg = bg;
+            _o += color::render_background_rgb(current_colors.bg);
+        }
+        if(current_colors.fg != fg)
+        {
+            current_colors.fg = fg;
+            _o += color::render_rgb(current_colors.fg);
+        }
+        if (ch.D&ASCII)
+        {
+            _o += ch.ascii();
+            continue;
+        }
+        if(ch.D & UTFBITS)
+        {
+            if(ch.D & Frame)
+                _o += border()[ch.border_index()];
+            else
+                if(ch.D & Accent)
+                    _o += accent_fr::data[ch.accent_index()];
+                else
+                    if(ch.D & UGlyph)
+                    {
+                        auto w = glyph::data[ch.icon_index()];
+                        _o += w;
+                        _o += "\033[D";
+                        //l = Sys::Debug(1);
+                        //l << "sizeof " << color::Yellow << w << color::R << "=" << std::strlen(w) << l;
+                    }
+        }
+    }
+    _o += _eol_;
+    return _o;
+
+}
+
 
 /**
  *  @brief Write std::string at the current position.
@@ -307,7 +360,7 @@ void vchar::bloc::clear(const rectangle& subarea)
     }
 
     for (int y=0;y<subarea.size.h; ++y)
-        std::fill_n(dc.begin()+subarea.a.x + (subarea.a.y + y) * geometry.size.h, subarea.size.h, vchar(color::pair(colors)));
+        std::fill_n(dc.begin()+subarea.a.x + ((subarea.a.y + y) * geometry.size.w), subarea.size.w, vchar(color::pair(colors)));
 
 }
 
@@ -340,7 +393,7 @@ rem::code vchar::bloc::copy(vchar::bloc&pad_dc, rectangle inner_area)
 vchar::iterator vchar::bloc::at(const cxy& offset)
 {
     if (geometry[offset])
-        return dc.begin() + geometry.width()*offset.y + offset.x;
+        return dc.begin() + (geometry.width() * offset.y) + offset.x;
 
     return cursor;
 }
@@ -349,9 +402,12 @@ vchar::iterator vchar::bloc::at(const cxy& offset)
 rem::code vchar::bloc::goto_xy(const cxy&offset)
 {
     if (!geometry[offset])
+    {
+        sys::error() << " vchar::pad::goto_xy : request area:" << rem::code::oob << ";" <<  offset << "; within " << geometry.size << sys::eol;
         return rem::code::oob;
+    }
 
-    cursor = dc.begin() + geometry.width() * geometry.cursor.y + geometry.cursor.x;
+    cursor = dc.begin() + (geometry.width() * geometry.cursor.y) + geometry.cursor.x;
     return rem::code::accepted;
 }
 
@@ -399,8 +455,8 @@ rem::code vchar::bloc::print(const std::string& str)
     // Re-assure syncing iterator position with the cursor position
     //cursor = (*this)[geometry.cursor];
     auto count = MIN(size, (dc.end() - cursor));
-    for (int x=0; x < count; x++)
-        *cursor++ << str[x];
+
+    for (int x=0; x < count; x++)  *cursor++ << str[x];
 
     return rem::code::accepted;
 }

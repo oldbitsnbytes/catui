@@ -113,7 +113,7 @@ struct vchar
         vchar::iterator set_position(cxy P);
         vchar::iterator peek(int l, int column=0);
         rem::code render(const rectangle& area);
-
+        std::string render(cxy xy, int w);
     };
 
 
@@ -153,7 +153,6 @@ struct vchar
         D = ch.D;
         return *this;
     }
-    static std::string render_line(vchar::iterator _it, std::size_t a_count);
 
     vchar&     operator <<(char ch);
     [[nodiscard]] std::string render_colors() const;

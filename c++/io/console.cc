@@ -269,7 +269,7 @@ conio& conio::operator<<(ui::vchar::bloc& ui_bloc)
 
     for (int Y=0; Y<ui_bloc.geometry.size.h; ++Y)
     {
-        con << ui_bloc.geometry.a + ui::cxy{0,Y} << ui_bloc.colors << ui::vchar::render_line(ui_bloc[{0,Y}],ui_bloc.geometry.size.w);
+        con << ui_bloc.geometry.a + ui::cxy{0,Y} << ui_bloc.render(ui::cxy{0,Y},ui_bloc.geometry.size.w);
     }
 
     return *this;
@@ -398,7 +398,7 @@ rem::code conio::render(ui::vchar::bloc& ui_bloc, const ui::rectangle& local_are
 
     for (int y = 0; y < ui_area.height(); ++y)
     {
-        con << ui_bloc.geometry.a+ui_area.a+ui::cxy{0,y}  << ui::vchar::render_line( ui_bloc[ui_area.a+ui::cxy{0,y}], ui_area.width());
+        con << ui_bloc.geometry.a+ui_area.a+ui::cxy{0,y}  << ui_bloc.render(ui_area.a+ui::cxy{0,y}, ui_area.width());
     }
     con << eol;
     return rem::code::accepted;

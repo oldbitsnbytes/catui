@@ -121,10 +121,10 @@ rem::code application::setup_ui()
 
 
     auto bloc = vchar::bloc::create(csz{40,10}, color::pair{color::yellow,color::blue});
-    bloc->goto_xy({1,1});
+    bloc->goto_xy({0,0});
     bloc->print("vchar::bloc.");
-    con.render(**bloc);
-
+    //con.render(**bloc);
+    con << **bloc << conio::eol;
     return rem::code::done;
 }
 
