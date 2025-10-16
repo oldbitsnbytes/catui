@@ -101,10 +101,10 @@ rem::code get_geometry()
     _geometry = {{0,0}, ui::csz{win.ws_col, win.ws_row}};
 
     // debug or info:
-    sys::info() << " console geometry: [" // << color::yellow << std::string(std::format("{:>3d}x{:<3d}",_geometry.size.h,_geometry.size.y)).c_str() << color::r << "]" << log;
-                                << color::yellow << _geometry.size.h
-                                << color::r << "x"
-                                << color::yellow << _geometry.size.h << color::r << ']' << sys::eol;
+    sys::info() << " console geometry: ["
+                << color::yellow << _geometry.size.w
+                << color::r << "x"
+                << color::yellow << _geometry.size.h << color::r << ']' << sys::eol;
 
     return rem::code::done;
 }
@@ -251,7 +251,7 @@ conio& conio::operator<<(rem::type ty)
 
 conio& conio::operator<<(ui::cxy xy)
 {
-    std::cout << std::format(io::console::set_caret_pos, xy.y,xy.x);//"\x1b[" << xy.y << ";" << xy.x << "H";
+    std::cout << std::format(io::console::set_caret_pos, xy.y+1,xy.x+1);//"\x1b[" << xy.y << ";" << xy.x << "H";
     std::cout.flush();
     return *this;
 }

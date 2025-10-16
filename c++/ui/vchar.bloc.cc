@@ -24,7 +24,25 @@ vchar::iterator vchar::bloc::set_position(cxy _pos)
     }
 
     state = rem::code::accepted;
+    geometry.cursor = _pos;
     return dc.begin() + geometry.width()*_pos.y + _pos.x;
+}
+
+
+/**
+ * @brief Moves the bloc to a specified position.
+ *
+ * Updates the geometric position of the bloc to the provided coordinates.
+ *
+ * @param P The target coordinates to move the bloc to.
+ * @return A rem::code indicating the operation result (always rem::code::accepted in current implementation).
+ *
+ * @todo Check coords ...or not...
+ */
+rem::code vchar::bloc::move_to(cxy P)
+{
+    geometry.move_at(P);
+    return rem::code::accepted;
 }
 
 
@@ -406,7 +424,7 @@ rem::code vchar::bloc::goto_xy(const cxy&offset)
         sys::error() << " vchar::pad::goto_xy : request area:" << rem::code::oob << ";" <<  offset << "; within " << geometry.size << sys::eol;
         return rem::code::oob;
     }
-
+    geometry.cursor = offset;
     cursor = dc.begin() + (geometry.width() * geometry.cursor.y) + geometry.cursor.x;
     return rem::code::accepted;
 }
@@ -500,7 +518,7 @@ rectangle vchar::bloc::operator /(const rectangle& rhs) const { return geometry 
 
 
 /**
- *
+ *  brief peek.
  */
 vchar::iterator vchar::bloc::operator[](cxy P)
 {

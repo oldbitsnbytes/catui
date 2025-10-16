@@ -111,6 +111,8 @@ struct vchar
         bool         operator --();    ///< --geometry (--geometry.cursor.x)
         bool         operator --(int); ///< geometry-- (++geometry.cursor.x)
         vchar::iterator set_position(cxy P);
+        rem::code    move_to(cxy P);
+
         vchar::iterator peek(int l, int column=0);
         rem::code render(const rectangle& area);
         std::string render(cxy xy, int w);

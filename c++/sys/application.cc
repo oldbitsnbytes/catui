@@ -50,7 +50,6 @@ application::~application()
 
 rem::code application::setup()
 {
-    io::console::start();
     install_signals();
     // _root = std::make_shared<dom::object>(nullptr, "root");
     // _root->set_theme("C128");
@@ -60,6 +59,30 @@ rem::code application::setup()
 
     return rem::code::done;
 }
+
+
+
+rem::code application::setup_ui()
+{
+    io::console::start();
+
+    auto coords1 = cxy{0,11};
+    auto coords2 = cxy{0,12};
+    auto rect = rectangle{cxy{30,20}, csz{10,10}};
+    con << color::hotpink4 <<  rect << color::r;
+    con << coords1 << color::yellow << (std::string) coords1 << "|catui monolithic library!" <<  coords2 << (std::string)coords2 << color::lightgoldenrod5 << " Playground ====================="  << color::r << conio::eol;
+
+
+
+    auto bloc = vchar::bloc::create(csz{40,10}, color::pair{color::yellow,color::blue});
+
+    bloc->goto_xy({1,1});
+    bloc->print("vchar::bloc.");
+    bloc->move_to({5,5});
+    con << **bloc << conio::eol;
+    return rem::code::done;
+}
+
 
 
 rem::code application::run()
@@ -110,23 +133,6 @@ rem::code application::end()
 }
 
 
-rem::code application::setup_ui()
-{
-    auto coords1 = cxy{1,11};
-    auto coords2 = cxy{1,12};
-    auto rect = rectangle{cxy{30,20}, csz{10,10}};
-    con << color::hotpink4 <<  rect << color::r;
-    con << coords1 << color::yellow << (std::string) coords1 << "|catui enormous library!" <<  coords2 << (std::string)coords2 << color::lightgoldenrod5 << "====================="  << color::r << conio::eol;
-
-
-
-    auto bloc = vchar::bloc::create(csz{40,10}, color::pair{color::yellow,color::blue});
-    bloc->goto_xy({0,0});
-    bloc->print("vchar::bloc.");
-    //con.render(**bloc);
-    con << **bloc << conio::eol;
-    return rem::code::done;
-}
 
 
 void application::install_signals()
