@@ -479,7 +479,7 @@ std::string color::pair::name() const
 }
 
 
-color::db::palette  themes=
+color::db::theme  color::db::themes=
 {
     {
         "default",
@@ -572,7 +572,7 @@ color::db::palette  themes=
         }
     },
     {
-        "c64",
+        "C64",
         {
             {
                 "object",
@@ -663,10 +663,10 @@ color::db::palette  themes=
         }
     },
     {
-        "c128",
+        "C128",
         {
             {
-                "element",
+                "object",
                 {
                     {cat::dom::dom_status_enums::active, {color::darkseagreen, color::grey15}},
                     {cat::dom::dom_status_enums::disabled, {color::grey30, color::grey15}}, // keep coherence with widgets base
@@ -852,7 +852,7 @@ color::db::palette  themes=
  * @return
  * @todo check exist.
  */
-color::db::element& color::db::theme(const std::string&theme_name)
+color::db::palette& color::db::theme_palette(const std::string&theme_name)
 {
     return themes[theme_name];
 }
@@ -860,14 +860,14 @@ color::db::element& color::db::theme(const std::string&theme_name)
 
 /*!
  *
- * @param element_palette
- * @param element_name
+ * @param theme_palette_data
+ * @param object_name
  * @return reference to items
  * @todo check exist.
  */
-color::db::item& color::db::element_item(element& element_palette, const std::string&element_name)
+color::db::object_palette& color::db::palette_item(palette& theme_palette_data, const std::string&object_name)
 {
-    return element_palette[element_name];
+    return theme_palette_data[object_name];
 }
 
 }

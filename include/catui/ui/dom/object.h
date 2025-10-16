@@ -255,7 +255,7 @@ protected:
     //virtual rem::code   setup_ui(const std::string& _theme_name);
     ui::rectangle           _rect{};
     ui::rectangle           _dirty_area{};
-    color::db::item         _palette{};
+    color::db::object_palette _palette{};
     color::pair             _theme_colors{};
     std::string             _theme_id{"default"};
     padding                 _padding{};

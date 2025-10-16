@@ -73,7 +73,7 @@ rem::code application::setup_ui()
     con << coords1 << color::yellow << (std::string) coords1 << "|catui monolithic library!" <<  coords2 << (std::string)coords2 << color::lightgoldenrod5 << " Playground ====================="  << color::r << conio::eol;
 
 
-
+    //auto object = cat::dom::object::create()
     auto bloc = vchar::bloc::create(csz{40,10}, color::pair{color::yellow,color::blue});
 
     bloc->goto_xy({1,1});
@@ -83,6 +83,16 @@ rem::code application::setup_ui()
     return rem::code::done;
 }
 
+
+rem::code application::set_global_theme(const std::string&theme_name)
+{
+    if (const auto it = color::db::themes.find(theme_name); it != color::db::themes.end())
+        _palette = &color::db::theme_palette(theme_name);
+    else
+        throw sys::exception()[sys::error() <<  "theme " << theme_name << ' ' << rem::code::notexist  << sys::eol];
+
+    return rem::code::accepted;
+}
 
 
 rem::code application::run()

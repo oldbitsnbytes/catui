@@ -85,7 +85,7 @@ object::iterator object::child(const object::shared& child)
 
 rem::code object::set_theme(const std::string&theme_name)
 {
-    _palette = color::db::element_item(color::db::theme(theme_name), "object");
+    _palette = color::db::palette_item(color::db::theme_palette(theme_name), "object");
     _theme_colors = _palette[_dom_status];
     return rem::code::accepted;
 }

@@ -359,13 +359,16 @@ namespace cat::ui
 
     struct db
     {
-        using item = std::map<int, color::pair>;
-        using element = std::map<std::string, item>;
-        using palette = std::map<std::string, element>;
+        using object_palette = std::map<int, color::pair>;
+        using palette = std::map<std::string, object_palette>;
+        using theme = std::map<std::string, palette>;
 
 
-        static db::element& theme(const std::string& theme_name);
-        static db::item& element_item(element& element_palette, const std::string& element_name);
+        static db::palette& theme_palette(const std::string& theme_name);
+        static db::object_palette& palette_item(palette& theme_palette_data, const std::string& object_name);
+
+
+        static theme themes;
 
     };
 

@@ -29,6 +29,7 @@ class CATUI_LIB application
     CLASSNAME_START(application)
     cat::string::view_list _arguments{};
     dom::object::shared _root{nullptr};
+    color::db::palette* _palette{nullptr};
 
 public:
     application();
@@ -39,6 +40,7 @@ public:
     virtual rem::code end();
 
     virtual rem::code setup_ui();
+    virtual rem::code set_global_theme(const std::string& theme_name);
 
 protected:
     static void install_signals();
