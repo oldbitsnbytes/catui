@@ -131,6 +131,11 @@ vchar& vchar::operator<<(color::pair cp)
 
 vchar& vchar::operator<<(char ch)
 { D = (D & ~(UTFBITS|CharMask))  | (D | ASCII | (ch & 0xff)); return *this; }
+
+
+
+
+
 // { D = (D & ~(UTFBITS|CharMask))  | (D & (Underline|Stroke|Blink|ColorsMask)) | ASCII | (ch & 0xff); return *this; }
 
 

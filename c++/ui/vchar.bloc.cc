@@ -50,7 +50,7 @@ vchar::iterator vchar::bloc::peek(int l, int column)
 {
     if (l>=geometry.size.h)
     {
-        throw sys::exception()[sys::error() << rem::code::oob << " vchar::pad::line(int) : request line:" << l << "; within 0-" << color::hotpink4 << geometry.size.h];
+        throw sys::exception()[sys::error() << rem::code::oob << " vchar::pad::line(int) : request line:" << l << "; within 0-" << color::hotpink4 << geometry.size.h << sys::eol];
         //return dc.end();
     }
     return (*this)[cxy{column,l}];
@@ -74,7 +74,7 @@ std::string vchar::bloc::render(cxy xy, int w)
 {
     auto c = at(xy);
     color::pair current_colors = c->colors();
-    sys::debug() << "col 1's detail:" << c->details() << color::r << sys::eol;
+    //sys::debug() << "col 1's detail:" << c->details() << color::r << sys::eol;
     std::string _o = current_colors();
     std::cout << _o;
 
@@ -413,6 +413,7 @@ vchar::iterator vchar::bloc::at(const cxy& offset)
     if (geometry[offset])
         return dc.begin() + (geometry.width() * offset.y) + offset.x;
 
+    sys::error() << rem::fn::func << " out of boundaries @" << color::red4 << offset << sys::eol;
     return cursor;
 }
 
@@ -421,8 +422,8 @@ rem::code vchar::bloc::goto_xy(const cxy&offset)
 {
     if (!geometry[offset])
     {
-        sys::error() << " vchar::pad::goto_xy : request area:" << rem::code::oob << ";" <<  offset << "; within " << geometry.size << sys::eol;
-        return rem::code::oob;
+        throw sys::exception()[sys::error() << " vchar::pad::goto_xy : request area:" << rem::code::oob << ";" <<  offset << "; within " << (std::string)geometry.size << sys::eol];
+        //return rem::code::oob;
     }
     geometry.cursor = offset;
     cursor = dc.begin() + (geometry.width() * geometry.cursor.y) + geometry.cursor.x;

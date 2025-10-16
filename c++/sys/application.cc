@@ -88,11 +88,11 @@ rem::code application::setup_ui()
 rem::code application::run()
 {
     setup();
-    setup_ui();
     try
     {
-
+        setup_ui();
         con << rem::code::ready << conio::eol;
+
 
         bool fini = false;
         while (!fini)

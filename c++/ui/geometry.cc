@@ -201,7 +201,7 @@ cxy cxy::get_min(const cxy &rhs) const
 
 csz::operator std::string() const
 {
-    return std::format("{},{}:{}", w, h , w*h);
+    return std::format("{}x{}:{}", w, h , w*h);
 }
 
 
@@ -542,7 +542,7 @@ bool rectangle::operator == (const rectangle& rhs) const
  */
 bool rectangle::operator[](const cxy &pt) const
 {
-    return ((pt.x >= a.x) && (pt.x <= b.x) && (pt.y >= a.y) && (pt.y <= b.y));
+    return ((pt.x >= 0) && (pt.x < size.w) && (pt.y >= 0) && (pt.y < size.h));
 }
 
 cxy rectangle::top_left() const

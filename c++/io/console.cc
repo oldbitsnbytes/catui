@@ -267,9 +267,12 @@ conio& conio::operator<<(glyph::value f)
 conio& conio::operator<<(ui::vchar::bloc& ui_bloc)
 {
 
+    sys::debug() << rem::fn::func << ": " << ui_bloc.geometry.size << " << " << ui_bloc.geometry.a << sys::eol;
     for (int Y=0; Y<ui_bloc.geometry.size.h; ++Y)
     {
-        con << ui_bloc.geometry.a + ui::cxy{0,Y} << ui_bloc.render(ui::cxy{0,Y},ui_bloc.geometry.size.w);
+        auto t = ui_bloc.render(ui::cxy{0,Y},ui_bloc.geometry.size.w);
+        con << ui_bloc.geometry.a + ui::cxy{0,Y} << t;
+        sys::write() << t << sys::eol;
     }
 
     return *this;
