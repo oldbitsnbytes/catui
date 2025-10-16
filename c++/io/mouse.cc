@@ -266,7 +266,7 @@ std::string mouse::operator()() const
          << color::orangered1 << std::format("{:<3d}", pos.y)
          << color::reset << "]";
     if(button.left)
-        text << color::lime << (pressed ? 'L' : 'l') << color::r;
+        text << color::aquamarine3 << (pressed ? 'L' : 'l') << color::r;
     else
         text << "l";
     text << '|';
