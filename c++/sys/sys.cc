@@ -373,7 +373,13 @@ sys::out& sys::out::operator << (rem::fn f)
 
     switch (f) {
         case rem::fn::eol:
+            ///@todo Limit _ram capacity then auto flush on disk + clear the ram.
             sys::_ram.emplace_back(text());
+            if (_ram.size() > 100000)
+            {
+                sys::flush("temp.sys",std::ios_base::app);
+                _ram.clear();
+            }
             text="";
             //            switch (appbook::format()) ///@todo create COut::format(); directly instead.
             //            {
@@ -607,10 +613,10 @@ sys::out sys::log         (std::source_location&& src){
 }
 
 
-rem::code sys::flush(std::string_view filename)
+rem::code sys::flush(std::string_view filename, std::ios_base::openmode mode)
 {
     std::ofstream file;
-    file.open(filename.data(),std::ios_base::binary| std::ios_base::trunc);
+    file.open(filename.data(),std::ios_base::binary|mode);
     for (const auto& txt : sys::_ram) file << txt << std::endl;
     // ~file() auto-close?
     sys::_ram.clear();

@@ -131,7 +131,7 @@ public:
     static sys::out log         (std::source_location&& src = std::source_location::current());
     //...
 
-    static rem::code flush(std::string_view filename);
+    static rem::code flush(std::string_view filename, std::ios_base::openmode mode=std::ios_base::trunc);
 
     class CATUI_LIB exception :  public std::exception
     {
