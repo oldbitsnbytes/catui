@@ -66,6 +66,7 @@ mouse &mouse::operator=(const mouse &cpy)
     dxy = cpy.dxy;
     button = cpy.button;
     state = cpy.state;
+    pressed = cpy.pressed;
     return *this;
 }
 
@@ -141,7 +142,7 @@ std::pair<rem::code,mouse>  mouse::parse(pollin &_fd)
                 case 'M' :
                 {
                     //auto l = sys::debug(); l << "end of sequence :'" << color::yellow << (char)b << color::r << "' args = [" << color::hotpink4 << tux::string::bytes(args) << color::r << "]" << l;
-                    if (auto [r,mev] = parse(false,args); r == rem::code::ready)
+                    if (auto [r,mev] = parse(true,args); r == rem::code::ready)
                     {
                         _fd.buffer.clear();
                         return {rem::code::ready, mev};
@@ -151,7 +152,7 @@ std::pair<rem::code,mouse>  mouse::parse(pollin &_fd)
                 case 'm':
                 {
                     //auto l = sys::debug(); l << "end of sequence :'" << color::yellow << (char)b << color::r << "' args = [" << color::hotpink4 << tux::string::bytes(args) << color::r << "]" << l;
-                    if (auto [r,mev] = parse(true,args); r == rem::code::ready)
+                    if (auto [r,mev] = parse(false,args); r == rem::code::ready)
                     {
                         _fd.buffer.clear();
                         return {rem::code::ready, mev};
@@ -178,7 +179,7 @@ mouse::operator bool()
 }
 
 
-std::pair<rem::code,mouse>  mouse::parse(bool brel, std::vector<int> args_)
+std::pair<rem::code,mouse>  mouse::parse(bool bpressed, std::vector<int> args_)
 {
 
 
@@ -199,7 +200,8 @@ std::pair<rem::code,mouse>  mouse::parse(bool brel, std::vector<int> args_)
     mev.button.mid    = (args_[0] & 3) == 1 ? 1 :0;
     mev.button.right  = (args_[0] & 3) == 2 ? 1 :0;
     if((args_[0] & 3)==3){
-        mev.pressed = false;
+        sys::debug() << "no button pressed" << sys::eol;
+
         mev.button = {0};
     }
     ///@todo handle the other buttons...
@@ -208,13 +210,13 @@ std::pair<rem::code,mouse>  mouse::parse(bool brel, std::vector<int> args_)
     mev.state.shift     = (args_[0] & 4   ) != 0;
     mev.state.alt       = (args_[0] & 8   ) != 0;
     mev.state.win       = (args_[0] & 0x10) != 0;
-    mev.pressed = !brel;
+    mev.pressed = bpressed;
     // subtract 1 from the coords. because the terminal starts at 1,1 and our ui system starts 0,0
     mev.pos.x = args_[1] - 1; //l << " x coord: " << color::yellow << mev.pos.x << color::r << "|" << args_[1] << l;
     mev.pos.y = args_[2] - 1; //l << " y coord: " << color::yellow << mev.pos.y << color::r << "|" << args_[2] << l;
     mev.dxy = mev.pos - prev_mev.pos;
     prev_mev.pos = mev.pos;
-    mev = mev & prev_mev;
+    //mev = mev & prev_mev;
 
     return {rem::code::ready,mev};
 }
