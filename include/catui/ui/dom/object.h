@@ -236,10 +236,10 @@ public:
     void set_dom_padding(padding padding);
     void set_dom_margin(margin margin);
 
-    std::pair<std::string, dom_status_enums::value> dom_status() const;
-    std::pair<std::string, type_enums::value> dom_type() const;
-    std::pair<std::string, component::value> dom_component() const;
-    std::pair<std::string, anchor::value> dom_anchor() const;
+    [[nodiscard]] std::pair<std::string, dom_status_enums::value> dom_status() const;
+    [[nodiscard]] std::pair<std::string, type_enums::value> dom_type() const;
+    [[nodiscard]] std::pair<std::string, component::value> dom_component() const;
+    [[nodiscard]] std::pair<std::string, anchor::value> dom_anchor() const;
     padding& dom_padding();
     margin&  dom_margin();
 
