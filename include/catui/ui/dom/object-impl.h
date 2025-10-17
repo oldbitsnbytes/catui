@@ -24,14 +24,82 @@
 namespace cat::dom
 {
 
-template<typename T> object& object::write(const T& content)
+inline object::canva::canva()
 {
-    std::ostringstream ss;
-    ss<<content;
-
-    return *this;
+    ;
 }
 
+
+inline object::canva::~canva()
+{
+    ;
+}
+
+
+inline void object::canva::clear()
+{
+
+}
+
+
+inline rem::code object::canva::position(const ui::cxy&xy)
+{
+}
+
+
+inline object::canva& object::canva::operator++()
+{
+}
+
+
+inline object::canva& object::canva::operator--()
+{
+}
+
+
+inline object::canva& object::canva::operator++(int)
+{
+}
+
+
+inline object::canva& object::canva::operator--(int)
+{
+}
+
+
+inline object::canva& object::canva::draw_frame()
+{
+}
+
+
+inline object::canva& object::canva::operator<<(ui::color::pair cp)
+{
+}
+
+
+inline object::canva& object::canva::operator<<(ui::color::value c)
+{
+}
+
+
+inline void object::canva::set_background_color(color::value aBg)
+{
+}
+
+
+inline object::canva& object::canva::write(const std::string&str)
+{
+}
+
+
+inline object::canva& object::begin_paint(ui::rectangle r)
+{
+}
+
+
+inline object::canva& object::end_paint(object::canva&canva)
+{
+}
 
 
 template<typename T> T* object::dom_parent()
@@ -46,4 +114,9 @@ template<typename T> T* object::dom_parent()
 }
 
 
+template<typename T>object::canva& object::canva::operator<<(const T&val)
+{
+
+    return *this;
+}
 }

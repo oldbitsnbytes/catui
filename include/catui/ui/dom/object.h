@@ -256,6 +256,8 @@ public:
         ui::vchar::iterator home{};
         object::shared parent{nullptr};
 
+        ui::color::pair colors{};
+
         canva();
         canva(object::shared _parent, ui::rectangle _geometry={});
 
@@ -264,8 +266,28 @@ public:
 
         rem::code position(const ui::cxy& xy);
 
-        
+        canva& operator++();
+        canva& operator--();
+        canva& operator++(int);
+        canva& operator--(int);
+
+        canva& draw_frame();
+        canva& operator << (ui::color::pair cp);
+        canva& operator << (ui::color::value c);
+
+        void set_background_color(color::value aBg);
+
+        template<typename T> canva& operator << (const T& val);
+
+        canva& write(const std::string& str);
+
+
     };
+
+
+    object::canva& begin_paint(ui::rectangle r = {});
+    object::canva& end_paint(object::canva& canva);
+
 protected:
     object::list _children{};
 

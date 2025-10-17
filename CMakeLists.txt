@@ -44,6 +44,7 @@ set(HEADERS
     include/${PROJECT_NAME}/lexer/lexer.h
     include/${PROJECT_NAME}/ui/dom/object-impl.h
 
+
 )
 
 
@@ -75,6 +76,7 @@ add_library(${PROJECT_NAME}
             c++/lexer/lang.cc
             c++/lexer/lexer.cc
             c++/sys/strscan.cc
+            c++/ui/dom/object.canva.cc
 )
 
 
