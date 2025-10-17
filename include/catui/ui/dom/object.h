@@ -246,6 +246,26 @@ public:
     //----------------------------------------------------------------------------------------------------------------------------
     #pragma endregion public_dom_element
 
+    struct canva
+    {
+        ui::vchar::bloc::shared dc{nullptr};
+        ui::rectangle geometry{};
+        ui::vchar::iterator cursor{};
+        ui::vchar::iterator begin{};
+        ui::vchar::iterator end{};
+        ui::vchar::iterator home{};
+        object::shared parent{nullptr};
+
+        canva();
+        canva(object::shared _parent, ui::rectangle _geometry={});
+
+        ~canva();
+        void clear();
+
+        rem::code position(const ui::cxy& xy);
+
+        
+    };
 protected:
     object::list _children{};
 
@@ -253,20 +273,20 @@ protected:
     //----------------------------------------------------------------------------------------------------------------------------
 
     //virtual rem::code   setup_ui(const std::string& _theme_name);
-    ui::rectangle           _rect{};
-    ui::rectangle           _dirty_area{};
-    color::db::object_palette _palette{};
-    color::pair             _theme_colors{};
-    std::string             _theme_id{"default"};
-    padding                 _padding{};
-    margin                  _margin{};
-    anchor::value           _anchor{anchor::none};
-    dom_status_enums::value _dom_status{dom_status_enums::normal};
-    component::value        _component{component::none};
-    type_enums::value       _dom_type{type_enums::none};
+    ui::rectangle               _rect{};
+    ui::rectangle               _dirty_area{};
+    color::db::object_palette*  _palette{nullptr};
+    color::pair                 _theme_colors{};
+    std::string                 _theme_id{"default"};
+    padding                     _padding{};
+    margin                      _margin{};
+    anchor::value               _anchor{anchor::none};
+    dom_status_enums::value     _dom_status{dom_status_enums::normal};
+    component::value            _component{component::none};
+    type_enums::value           _dom_type{type_enums::none};
 
 
-    rem::code               _alloc_bloc_dc(ui::csz wxh);
+    rem::code               allocate_bloc_dc(ui::csz wxh);
 
     ui::vchar::bloc::shared _dc{nullptr};
     ui::rectangle           _geometry{};

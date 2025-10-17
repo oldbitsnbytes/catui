@@ -101,7 +101,7 @@ ui::vchar::iterator object::operator[](ui::cxy pos) const
 rem::code object::set_geometry(const ui::rectangle&rect)
 {
     _geometry = rect;
-    _alloc_bloc_dc(_geometry.size);
+    allocate_bloc_dc(_geometry.size);
     bloc_dc()->geometry = _geometry;
     return rem::code::accepted;
 }
@@ -312,7 +312,7 @@ margin& object::dom_margin()
 }
 
 
-rem::code object::_alloc_bloc_dc(ui::csz wxh)
+rem::code object::allocate_bloc_dc(ui::csz wxh)
 {
     if (_parent)
         _dc = parent()->bloc_dc();
