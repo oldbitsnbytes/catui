@@ -192,7 +192,7 @@ public:
     object& operator = (object&& rhs) noexcept;
     object& operator = (const object& rhs);
 
-    object* parent() { return _parent.get(); }
+    object::shared parent() { return _parent; }
     [[nodiscard]] object::iterator child(const std::string& id);
     // object* child(int index);
     object::iterator child(const object::shared& child);
@@ -201,7 +201,6 @@ public:
     #pragma region public_dom_element
     //----------------------------------------------------------------------------------------------------------------------------
 
-    rem::code set_theme(const std::string& theme_name);
 
     //object* operator ->() { return this; }
     ui::vchar::bloc::shared bloc_dc() { return _dc; }
@@ -209,7 +208,7 @@ public:
     ui::vchar::iterator operator[](ui::cxy pos) const;
     rem::code set_geometry(const ui::rectangle& rect);
 
-    template<typename T> object& write(const T& content);
+
     template<typename T> T* dom_parent();
     object&  dom_clear();
     object&  home();
@@ -280,13 +279,13 @@ public:
         template<typename T> canva& operator << (const T& val);
 
         canva& write(const std::string& str);
-
+        canva& operator *() { return *this; }
 
     };
 
 
     object::canva& begin_paint(ui::rectangle r = {});
-    object::canva& end_paint(object::canva& canva);
+    void end_paint(object::canva& canva);
 
 protected:
     object::list _children{};

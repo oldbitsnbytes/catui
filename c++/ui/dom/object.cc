@@ -83,13 +83,6 @@ object::iterator object::child(const object::shared& child)
 }
 
 
-rem::code object::set_theme(const std::string&theme_name)
-{
-    _palette = color::db::palette_item(color::db::theme_palette(theme_name), "object");
-    _theme_colors = _palette[_dom_status];
-    return rem::code::accepted;
-}
-
 
 ui::vchar::iterator object::operator[](ui::cxy pos) const
 {
@@ -209,7 +202,7 @@ object& object::operator<<(cat::ui::border::Index idx)
 void object::set_dom_status(dom_status_enums::value status)
 {
     _dom_status = status;
-    _theme_colors = _palette[_dom_status];
+    _theme_colors = (*_palette)[_dom_status];
 }
 
 
