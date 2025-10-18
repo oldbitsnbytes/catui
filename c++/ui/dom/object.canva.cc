@@ -4,6 +4,8 @@
 #include <catui/ui/dom/object.h>
 
 
+#define MIN(a,b) ((a)<(b)?(a):(b))
+#define MAX(a,b) ((a)>(b)?(a):(b))
 
 
 namespace cat::dom
@@ -16,81 +18,119 @@ object::canva::canva(object::shared _parent, ui::rectangle _geometry)
 }
 
 
-inline object::canva::canva()
+ object::canva::canva()
 {
     ;
 }
 
 
-inline object::canva::~canva()
+ object::canva::~canva()
 {
     ;
 }
 
 
-inline void object::canva::clear()
+ void object::canva::clear()
 {
 
 }
 
 
-inline rem::code object::canva::position(const ui::cxy&xy)
+ rem::code object::canva::position(const ui::cxy&xy)
 {
+    cursor = parent->dc().at(xy+geometry.a);
+    geometry.cursor = xy;
     return rem::code::accepted;
 }
 
 
-inline object::canva& object::canva::operator++()
+ object::canva& object::canva::operator++()
 {
+    if (++geometry)
+        cursor = parent->dc().at(geometry.a + geometry.cursor);
     return *this;
 
 }
 
 
-inline object::canva& object::canva::operator--()
+ object::canva& object::canva::operator--()
 {
+    if (--geometry)
+        cursor = parent->dc().at(geometry.a + geometry.cursor);
     return *this;
 }
 
 
-inline object::canva& object::canva::operator++(int)
+ object::canva& object::canva::operator++(int)
 {
+    if (geometry++)
+        cursor = parent->dc().at(geometry.a + geometry.cursor);
     return *this;
 }
 
 
-inline object::canva& object::canva::operator--(int)
+ object::canva& object::canva::operator--(int)
 {
+    if (--geometry)
+        cursor = parent->dc().at(geometry.a + geometry.cursor);
+
     return *this;
 }
 
 
-inline object::canva& object::canva::draw_frame()
+object::canva& object::canva::draw_frame()
 {
+    position({0,0});
+    (*cursor) << border::TopLeft;
+    position(geometry.bottom_left());
+    (*cursor) << border::BottomLeft;
+    position(geometry.bottom_right());
+    (*cursor) << border::BottomRight;
+    position(geometry.top_right());
+    (*cursor) << border::TopRight;
+
+    for (int x=1;x<geometry.width()-1; x++)
+    {
+        position(geometry.top_left() + ui::cxy{x,0});
+        (*cursor) << border::Horizontal;
+        position(geometry.bottom_left() + ui::cxy{x,0});
+    }
+
+    for (int x=1;x<geometry.height()-1; x++)
+    {
+        position(geometry.top_left() + ui::cxy{0,x});
+        (*cursor) << border::Vertical;
+        position(geometry.top_right() + ui::cxy{0,x});
+        (*cursor) << border::Vertical;
+    }
+
     return *this;
 }
 
 
-inline object::canva& object::canva::operator<<(ui::color::pair cp)
+ object::canva& object::canva::operator<<(ui::color::pair cp)
 {
+    colors = cp;
     return *this;
 }
 
 
-inline object::canva& object::canva::operator<<(ui::color::value c)
+ object::canva& object::canva::operator<<(ui::color::value c)
 {
+    colors.fg = c;
     return *this;
 }
 
 
 void object::canva::set_background_color(color::value aBg)
 {
-
+    colors.bg = aBg;
 }
 
 
 object::canva& object::canva::write(const std::string&str)
 {
+    auto wsz = MIN(str.length(),;
     return *this;
 }
 
