@@ -265,10 +265,10 @@ public:
 
         rem::code position(const ui::cxy& xy);
 
-        canva& operator++();
-        canva& operator--();
-        canva& operator++(int);
-        canva& operator--(int);
+        [[nodiscard]] bool  operator++();
+        [[nodiscard]] bool  operator--();
+        [[nodiscard]] bool  operator++(int);
+        [[nodiscard]] bool  operator--(int);
 
         canva& draw_frame();
         canva& operator << (ui::color::pair cp);

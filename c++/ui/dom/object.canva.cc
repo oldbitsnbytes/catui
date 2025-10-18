@@ -10,6 +10,10 @@
 
 namespace cat::dom
 {
+
+
+
+
 object::canva::canva(object::shared _parent, ui::rectangle _geometry)
 {
     parent = _parent;
@@ -44,37 +48,39 @@ object::canva::canva(object::shared _parent, ui::rectangle _geometry)
 }
 
 
- object::canva& object::canva::operator++()
+bool object::canva::operator++()
 {
-    if (++geometry)
-        cursor = parent->dc().at(geometry.a + geometry.cursor);
-    return *this;
+    if (!+geometry) return false;
+    cursor = parent->dc().at(geometry.a + geometry.cursor);
+    return true;
 
 }
 
 
- object::canva& object::canva::operator--()
+bool object::canva::operator--()
 {
-    if (--geometry)
-        cursor = parent->dc().at(geometry.a + geometry.cursor);
-    return *this;
+    if (!--geometry)
+        return false;
+    cursor = parent->dc().at(geometry.a + geometry.cursor);
+    return true;
 }
 
 
- object::canva& object::canva::operator++(int)
+bool object::canva::operator++(int)
 {
-    if (geometry++)
-        cursor = parent->dc().at(geometry.a + geometry.cursor);
-    return *this;
+    if (!geometry++)
+        return false;
+    cursor = parent->dc().at(geometry.a + geometry.cursor);
+    return true;
 }
 
 
- object::canva& object::canva::operator--(int)
+bool object::canva::operator--(int)
 {
-    if (--geometry)
-        cursor = parent->dc().at(geometry.a + geometry.cursor);
-
-    return *this;
+    if (!--geometry)
+        return false;
+    cursor = parent->dc().at(geometry.a + geometry.cursor);
+    return true;
 }
 
 
@@ -130,7 +136,14 @@ void object::canva::set_background_color(color::value aBg)
 
 object::canva& object::canva::write(const std::string&str)
 {
-    auto wsz = MIN(str.length(),;
+    auto wsz = MIN(str.length(),geometry.width()-geometry.cursor.x);
+    for (int i=0; i<wsz; i++)
+    {
+        (*cursor) << str[i];
+        if (!(*this)++)
+            return *this;
+    }
+
     return *this;
 }
 
