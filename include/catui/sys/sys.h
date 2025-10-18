@@ -48,6 +48,7 @@ public:
     static int indent,indentsize;
     struct CATUI_LIB out
     {
+///@todo: change header components bits to one u16 bitmap.
         struct header_component
         {
             U8 Type  : 1;
