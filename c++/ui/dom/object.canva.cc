@@ -116,6 +116,9 @@ object::canva& object::canva::draw_frame()
 
  object::canva& object::canva::operator<<(ui::color::pair cp)
 {
+    cp.fg = cp.fg == color::r ? parent->dc().colors.fg : cp.fg;
+    cp.bg = cp.bg == color::r ? parent->dc().colors.bg : cp.bg;
+
     colors = cp;
     return *this;
 }
@@ -123,13 +126,14 @@ object::canva& object::canva::draw_frame()
 
  object::canva& object::canva::operator<<(ui::color::value c)
 {
-    colors.fg = c;
+    colors.fg = c == color::r ? parent->dc().colors.fg : c;
     return *this;
 }
 
 
 void object::canva::set_background_color(color::value aBg)
 {
+    aBg = aBg==color::r ? parent->dc().colors.bg : aBg;
     colors.bg = aBg;
 }
 
