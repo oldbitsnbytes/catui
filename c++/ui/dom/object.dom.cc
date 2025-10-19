@@ -28,11 +28,6 @@ object& object::clear()
 }
 
 
-object& object::home()
-{
-    (*_dc)[_geometry.a];
-    return *this;
-}
 
 
 object& object::operator<<(const std::string& str)

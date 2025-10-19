@@ -190,4 +190,8 @@ void object::end_paint(object::canva& canva)
 }
 
 
+void object::draw()
+{
+    auto &cc =
+}
 }

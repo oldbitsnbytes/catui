@@ -210,8 +210,7 @@ public:
 
 
     template<typename T> T* dom_parent();
-    object&  clear();
-    object&  home();
+    object&    clear();
     object&    operator << (const std::string& str);
     object&    operator << (const char* str);
     object&    operator << (const std::string_view& str);
@@ -286,6 +285,12 @@ public:
 
     object::canva& begin_paint(ui::rectangle r = {});
     void end_paint(object::canva& canva);
+
+
+
+    void      draw();
+    rem::code update(const ui::rectangle& rect);
+
 
 protected:
     object::list _children{};
