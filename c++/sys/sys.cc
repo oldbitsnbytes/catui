@@ -341,7 +341,7 @@ sys::out& sys::out::operator<<(sys::fn f)
     switch (f)
     {
         case fn::eol:
-
+        case fn::push:
             sys::_ram.emplace_back(text());
             text="";
             return *this;

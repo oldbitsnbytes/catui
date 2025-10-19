@@ -77,6 +77,7 @@ add_library(${PROJECT_NAME}
             c++/lexer/lexer.cc
             c++/sys/strscan.cc
             c++/ui/dom/object.canva.cc
+            c++/ui/dom/object.dom.cc
 )
 
 

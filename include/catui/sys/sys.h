@@ -41,7 +41,7 @@ public:
     enum  fn: u8
     {
         eol = 0,
-
+        push=1,
        //...
     };
 

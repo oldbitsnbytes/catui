@@ -210,7 +210,7 @@ public:
 
 
     template<typename T> T* dom_parent();
-    object&  dom_clear();
+    object&  clear();
     object&  home();
     object&    operator << (const std::string& str);
     object&    operator << (const char* str);
@@ -228,12 +228,12 @@ public:
     object&    operator << (cat::ui::border::Index idx);
 
 
-    void set_dom_status(dom_status_enums::value status);
-    void set_dom_type(type_enums::value type);
-    void set_dom_component(component::value component);
-    void set_dom_anchor(anchor::value anchor);
-    void set_dom_padding(padding padding);
-    void set_dom_margin(margin margin);
+    void set_status(dom_status_enums::value status);
+    void set_type(type_enums::value type);
+    void set_component(component::value component);
+    void set_anchor(anchor::value anchor);
+    void set_padding(padding padding);
+    void set_margin(margin margin);
 
     [[nodiscard]] std::pair<std::string, dom_status_enums::value> dom_status() const;
     [[nodiscard]] std::pair<std::string, type_enums::value> dom_type() const;
@@ -258,11 +258,11 @@ public:
         ui::color::pair colors{};
 
         canva();
-        canva(object::shared _parent, ui::rectangle _geometry={});
+        explicit canva(object::shared _parent, ui::rectangle _geometry={});
 
         ~canva();
-        void clear();
-
+        void clear() const;
+        rem::code clear(const ui::rectangle& rect);
         rem::code position(const ui::cxy& xy);
 
         [[nodiscard]] bool  operator++();

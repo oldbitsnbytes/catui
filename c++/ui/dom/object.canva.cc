@@ -17,30 +17,52 @@ namespace cat::dom
 object::canva::canva(object::shared _parent, ui::rectangle _geometry)
 {
     parent = _parent;
-    geometry = _geometry;
+    if (!_geometry)
+        geometry = parent->_geometry.to_local();
+    else
+        geometry = _geometry;
+
     colors= parent->_theme_colors;
 }
 
 
- object::canva::canva()
+object::canva::canva()
 {
     ;
 }
 
 
- object::canva::~canva()
+object::canva::~canva()
 {
     ;
 }
 
 
- void object::canva::clear()
+void object::canva::clear() const
 {
-
+    if (geometry==parent->_geometry)
+        parent->dc().clear();
+    else
+        parent->dc().clear(geometry);
 }
 
 
- rem::code object::canva::position(const ui::cxy&xy)
+rem::code object::canva::clear(const ui::rectangle&rect)
+{
+
+    auto area = geometry & rect;
+    if (!rect)
+    {
+        sys::error() << "Invalid area: " << rect<< sys::eol;
+        return rem::code::rejected;
+    }
+    parent->dc().clear(area);
+
+    return rem::code::accepted;
+}
+
+
+rem::code object::canva::position(const ui::cxy&xy)
 {
     cursor = parent->dc().at(xy+geometry.a);
     geometry.cursor = xy;
