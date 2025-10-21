@@ -28,6 +28,11 @@ using namespace cat::ui;
 namespace cat
 {
 
+
+
+std::string application::_global_theme_id{"C64"};
+
+
 application::application()
 {
     ;
@@ -60,46 +65,6 @@ rem::code application::setup()
     return rem::code::done;
 }
 
-
-
-rem::code application::setup_ui()
-{
-    io::console::start();
-
-    auto coords1 = cxy{0,11};
-    auto coords2 = cxy{0,12};
-    auto rect = rectangle{cxy{30,20}, csz{10,10}};
-    con << color::hotpink4 <<  rect << color::r;
-    con << coords1 << color::yellow << (std::string) coords1 << "|catui monolithic library!" <<  coords2 << (std::string)coords2 << color::lightgoldenrod5 << " Playground ====================="  << color::r << conio::eol;
-
-
-    //auto object = cat::dom::object::create()
-    // auto bloc = vchar::bloc::create(csz{40,10}, color::pair{color::yellow,color::blue});
-    //
-    // bloc->goto_xy({1,1});
-    // bloc->print("vchar::bloc.");
-    // bloc->move_to({5,5});
-    // con << **bloc << conio::eol;
-
-
-    auto object = dom::object::create("testing dom::object");
-    object->set_geometry({ui::cxy{10,20},ui::csz{40,10}});
-    object->draw();
-    object->update();
-    object->redraw();
-    return rem::code::done;
-}
-
-
-rem::code application::set_global_theme(const std::string&theme_name)
-{
-    if (const auto it = color::db::themes.find(theme_name); it != color::db::themes.end())
-        _palette = &color::db::theme_palette(theme_name);
-    else
-        throw sys::exception()[sys::error() <<  "theme " << theme_name << ' ' << rem::code::notexist  << sys::eol];
-
-    return rem::code::accepted;
-}
 
 
 rem::code application::run()
@@ -150,23 +115,78 @@ rem::code application::end()
 }
 
 
+rem::code application::setup_ui()
+{
+    io::console::start();
+
+    auto coords1 = cxy{0,11};
+    auto coords2 = cxy{0,12};
+    auto rect    = rectangle{cxy{30,20}, csz{10,10}};
+    con << color::hotpink4 <<  rect << color::r;
+    con << coords1 << color::yellow << (std::string) coords1 << "|catui monolithic library!" <<  coords2 << (std::string)coords2 << color::lightgoldenrod5 << " Playground ====================="  << color::r << conio::eol;
+
+
+    //auto object = cat::dom::object::create()
+    // auto bloc = vchar::bloc::create(csz{40,10}, color::pair{color::yellow,color::blue});
+    //
+    // bloc->goto_xy({1,1});
+    // bloc->print("vchar::bloc.");
+    // bloc->move_to({5,5});
+    // con << **bloc << conio::eol;
+
+
+    auto object = new dom::object("testing dom::object");
+    object->set_geometry({ui::cxy{10,20},ui::csz{40,10}});
+    object->draw();
+    auto& painter = object->begin_paint();
+    painter << cxy{1,1} << "vchar::bloc.";
+    object->end_paint(painter);
+    object->update();
+    object->redraw();
+    //...
+    delete object;
+    return rem::code::done;
+}
+
+
+rem::code application::set_global_theme(const std::string&theme_name)
+{
+    if (const auto it = color::db::themes.find(theme_name); it != color::db::themes.end())
+        _palette      = &color::db::theme_palette(theme_name);
+    else
+        throw sys::exception()[sys::error() <<  "theme " << theme_name << ' ' << rem::code::notexist  << sys::eol];
+
+    return rem::code::accepted;
+}
+
+
+const std::string& application::theme_id()
+{
+    return application::_global_theme_id;
+}
+
+
+void application::set_global_theme_id(const std::string&theme_id)
+{
+    application::_global_theme_id = theme_id;
+}
 
 
 void application::install_signals()
 {
-        std::signal(SIGSEGV, &application::sig_segv);
-        sys::info()  << "signal SIGSEV installed."  << sys::eol;
-        std::signal(SIGABRT, &application::sig_aborted);
-        sys::info() << "signal SIGABRT installed."  << sys::eol;
-        std::signal(SIGINT, &application::sig_interrupted);
-        sys::info() << "signal SIGINT installed."  << sys::eol;
-        std::signal(SIGWINCH, &application::sig_winch);
-        sys::info() << "signal SIGWINCH installed."  << sys::eol;
-        // std::signal(SIGHUP, &application::sig_winch);
-        std::signal(SIGKILL, &application::sig_interrupted);
-        sys::info() << "signal SIGKILL installed." << sys::eol;
-        std::signal(SIGTERM, &application::sig_interrupted);
-        sys::info() << "signal SIGTERM installed." << sys::eol;
+    std::signal(SIGSEGV, &application::sig_segv);
+    sys::info()  << "signal SIGSEV installed."  << sys::eol;
+    std::signal(SIGABRT, &application::sig_aborted);
+    sys::info() << "signal SIGABRT installed."  << sys::eol;
+    std::signal(SIGINT, &application::sig_interrupted);
+    sys::info() << "signal SIGINT installed."  << sys::eol;
+    std::signal(SIGWINCH, &application::sig_winch);
+    sys::info() << "signal SIGWINCH installed."  << sys::eol;
+    // std::signal(SIGHUP, &application::sig_winch);
+    std::signal(SIGKILL, &application::sig_interrupted);
+    sys::info() << "signal SIGKILL installed." << sys::eol;
+    std::signal(SIGTERM, &application::sig_interrupted);
+    sys::info() << "signal SIGTERM installed." << sys::eol;
 }
 
 

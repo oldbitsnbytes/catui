@@ -72,7 +72,7 @@ rem::code object::canva::position(const ui::cxy&xy)
 
 bool object::canva::operator++()
 {
-    if (!+geometry) return false;
+    if (!++geometry) return false;
     cursor = parent->dc().at(geometry.a + geometry.cursor);
     return true;
 
@@ -99,7 +99,7 @@ bool object::canva::operator++(int)
 
 bool object::canva::operator--(int)
 {
-    if (!--geometry)
+    if (!geometry--)
         return false;
     cursor = parent->dc().at(geometry.a + geometry.cursor);
     return true;
@@ -167,10 +167,108 @@ object::canva& object::canva::write(const std::string&str)
     for (int i=0; i<wsz; i++)
     {
         (*cursor) << str[i];
-        if (!(*this)++)
-            return *this;
+        if (!++(*this))
+            break;
     }
 
+    return *this;
+}
+
+
+object::canva& object::canva::operator<<(const std::string&str)
+{
+    return (*this) << str.c_str();
+}
+
+
+object::canva& object::canva::operator<<(const char* str)
+{
+    auto wsz = MIN(std::strlen(str),geometry.width()-geometry.cursor.x);
+    for (int i=0; i<wsz; i++)
+    {
+        (*cursor) << str[i];
+        if (!++(*this))
+            break;
+    }
+
+    return *this;
+}
+
+
+/**
+ * Overloads the left-shift operator to append a string view to the current canva instance.
+ *
+ * This operator function converts the given `std::string_view` to a `std::string` and forwards
+ * the operation to another overloaded version of the left-shift operator that takes a `std::string` as input.
+ *
+ * @param str The string view to be appended to the canva instance.
+ * @return A reference to the modified canva instance.
+ * @todo Re-implement with string_view instead of converting to std::string overhead...
+ */
+object::canva& object::canva::operator<<(const std::string_view&str)
+{
+    auto wsz = MIN(str.length(),geometry.width()-geometry.cursor.x);
+    for (int i=0; i<wsz; i++)
+    {
+        (*cursor) << str[i];
+        if (!++(*this))
+            break;
+    }
+
+    return *this;
+
+}
+
+
+object::canva& object::canva::operator<<(const ui::vchar::string&str)
+{
+
+    return *this;
+}
+
+
+object::canva& object::canva::operator<<(const ui::rectangle&frame_dim)
+{
+
+    return *this;
+}
+
+
+object::canva& object::canva::operator<<(glyph::value f)
+{
+    return *this;
+}
+
+
+object::canva& object::canva::operator<<(cat::string str)
+{
+    return *this << str().c_str();
+
+}
+
+
+object::canva& object::canva::operator<<(cat::ui::cxy xy)
+{
+    position(xy);
+    return *this;
+}
+
+
+object::canva& object::canva::operator<<(sys::fn f)
+{
+
+    return *this;
+}
+
+
+object::canva& object::canva::operator<<(cat::ui::rectangle rect)
+{
+    return *this;
+}
+
+
+object::canva& object::canva::operator<<(cat::ui::border::Index idx)
+{
     return *this;
 }
 

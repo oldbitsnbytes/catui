@@ -28,9 +28,9 @@ class CATUI_LIB application
 {
     CLASSNAME_START(application)
     cat::string::view_list _arguments{};
-    dom::object::shared _root{nullptr};
+    dom::object* _root{nullptr};
     color::db::palette* _palette{nullptr};
-    std::string _theme_id{"C64"};
+    static std::string _global_theme_id;
 
 public:
     application();
@@ -42,7 +42,8 @@ public:
 
     virtual rem::code setup_ui();
     virtual rem::code set_global_theme(const std::string& theme_name);
-    std::string theme_id() const { return _theme_id; }
+    static const std::string& theme_id();
+    static void set_global_theme_id(const std::string& theme_id);
 protected:
     static void install_signals();
 

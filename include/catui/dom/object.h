@@ -180,25 +180,23 @@ public:
     using shared = std::shared_ptr<object>;
     using weak = std::weak_ptr<object>;
 
-    using list = std::vector<object::shared>;
+    using list = std::vector<object*>;
     using iterator = list::iterator;
 
     object();
     virtual ~object();
 
     object(std::string  a_id);
-    object(const object::shared parent_object, std::string  a_id);
+    object(object*  parent_object, std::string  a_id);
 
     object& operator = (object&& rhs) noexcept;
     object& operator = (const object& rhs);
 
-    static object::shared create(std::string  a_id);
-    static object::shared create(object::shared parent_object, std::string  a_id);
 
-    object::shared parent() { return _parent; }
+    object* parent() { return _parent; }
     [[nodiscard]] object::iterator child(const std::string& id);
     // object* child(int index);
-    object::iterator child(const object::shared& child);
+    object::iterator child(const object*& child);
     [[nodiscard]] const std::string& id() const { return _id; }
     object&  operator *() { return *this; }
     #pragma region public_dom_element
@@ -214,20 +212,6 @@ public:
 
     template<typename T> T* dom_parent();
     object&    clear();
-    object&    operator << (const std::string& str);
-    object&    operator << (const char* str);
-    object&    operator << (const std::string_view& str);
-    object&    operator << (const std::vector<std::string_view>& str);
-    object&    operator << (const std::vector<std::string>& str);
-    object&    operator << (const ui::rectangle& frame_dim);
-    object&    operator << (color::pair clr);
-    object&    operator << (color::value clr);
-    object&    operator << (glyph::value f);
-    object&    operator << (cat::string str);
-    object&    operator << (cat::ui::cxy xy);
-    object&    operator << (sys::fn f);
-    object&    operator << (cat::ui::rectangle rect);
-    object&    operator << (cat::ui::border::Index idx);
 
 
     void set_status(dom_status_enums::value status);
@@ -284,6 +268,20 @@ public:
         canva& write(const std::string& str);
         canva& operator *() { return *this; }
 
+        object::canva&    operator << (const std::string& str);
+        object::canva&    operator << (const char* str);
+        object::canva&    operator << (const std::string_view& str);
+        object::canva&    operator << (const ui::vchar::string& str);
+        object::canva&    operator << (const ui::rectangle& frame_dim);
+        // object::canva&    operator << (color::pair clr);
+        // object::canva&    operator << (color::value clr);
+        object::canva&    operator << (glyph::value f);
+        object::canva&    operator << (cat::string str);
+        object::canva&    operator << (cat::ui::cxy xy);
+        object::canva&    operator << (sys::fn f);
+        object::canva&    operator << (cat::ui::rectangle rect);
+        object::canva&    operator << (cat::ui::border::Index idx);
+
     };
 
 
@@ -320,7 +318,7 @@ protected:
 
     ui::vchar::bloc::shared _dc{nullptr};
     ui::rectangle           _geometry{};
-    object::shared _parent{nullptr};
+    object* _parent{nullptr};
 public: // temporary
     void    redraw() const;
     //----------------------------------------------------------------------------------------------------------------------------
