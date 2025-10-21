@@ -1,5 +1,5 @@
 
-#include <catui/ui/vchar.h>
+#include <catui/sys/vchar.h>
 #include <iostream>
 
 #include <catui/sys/sys.h>

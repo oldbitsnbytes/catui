@@ -1,8 +1,8 @@
 //
 // Created by oldlonecoder on 2025-08-18.
 //
-#include <catui/ui/vchar.h>
-#include "catui/sys/sys.h"
+#include <catui/sys/vchar.h>
+#include <catui/sys/sys.h>
 #include <catui/io/console.h>
 
 

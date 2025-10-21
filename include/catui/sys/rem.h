@@ -18,9 +18,9 @@
 
 #pragma once
 
-#include <catui/ui/colors.h>
-#include <catui/ui/glyphes.h>
-#include <catui/ui/border.h>
+#include <catui/sys/colors.h>
+#include <catui/sys/glyphes.h>
+#include <catui/sys/border.h>
 
 
 using cat::ui::color;

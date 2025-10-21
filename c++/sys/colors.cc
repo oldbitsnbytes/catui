@@ -2,8 +2,8 @@
 // Created by oldlonecoder on 2025-09-23.
 //
 
-#include <catui/ui/colors.h>
-#include <catui/ui/dom/object.h>
+#include <catui/sys/colors.h>
+#include <catui/dom/object.h>
 ////////////////////////////////////////////////////////////////////////////////////////////
 //   Copyright (C) ...,2025,... by Serge Lussier
 //   serge.lussier@oldbitsnbytes.club / lussier.serge@gmail.com

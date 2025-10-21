@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include <catui/ui/colors.h>
+#include <catui/sys/colors.h>
 #include <map>
 #include <vector>
 #include <string>

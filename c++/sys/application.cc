@@ -17,7 +17,7 @@
 
 #include <catui/sys/application.h>
 #include <catui/io/console.h>
-#include <catui/ui/dom/object.h>
+#include <catui/dom/object.h>
 
 #include <csignal>
 

@@ -25,7 +25,7 @@
 
 #pragma once
 #include <catui/lexer/lang.h>
-#include <catui/ui/dom/object.h>
+#include <catui/dom/object.h>
 #include <catui/sys/strscan.h>
 
 namespace cat::lang

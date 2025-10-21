@@ -26,7 +26,7 @@
 
 
 #include <catui/sys/sys.h>
-#include <catui/ui/vchar.h>
+#include <catui/sys/vchar.h>
 namespace cat::dom
 {
 
@@ -325,4 +325,4 @@ private:
 };
 } // cat::dom
 
-#include <catui/ui/dom/object-impl.h>
+#include <catui/dom/object-impl.h>

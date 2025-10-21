@@ -2,7 +2,7 @@
 // Created by Serge Lussier on 2025-10-02.
 //
 
-#include <catui/ui/dom/object.h>
+#include <catui/dom/object.h>
 #include <catui/io/console.h>
 #include <utility>
 

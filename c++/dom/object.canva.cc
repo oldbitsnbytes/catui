@@ -1,7 +1,7 @@
 //
 // Created by Serge Lussier on 2025-10-17.
 //
-#include <catui/ui/dom/object.h>
+#include <catui/dom/object.h>
 
 
 #define MIN(a,b) ((a)<(b)?(a):(b))

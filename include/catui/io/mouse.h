@@ -19,7 +19,7 @@
 #pragma once
 
 #include <catui/io/polling.h>
-#include <catui/ui/geometry.h>
+#include <catui/sys/geometry.h>
 
 namespace cat::io
 {

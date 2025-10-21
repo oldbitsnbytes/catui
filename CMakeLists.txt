@@ -14,13 +14,13 @@ project(catui
 
 set(HEADERS
     include/${PROJECT_NAME}/root.h
-    include/${PROJECT_NAME}/ui/border.h
+    include/${PROJECT_NAME}/sys/border.h
     include/${PROJECT_NAME}/sys/cmdargs.h
-    include/${PROJECT_NAME}/ui/colors.h
+    include/${PROJECT_NAME}/sys/colors.h
     include/${PROJECT_NAME}/sys/notify.h
     include/${PROJECT_NAME}/sys/expect.h
-    include/${PROJECT_NAME}/ui/geometry.h
-    include/${PROJECT_NAME}/ui/glyphes.h
+    include/${PROJECT_NAME}/sys/geometry.h
+    include/${PROJECT_NAME}/sys/glyphes.h
     include/${PROJECT_NAME}/sys/dbase.h
     include/${PROJECT_NAME}/sys/dbase_field_impl.h
     #    include/${PROJECT_NAME}/ui/data/field.h
@@ -29,20 +29,20 @@ set(HEADERS
     include/${PROJECT_NAME}/sys/rem.h
     include/${PROJECT_NAME}/sys/string.h
     include/${PROJECT_NAME}/sys/string-impl.h
-    include/${PROJECT_NAME}/ui/vchar.h
+    include/${PROJECT_NAME}/sys/vchar.h
     include/${PROJECT_NAME}/io/polling.h
     #    include/${PROJECT_NAME}/ui/io/listener.h
     #    include/${PROJECT_NAME}/ui/io/tcp_socket.h
     include/${PROJECT_NAME}/io/kstroke.h
     include/${PROJECT_NAME}/io/mouse.h
     include/${PROJECT_NAME}/io/console.h
-    include/${PROJECT_NAME}/ui/dom/object.h
+    include/${PROJECT_NAME}/dom/object.h
     include/${PROJECT_NAME}/sys/application.h
     include/${PROJECT_NAME}/sys/strscan.h
     include/${PROJECT_NAME}/lexer/lang.h
     include/${PROJECT_NAME}/lexer/token_info.h
     include/${PROJECT_NAME}/lexer/lexer.h
-    include/${PROJECT_NAME}/ui/dom/object-impl.h
+    include/${PROJECT_NAME}/dom/object-impl.h
 
 
 )
@@ -53,19 +53,19 @@ add_library(${PROJECT_NAME}
             SHARED
 
             ${HEADERS}
-            c++/ui/colors.cc
-            c++/ui/geometry.cc
-            c++/ui/border.cc
+            c++/sys/colors.cc
+            c++/sys/geometry.cc
+            c++/sys/border.cc
             c++/sys/sys.cc
             c++/sys/cmdargs.cc
             c++/sys/application.cc
             c++/sys/rem.cc
-            c++/ui/glyphes.cc
-            c++/ui/dom/object.cc
+            c++/sys/glyphes.cc
+            c++/dom/object.cc
             c++/sys/string.cc
             c++/sys/dbase.cc
-            c++/ui/vchar.cc
-            c++/ui/vchar.bloc.cc
+            c++/sys/vchar.cc
+            c++/sys/vchar.bloc.cc
             c++/io/polling.cc
 #            c++/ui/io/listener.cc
 #            c++/ui/io/tcp_socket.cc
@@ -76,8 +76,8 @@ add_library(${PROJECT_NAME}
             c++/lexer/lang.cc
             c++/lexer/lexer.cc
             c++/sys/strscan.cc
-            c++/ui/dom/object.canva.cc
-            c++/ui/dom/object.dom.cc
+            c++/dom/object.canva.cc
+            c++/dom/object.dom.cc
 )
 
 

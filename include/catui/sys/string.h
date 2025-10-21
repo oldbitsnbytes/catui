@@ -26,8 +26,8 @@
 
 #include <catui/sys/rem.h>
 
-#include <catui/ui/geometry.h>
-#include <catui/ui/vchar.h>
+#include <catui/sys/geometry.h>
+#include <catui/sys/vchar.h>
 
 #include <iostream>
 #include <cstring>

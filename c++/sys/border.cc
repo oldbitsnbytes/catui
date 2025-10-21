@@ -2,7 +2,7 @@
 // Created by Serge Lussier on 2025-08-17.
 //
 
-#include <catui/ui/border.h>
+#include <catui/sys/border.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 //   Copyright (C) ...,2025,... by Serge Lussier

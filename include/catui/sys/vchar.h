@@ -20,10 +20,10 @@
 
 
 // #include <catui/ui/geometry.h>
-#include <catui/ui/border.h>
+#include <catui/sys/border.h>
 #include <catui/sys/rem.h>
-#include <catui/ui/glyphes.h>
-#include <catui/ui/geometry.h>
+#include <catui/sys/glyphes.h>
+#include <catui/sys/geometry.h>
 
 namespace cat::ui
 {
