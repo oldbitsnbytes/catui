@@ -192,6 +192,9 @@ void object::end_paint(object::canva& canva)
 
 void object::draw()
 {
-    auto &cc =
+    auto &cc = begin_paint();
+    cc.draw_frame();
+    end_paint(cc);
 }
+
 }
