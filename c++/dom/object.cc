@@ -41,7 +41,7 @@ object::~object()
 object::object(std::string a_id): _id(std::move(a_id)){}
 
 
-object::object(const object::shared& parent_object, std::string a_id):  _id(std::move(a_id)),_parent(parent_object)
+object::object(object::shared parent_object, std::string a_id):  _id(std::move(a_id)),_parent(parent_object)
 {
     if (_parent.get())
         _parent->_children.push_back(std::shared_ptr<object>(this));
@@ -69,6 +69,22 @@ object& object::operator=(const object&rhs)
     _children = rhs._children;
     return *this;
 }
+
+
+object::shared object::create(std::string a_id)
+{
+    auto shobj = std::make_shared<object>(a_id);
+    //shobj->_theme_id =
+    return shobj;
+}
+
+
+object::shared object::create(object::shared parent_object, std::string a_id)
+{
+    return std::make_shared<object>(parent_object, a_id);
+}
+
+
 
 
 object::iterator object::child(const std::string& a_id)

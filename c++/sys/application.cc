@@ -74,12 +74,19 @@ rem::code application::setup_ui()
 
 
     //auto object = cat::dom::object::create()
-    auto bloc = vchar::bloc::create(csz{40,10}, color::pair{color::yellow,color::blue});
+    // auto bloc = vchar::bloc::create(csz{40,10}, color::pair{color::yellow,color::blue});
+    //
+    // bloc->goto_xy({1,1});
+    // bloc->print("vchar::bloc.");
+    // bloc->move_to({5,5});
+    // con << **bloc << conio::eol;
 
-    bloc->goto_xy({1,1});
-    bloc->print("vchar::bloc.");
-    bloc->move_to({5,5});
-    con << **bloc << conio::eol;
+
+    auto object = dom::object::create("testing dom::object");
+    object->set_geometry({ui::cxy{10,20},ui::csz{40,10}});
+    object->draw();
+    object->update();
+    object->redraw();
     return rem::code::done;
 }
 

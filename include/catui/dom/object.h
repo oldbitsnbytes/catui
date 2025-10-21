@@ -187,10 +187,13 @@ public:
     virtual ~object();
 
     object(std::string  a_id);
-    object(const object::shared&parent_object, std::string  a_id);
+    object(const object::shared parent_object, std::string  a_id);
 
     object& operator = (object&& rhs) noexcept;
     object& operator = (const object& rhs);
+
+    static object::shared create(std::string  a_id);
+    static object::shared create(object::shared parent_object, std::string  a_id);
 
     object::shared parent() { return _parent; }
     [[nodiscard]] object::iterator child(const std::string& id);
@@ -248,16 +251,17 @@ public:
     {
         ui::vchar::bloc::shared dc{nullptr};
         ui::rectangle geometry{};
-        ui::vchar::iterator cursor{};
-        ui::vchar::iterator begin{};
-        ui::vchar::iterator end{};
-        ui::vchar::iterator home{};
-        object::shared parent{nullptr};
+        // --------- Mark iterators with the object's DC bloc.
+        ui::vchar::iterator cursor{};   ///< dc->at(geometry.cursor + geometry.a);
+        ui::vchar::iterator end{};      ///< dc->at( {geometry.size.w , geometry.size.h} + geometry.a );
+        ui::vchar::iterator home{};     ///< dc->at(geometry.a);
+        // --------------------------------------------------
+        object* parent{nullptr};
 
         ui::color::pair colors{};
 
         canva();
-        explicit canva(object::shared _parent, ui::rectangle _geometry={});
+        explicit canva(object* _parent, ui::rectangle _geometry={});
 
         ~canva();
         void clear() const;
@@ -289,7 +293,7 @@ public:
 
 
     void      draw();
-    rem::code update(const ui::rectangle& rect);
+    rem::code update(ui::rectangle rect={});
 
 
 protected:
@@ -316,12 +320,11 @@ protected:
 
     ui::vchar::bloc::shared _dc{nullptr};
     ui::rectangle           _geometry{};
-    //ui::vchar::iterator     _home();
+    object::shared _parent{nullptr};
+public: // temporary
+    void    redraw() const;
     //----------------------------------------------------------------------------------------------------------------------------
     #pragma endregion dom_element_protected
-
-private:
-    object::shared _parent{nullptr};
 };
 } // cat::dom
 

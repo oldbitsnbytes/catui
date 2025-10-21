@@ -30,6 +30,7 @@ class CATUI_LIB application
     cat::string::view_list _arguments{};
     dom::object::shared _root{nullptr};
     color::db::palette* _palette{nullptr};
+    std::string _theme_id{"C64"};
 
 public:
     application();
@@ -41,7 +42,7 @@ public:
 
     virtual rem::code setup_ui();
     virtual rem::code set_global_theme(const std::string& theme_name);
-
+    std::string theme_id() const { return _theme_id; }
 protected:
     static void install_signals();
 

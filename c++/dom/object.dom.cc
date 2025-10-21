@@ -5,6 +5,7 @@
 
 
 #include <catui/dom/object.h>
+#include <catui/io/console.h>
 
 
 namespace cat::dom
@@ -16,7 +17,6 @@ rem::code object::set_geometry(const ui::rectangle&rect)
 {
     _geometry = rect;
     allocate_bloc_dc(_geometry.size);
-    bloc_dc()->geometry = _geometry;
     return rem::code::accepted;
 }
 
@@ -205,7 +205,21 @@ std::pair<std::string, component::value> object::dom_component() const
 
 std::pair<std::string, anchor::value> object::dom_anchor() const
 {
-    return {};
+    std::map<dom::anchor::value, std::string> anchor_names = {
+        {dom::anchor::none    , "none"},
+        {dom::anchor::fixed   , "fixed"},
+        {dom::anchor::width   , "width"},
+        {dom::anchor::height  , "height"},
+        {dom::anchor::frame   , "frame"},
+        {dom::anchor::right   , "right"},
+        {dom::anchor::left    , "left"},
+        {dom::anchor::top     , "top"},
+        {dom::anchor::bottom  , "bottom"},
+        {dom::anchor::center  , "center"},
+        {dom::anchor::hcenter , "hcenter"},
+        {dom::anchor::vcenter , "vcenter"}
+    };
+    return {anchor_names[_anchor],_anchor};
 }
 
 
@@ -221,16 +235,81 @@ margin& object::dom_margin()
 }
 
 
+/**
+ * Allocates or retrieves a display context (DC) associated with the object based on its parent or creates one
+ * from the given dimensions and current theme colors. Clears the display context post allocation or retrieval.
+ *
+ * @param wxh The dimensions (width and height) used to create a new display context if the object has no parent.
+ * @return A `rem::code` indicating the result:
+ *         - `rem::code::accepted` if the display context is allocated or retrieved successfully.
+ */
 rem::code object::allocate_bloc_dc(ui::csz wxh)
 {
     if (_parent)
         _dc = parent()->bloc_dc();
     else
+    {
         _dc = ui::vchar::bloc::create(wxh, _theme_colors);
+        _dc->move_to(_geometry.a);
+
+    }
+
     clear();
     //...
     return rem::code::accepted;
 }
+
+
+
+
+
+
+
+void object::draw()
+{
+    auto &cc = begin_paint();
+    cc.draw_frame(); // just for testing.
+    end_paint(cc);
+}
+
+
+
+
+
+
+
+
+void object::redraw() const
+{
+    sys::test() << " redraw Area : " << color::yellow << _dirty_area << color::r << sys::eol;
+    con.render(*_dc, _dirty_area);
+}
+
+
+/**
+ * Updates the specified area within the object's geometry and merges(union operation) it to the current dirty area if valid.
+ *
+ * @param rect The rectangle to be updated and intersected with the object's local geometry.
+ * @return A `rem::code` indicating the outcome:
+ *         - `rem::code::rejected` if the resulting rectangle is invalid.
+ *         - `rem::code::accepted` if the rectangle is successfully updated and marked as dirty.
+ */
+rem::code object::update(ui::rectangle rect)
+{
+    if (!rect)
+        rect = _geometry.to_local();
+    else
+    {
+        rect = _geometry.to_local() & rect;
+        if (!rect)
+            return rem::code::rejected;
+    }
+    _dirty_area |= rect;
+    sys::debug() << rem::fn::func << ": dirty area: " << color::yellow << _dirty_area << color::r << sys::eol;
+
+    return rem::code::accepted;
+}
+
 
 
 }

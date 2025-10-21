@@ -14,7 +14,7 @@ namespace cat::dom
 
 
 
-object::canva::canva(object::shared _parent, ui::rectangle _geometry)
+object::canva::canva(object* _parent, ui::rectangle _geometry)
 {
     parent = _parent;
     if (!_geometry)
@@ -122,6 +122,7 @@ object::canva& object::canva::draw_frame()
         position(geometry.top_left() + ui::cxy{x,0});
         (*cursor) << border::Horizontal;
         position(geometry.bottom_left() + ui::cxy{x,0});
+        (*cursor) << border::Horizontal;
     }
 
     for (int x=1;x<geometry.height()-1; x++)
@@ -176,10 +177,7 @@ object::canva& object::canva::write(const std::string&str)
 
 object::canva& object::begin_paint(ui::rectangle r)
 {
-    if (_parent.get())
-        return *(new canva(*_parent->child(_id)));
-
-    return *(new canva(shared(this), r));
+    return *new canva(this, r);
 }
 
 
@@ -190,11 +188,5 @@ void object::end_paint(object::canva& canva)
 }
 
 
-void object::draw()
-{
-    auto &cc = begin_paint();
-    cc.draw_frame();
-    end_paint(cc);
-}
 
 }
