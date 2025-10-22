@@ -258,7 +258,7 @@ conio& conio::operator<<(rem::type ty)
 conio& conio::operator<<(ui::cxy xy)
 {
     std::cout << std::format(io::console::set_caret_pos, xy.y+1,xy.x+1);//"\x1b[" << xy.y << ";" << xy.x << "H";
-    std::cout.flush();
+    //std::cout.flush();
     return *this;
 }
 
@@ -276,9 +276,9 @@ conio& conio::operator<<(ui::vchar::bloc& ui_bloc)
     sys::debug() << rem::fn::func << ": " << ui_bloc.geometry.size << " << " << ui_bloc.geometry.a << sys::eol;
     for (int Y=0; Y<ui_bloc.geometry.size.h; ++Y)
     {
-        auto t = ui_bloc.render(ui::cxy{0,Y},ui_bloc.geometry.size.w);
-        con << ui_bloc.geometry.a + ui::cxy{0,Y} << t;
-        sys::write() << t << sys::eol;
+        //auto t = ui_bloc.render(ui::cxy{0,Y},ui_bloc.geometry.size.w);
+        con << ui_bloc.geometry.a + ui::cxy{0,Y} << ui_bloc.render(ui::cxy{0,Y},ui_bloc.geometry.size.w).c_str();
+        //sys::write() << t << sys::eol;
     }
 
     return *this;

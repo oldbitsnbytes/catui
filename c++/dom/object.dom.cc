@@ -208,7 +208,7 @@ void object::draw()
 
 void object::redraw() const
 {
-    sys::test() << " redraw Area : " << color::yellow << _dirty_area << color::r << sys::eol;
+    sys::test() << " redraw Area : " << color::yellow << _dirty_area << color::r << " at " << color::yellow << _dc->geometry.a << color::r <<  sys::eol;
     con.render(*_dc, _dirty_area);
 }
 
