@@ -73,7 +73,7 @@ rem::code application::run()
     try
     {
         setup_ui();
-        con << rem::code::ready << conio::eol;
+        con << cxy{1,1} << rem::code::ready << conio::eol;
 
 
         bool fini = false;
@@ -89,9 +89,9 @@ rem::code application::run()
             }
             else
             {
-                cat::con << cxy{1,3} << "mouse event: " << cev.m() << conio::eol;
-                cat::con << cev.m.pos << cat::ui::rectangle{cev.m.pos,ui::csz{20,5}};
-                sys::debug() << "mouse event: " << cev.m() << sys::eol;
+                //cat::con << cxy{1,3} << "mouse event: " << cev.m() << conio::eol;
+                //cat::con << cev.m.pos << cat::ui::rectangle{cev.m.pos,ui::csz{20,5}};
+                //sys::debug() << "mouse event: " << cev.m() << sys::eol;
             }
         }
         cat::con << "press " << color::blue << glyph::mouse << color::r << "| " << color::skyblue3 << glyph::esc << conio::eol;
@@ -119,32 +119,21 @@ rem::code application::setup_ui()
 {
     io::console::start();
 
-    auto coords1 = cxy{0,11};
-    auto coords2 = cxy{0,12};
-    auto rect    = rectangle{cxy{30,20}, csz{10,10}};
-    con << color::hotpink4 <<  rect << color::r;
-    con << coords1 << color::yellow << (std::string) coords1 << "|catui monolithic library!" <<  coords2 << (std::string)coords2 << color::lightgoldenrod5 << " Playground ====================="  << color::r << conio::eol;
-
-
-    //auto object = cat::dom::object::create()
-    // auto bloc = vchar::bloc::create(csz{40,10}, color::pair{color::yellow,color::blue});
-    //
-    // bloc->goto_xy({1,1});
-    // bloc->print("vchar::bloc.");
-    // bloc->move_to({5,5});
-    // con << **bloc << conio::eol;
-
-
-    auto object = new dom::object("testing dom::object");
-    object->set_geometry({ui::cxy{10,20},ui::csz{40,10}});
-    object->draw();
-    auto& painter = object->begin_paint();
-    painter << cxy{1,1} << "vchar::bloc.";
-    object->end_paint(painter);
-    object->update();
-    object->redraw();
-    //...
-    delete object;
+    status_bar = new dom::object("status bar");
+    status_bar->set_geometry({cxy{0,io::console::geometry().b.y},csz(io::console::geometry().width(),1)});
+    status_bar->draw();
+    status_bar->update();
+    status_bar->redraw();
+    // auto object = new dom::object("testing dom::object");
+    // object->set_geometry({ui::cxy{10,20},ui::csz{40,10}});
+    // object->draw();
+    // auto& painter = object->begin_paint();
+    // painter << cxy{1,1} << "vchar::bloc.";
+    // object->end_paint(painter);
+    // object->update();
+    // object->redraw();
+    // //...
+    // delete object;
     return rem::code::done;
 }
 

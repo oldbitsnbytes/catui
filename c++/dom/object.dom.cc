@@ -51,6 +51,8 @@ void object::set_component(component::value component)
 
 void object::set_anchor(anchor::value anchor)
 {
+    _anchor = anchor;
+
 }
 
 
@@ -175,15 +177,25 @@ rem::code object::allocate_bloc_dc(ui::csz wxh)
 }
 
 
+rem::code object::apply_anchor()
+{
+    switch (_anchor)
+    {
+        case anchor::none: break;
+        case anchor::fixed: break;
+        case anchor::width:
 
-
-
+            break;
+    }
+    return rem::code::accepted;
+}
 
 
 void object::draw()
 {
     auto &cc = begin_paint();
-    cc.draw_frame(); // just for testing.
+    //cc.draw_frame(); // just for testing.
+    cc.clear();
     end_paint(cc);
 }
 
@@ -226,5 +238,9 @@ rem::code object::update(ui::rectangle rect)
 }
 
 
-
+rem::code object::resize(ui::rectangle rect)
+{
+    _geometry = rect;
+    return rem::code::accepted;
+}
 }

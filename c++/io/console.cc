@@ -127,6 +127,12 @@ void restore_screen()
 }
 
 
+ui::rectangle geometry()
+{
+    return _geometry;
+}
+
+
 /**
  * @brief Set terminal to report the mouse events.
 

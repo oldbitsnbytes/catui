@@ -32,6 +32,9 @@ class CATUI_LIB application
     color::db::palette* _palette{nullptr};
     static std::string _global_theme_id;
 
+    // Tests...
+    dom::object* status_bar{nullptr};
+
 public:
     application();
     application(const std::string& app_name,cat::string::view_list&& arguments);

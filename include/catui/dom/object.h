@@ -186,7 +186,7 @@ public:
     object();
     virtual ~object();
 
-    object(std::string  a_id);
+    explicit object(std::string  a_id);
     object(object*  parent_object, std::string  a_id);
 
     object& operator = (object&& rhs) noexcept;
@@ -289,10 +289,9 @@ public:
     void end_paint(object::canva& canva);
 
 
-
     void      draw();
     rem::code update(ui::rectangle rect={});
-
+    rem::code resize(ui::rectangle rect);
 
 protected:
     object::list _children{};
@@ -316,6 +315,9 @@ protected:
 
     rem::code               allocate_bloc_dc(ui::csz wxh);
 
+    rem::code apply_anchor();
+
+
     ui::vchar::bloc::shared _dc{nullptr};
     ui::rectangle           _geometry{};
     object* _parent{nullptr};
@@ -324,6 +326,7 @@ public: // temporary
     //----------------------------------------------------------------------------------------------------------------------------
     #pragma endregion dom_element_protected
 };
+
 } // cat::dom
 
 #include <catui/dom/object-impl.h>

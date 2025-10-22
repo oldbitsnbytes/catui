@@ -112,6 +112,7 @@ rem::code stop_mouse();
 rem::code end();
 void save_screen();
 void restore_screen();
+ui::rectangle geometry();
 
 cat::io::pollin& poll_fd();
 
