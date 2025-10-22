@@ -409,7 +409,7 @@ rem::code conio::render(ui::vchar::bloc& ui_bloc, const ui::rectangle& local_are
     {
         con << ui_bloc.geometry.a+ui_area.a+ui::cxy{0,y}  << ui_bloc.render(ui_area.a+ui::cxy{0,y}, ui_area.width());
     }
-    con << eol;
+    std::cout.flush();
     return rem::code::accepted;
 
 }

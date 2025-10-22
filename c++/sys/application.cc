@@ -128,7 +128,7 @@ rem::code application::setup_ui()
     io::console::start();
 
     status_bar = new dom::object("status bar");
-    status_bar->set_geometry({cxy{0,io::console::geometry().height()-1},csz(io::console::geometry().width()-4,1)});
+    status_bar->set_geometry({cxy{0,io::console::geometry().height()-1},csz(io::console::geometry().width(),1)});
     status_bar->draw();
     status_bar->update();
     status_bar->redraw();
