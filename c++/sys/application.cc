@@ -48,6 +48,7 @@ application::application(const std::string&app_name, cat::string::view_list&& ar
 application::~application()
 {
     sys::info() << "application::~application(); terminate interactive console and flush remaining application logs{ file ./catui_tests.sys }." << sys::eol;
+    delete status_bar;
     io::console::end();
     sys::flush("catui_test.sys");
 }
@@ -89,6 +90,13 @@ rem::code application::run()
             }
             else
             {
+                status_bar->clear();
+                auto& painter=status_bar->begin_paint();
+                painter << cxy{1,0} << "mouse event: " << (std::string)cev.m.pos;
+                status_bar->end_paint(painter);
+                status_bar->update();
+                status_bar->redraw();
+
                 //cat::con << cxy{1,3} << "mouse event: " << cev.m() << conio::eol;
                 //cat::con << cev.m.pos << cat::ui::rectangle{cev.m.pos,ui::csz{20,5}};
                 //sys::debug() << "mouse event: " << cev.m() << sys::eol;
