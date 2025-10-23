@@ -4,7 +4,7 @@
 
 
 
-#include <catui/dom/object.h>
+#include <catui/widgets/object.h>
 #include <catui/io/console.h>
 
 

@@ -17,7 +17,7 @@
 
 #include <catui/sys/application.h>
 #include <catui/io/console.h>
-#include <catui/dom/object.h>
+#include <catui/widgets/object.h>
 
 #include <csignal>
 
@@ -87,7 +87,7 @@ rem::code application::run()
                 sys::debug() << "keystroke (mnemonic name): " << cat::io::kstroke::name(cev.k.mnemonic) << sys::eol;
                 status_bar->clear();
                 auto& painter=status_bar->begin_paint();
-                painter << cxy{1,0} << "keystroke (mnemonic name): " << cat::io::kstroke::name(cev.k.mnemonic);
+                painter << cxy{1,0} << "keystroke (mnemonic name): " << cat::io::kstroke::name(cev.k.mnemonic) << " | " << (char)cev.k.kcode;
                 status_bar->end_paint(painter);
                 status_bar->update();
                 status_bar->redraw();

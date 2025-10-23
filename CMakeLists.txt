@@ -36,13 +36,15 @@ set(HEADERS
     include/${PROJECT_NAME}/io/kstroke.h
     include/${PROJECT_NAME}/io/mouse.h
     include/${PROJECT_NAME}/io/console.h
-    include/${PROJECT_NAME}/dom/object.h
+    include/${PROJECT_NAME}/widgets/object.h
     include/${PROJECT_NAME}/sys/application.h
     include/${PROJECT_NAME}/sys/strscan.h
     include/${PROJECT_NAME}/lexer/lang.h
     include/${PROJECT_NAME}/lexer/token_info.h
     include/${PROJECT_NAME}/lexer/lexer.h
-    include/${PROJECT_NAME}/dom/object-impl.h
+    include/${PROJECT_NAME}/widgets/object-impl.h
+    c++/widgets/label.cc
+    include/catui/widgets/label.h
 
 
 )

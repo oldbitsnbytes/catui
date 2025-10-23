@@ -3,7 +3,7 @@
 //
 
 #include <catui/sys/colors.h>
-#include <catui/dom/object.h>
+#include <catui/widgets/object.h>
 ////////////////////////////////////////////////////////////////////////////////////////////
 //   Copyright (C) ...,2025,... by Serge Lussier
 //   serge.lussier@oldbitsnbytes.club / lussier.serge@gmail.com

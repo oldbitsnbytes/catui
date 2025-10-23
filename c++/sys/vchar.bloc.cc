@@ -383,6 +383,25 @@ void vchar::bloc::clear(const rectangle& subarea)
 }
 
 
+rem::code vchar::bloc::clear(ui::rectangle r, color::pair cp)
+{
+    if (!r)
+        r = geometry.to_local();
+    else
+    {
+        r = r & geometry.to_local();
+        if (!r)
+        {
+            sys::message() << rem::fn::func << " out of boundaries @" << color::yellow << r << color::r << sys::eol;
+            return rem::code::rejected;
+        }
+    }
+    for (int y=0;y<r.size.h; ++y)
+        std::fill_n(dc.begin()+r.a.x + ((r.a.y + y) * geometry.size.w), r.size.w, vchar(color::pair(cp)));
+    return rem::code::accepted;
+}
+
+
 /**
  *  @brief Copies a defined inner area of one pad into another pad.
  *

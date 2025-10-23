@@ -329,4 +329,4 @@ public: // temporary
 
 } // cat::widgets
 
-#include <catui/dom/object-impl.h>
+#include <catui/widgets/object-impl.h>

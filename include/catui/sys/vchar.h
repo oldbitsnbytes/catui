@@ -84,6 +84,7 @@ struct vchar
         [[nodiscard]] int       height() const {return geometry.size.h;}
         static shared           create(csz sz, color::pair a_colors);
         void                    clear(const rectangle& subarea={});
+        rem::code               clear(ui::rectangle r, color::pair cp);
         rem::code               copy(vchar::bloc& PadDc, rectangle InnerArea);
         vchar::iterator         at(const cxy&offset={});
         rem::code               goto_xy(const cxy&offset={});

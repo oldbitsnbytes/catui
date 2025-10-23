@@ -1,7 +1,7 @@
 //
 // Created by Serge Lussier on 2025-10-17.
 //
-#include <catui/dom/object.h>
+#include <catui/widgets/object.h>
 
 
 #define MIN(a,b) ((a)<(b)?(a):(b))
@@ -49,14 +49,20 @@ void object::canva::clear() const
 
 rem::code object::canva::clear(const ui::rectangle&rect)
 {
-
-    auto area = geometry & rect;
-    if (!rect)
+    auto area = rect;
+    if (!area)
+        area = geometry;
+    else
     {
-        sys::error() << "Invalid area: " << rect<< sys::eol;
-        return rem::code::rejected;
+        area = area & geometry;
+        if (!area)
+        {
+            sys::error() << "Invalid area: " << area<< sys::eol;
+            return rem::code::rejected;
+        }
     }
-    parent->dc().clear(area);
+
+    parent->dc().clear(area,colors);
 
     return rem::code::accepted;
 }
