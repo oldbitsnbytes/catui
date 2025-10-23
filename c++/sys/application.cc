@@ -57,9 +57,9 @@ application::~application()
 rem::code application::setup()
 {
     install_signals();
-    // _root = std::make_shared<dom::object>(nullptr, "root");
+    // _root = std::make_shared<widgets::object>(nullptr, "root");
     // _root->set_theme("C128");
-    // _root->set_dom_status(dom::dom_status_enums::active);
+    // _root->set_dom_status(widgets::dom_status_enums::active);
     // _root->set_geometry({cxy{2,5},ui::csz{40,5}});
     // con.render(*_root->bloc_dc(), {});
 
@@ -85,10 +85,17 @@ rem::code application::run()
             {
                 cat::con << cxy{1,3} <<  "keystroke (mnemonic name): " << cat::io::kstroke::name(cev.k.mnemonic) << conio::eol;
                 sys::debug() << "keystroke (mnemonic name): " << cat::io::kstroke::name(cev.k.mnemonic) << sys::eol;
+                status_bar->clear();
+                auto& painter=status_bar->begin_paint();
+                painter << cxy{1,0} << "keystroke (mnemonic name): " << cat::io::kstroke::name(cev.k.mnemonic);
+                status_bar->end_paint(painter);
+                status_bar->update();
+                status_bar->redraw();
+
                 if (cev.k.mnemonic == cat::io::kstroke::ESCAPE)
                     fini = true;
             }
-            else
+            if (cev.is<cat::io::mouse>())
             {
                 status_bar->clear();
                 auto& painter=status_bar->begin_paint();
@@ -127,12 +134,12 @@ rem::code application::setup_ui()
 {
     io::console::start();
 
-    status_bar = new dom::object("status bar");
+    status_bar = new ui::object("status bar");
     status_bar->set_geometry({cxy{0,io::console::geometry().height()-1},csz(io::console::geometry().width(),1)});
     status_bar->draw();
     status_bar->update();
     status_bar->redraw();
-    // auto object = new dom::object("testing dom::object");
+    // auto object = new widgets::object("testing widgets::object");
     // object->set_geometry({ui::cxy{10,20},ui::csz{40,10}});
     // object->draw();
     // auto& painter = object->begin_paint();

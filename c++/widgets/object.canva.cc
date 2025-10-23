@@ -8,7 +8,7 @@
 #define MAX(a,b) ((a)>(b)?(a):(b))
 
 
-namespace cat::dom
+namespace cat::ui
 {
 
 

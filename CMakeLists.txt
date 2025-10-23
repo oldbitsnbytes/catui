@@ -61,7 +61,7 @@ add_library(${PROJECT_NAME}
             c++/sys/application.cc
             c++/sys/rem.cc
             c++/sys/glyphes.cc
-            c++/dom/object.cc
+            c++/widgets/object.cc
             c++/sys/string.cc
             c++/sys/dbase.cc
             c++/sys/vchar.cc
@@ -76,8 +76,8 @@ add_library(${PROJECT_NAME}
             c++/lexer/lang.cc
             c++/lexer/lexer.cc
             c++/sys/strscan.cc
-            c++/dom/object.canva.cc
-            c++/dom/object.dom.cc
+            c++/widgets/object.canva.cc
+            c++/widgets/object.ui.cc
 )
 
 

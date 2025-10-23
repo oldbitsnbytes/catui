@@ -27,7 +27,7 @@
 
 #include <catui/sys/sys.h>
 #include <catui/sys/vchar.h>
-namespace cat::dom
+namespace cat::ui
 {
 
 namespace type_enums
@@ -327,6 +327,6 @@ public: // temporary
     #pragma endregion dom_element_protected
 };
 
-} // cat::dom
+} // cat::widgets
 
 #include <catui/dom/object-impl.h>

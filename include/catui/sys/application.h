@@ -28,12 +28,12 @@ class CATUI_LIB application
 {
     CLASSNAME_START(application)
     cat::string::view_list _arguments{};
-    dom::object* _root{nullptr};
+    ui::object* _root{nullptr};
     color::db::palette* _palette{nullptr};
     static std::string _global_theme_id;
 
     // Tests...
-    dom::object* status_bar{nullptr};
+    ui::object* status_bar{nullptr};
 
 public:
     application();

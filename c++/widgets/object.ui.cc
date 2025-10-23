@@ -8,7 +8,7 @@
 #include <catui/io/console.h>
 
 
-namespace cat::dom
+namespace cat::ui
 {
 
 using namespace cat::ui;
@@ -93,7 +93,7 @@ std::pair<std::string, dom_status_enums::value> object::dom_status() const
 
 std::pair<std::string, type_enums::value> object::dom_type() const
 {
-    std::map<dom::type_enums::value, std::string> type_names = {
+    std::map<ui::type_enums::value, std::string> type_names = {
         {type_enums::dialog,    "dialog"},
         {type_enums::floating,  "floating"},
         {type_enums::menu,      "menu"},
@@ -122,19 +122,19 @@ std::pair<std::string, component::value> object::dom_component() const
 
 std::pair<std::string, anchor::value> object::dom_anchor() const
 {
-    std::map<dom::anchor::value, std::string> anchor_names = {
-        {dom::anchor::none    , "none"},
-        {dom::anchor::fixed   , "fixed"},
-        {dom::anchor::width   , "width"},
-        {dom::anchor::height  , "height"},
-        {dom::anchor::frame   , "frame"},
-        {dom::anchor::right   , "right"},
-        {dom::anchor::left    , "left"},
-        {dom::anchor::top     , "top"},
-        {dom::anchor::bottom  , "bottom"},
-        {dom::anchor::center  , "center"},
-        {dom::anchor::hcenter , "hcenter"},
-        {dom::anchor::vcenter , "vcenter"}
+    std::map<ui::anchor::value, std::string> anchor_names = {
+        {ui::anchor::none    , "none"},
+        {ui::anchor::fixed   , "fixed"},
+        {ui::anchor::width   , "width"},
+        {ui::anchor::height  , "height"},
+        {ui::anchor::frame   , "frame"},
+        {ui::anchor::right   , "right"},
+        {ui::anchor::left    , "left"},
+        {ui::anchor::top     , "top"},
+        {ui::anchor::bottom  , "bottom"},
+        {ui::anchor::center  , "center"},
+        {ui::anchor::hcenter , "hcenter"},
+        {ui::anchor::vcenter , "vcenter"}
     };
     return {anchor_names[_anchor],_anchor};
 }
