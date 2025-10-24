@@ -85,24 +85,24 @@ rem::code application::run()
             {
                 cat::con << cxy{1,3} <<  "keystroke (mnemonic name): " << cat::io::kstroke::name(cev.k.mnemonic) << conio::eol;
                 sys::debug() << "keystroke (mnemonic name): " << cat::io::kstroke::name(cev.k.mnemonic) << sys::eol;
-                label->clear();
+                _statusbar->clear();
                 auto& painter=label->begin_paint();
                 painter << cxy{1,0} << "keystroke (mnemonic name): " << cat::io::kstroke::name(cev.k.mnemonic) << " | " << (char)cev.k.kcode;
-                label->end_paint(painter);
-                label->update();
-                label->redraw();
+                _statusbar->end_paint(painter);
+                _statusbar->update({});
+                _statusbar->redraw();
 
                 if (cev.k.mnemonic == cat::io::kstroke::ESCAPE)
                     fini = true;
             }
             if (cev.is<cat::io::mouse>())
             {
-                label->clear();
+                _statusbar->clear();
                 auto& painter=label->begin_paint();
                 painter << cxy{1,0} << "mouse event: " << (std::string)cev.m.pos;
-                label->end_paint(painter);
-                label->update();
-                label->redraw();
+                _statusbar->end_paint(painter);
+                _statusbar->update({});
+                _statusbar->redraw();
 
                 //cat::con << cxy{1,3} << "mouse event: " << cev.m() << conio::eol;
                 //cat::con << cev.m.pos << cat::ui::rectangle{cev.m.pos,ui::csz{20,5}};
@@ -137,7 +137,7 @@ rem::code application::setup_ui()
     _statusbar = new ui::statusbar(nullptr,"status bar");
     _statusbar->set_geometry({cxy{0,io::console::geometry().height()-1},csz(io::console::geometry().width(),1)});
     _statusbar->draw();
-    _statusbar->update();
+    _statusbar->update({});
     _statusbar->redraw();
     // auto object = new widgets::object("testing widgets::object");
     // object->set_geometry({ui::cxy{10,20},ui::csz{40,10}});
@@ -156,7 +156,7 @@ rem::code application::setup_ui()
 rem::code application::set_global_theme(const std::string&theme_name)
 {
     if (const auto it = color::db::themes.find(theme_name); it != color::db::themes.end())
-        _palette      = &color::db::theme_palette(theme_name);
+        _palette = &color::db::theme_palette(theme_name);
     else
         throw sys::exception()[sys::error() <<  "theme " << theme_name << ' ' << rem::code::notexist  << sys::eol];
 

@@ -163,7 +163,7 @@ margin& object::dom_margin()
 rem::code object::allocate_bloc_dc(ui::csz wxh)
 {
     if (_parent)
-        _dc = parent()->bloc_dc();
+        _dc = _parent->bloc_dc();
     else
     {
         _dc = ui::vchar::bloc::create(wxh, _theme_colors);
@@ -183,11 +183,103 @@ rem::code object::apply_anchor()
     {
         case anchor::none: break;
         case anchor::fixed: break;
-        case anchor::width:
-
-            break;
+        case anchor::width: break;
+        case anchor::height: break;
+        case anchor::frame: break;
+        case anchor::right: break;
+        case anchor::left: break;
+        case anchor::top: break;
+        case anchor::bottom: break;
+        case anchor::center: break;
+        case anchor::hcenter: break;
+        case anchor::vcenter: break;
+        case anchor::bottom | anchor::width: break;
+        default:break;
     }
     return rem::code::accepted;
+}
+
+
+rem::code object::apply_width_constraints(object* _child) const
+{
+    if (!(_child->_anchor & anchor::width))
+        return rem::code::rejected;
+
+    int child_width = width()-_child->_margin.left-_child->_margin.right-(_component&component::frame?2:0);
+    int child_left  = _child->_margin.left+(_component&component::frame?1:0);
+    //int child_top   = _child->_margin.top+(_component&component::frame?1:0);
+    _child->set_geometry({cxy{child_left,_child->_geometry.a.y},csz{child_width,_child->_geometry.size.h}});
+    return rem::code::accepted;
+}
+
+
+rem::code object::apply_height_constraints(object* _child) const
+{
+    if (!(_child->_anchor & anchor::height))
+        return rem::code::rejected;
+
+    int child_height = height()-_child->_margin.top-_child->_margin.bottom-(_component&component::frame?2:0);
+    int child_top    = _child->_margin.top+(_component&component::frame?1:0);
+    _child->set_geometry({cxy{_child->_geometry.a.x,child_top},csz{_child->_geometry.size.w,child_height}});
+    return rem::code::accepted;
+}
+
+
+rem::code object::apply_left_constraints(object* _child) const
+{
+    return rem::code::notimplemented;
+}
+
+
+rem::code object::apply_right_constraints(object* _child) const
+{
+    return rem::code::notimplemented;
+}
+
+
+rem::code object::apply_hcenter_constraints(object* _child) const
+{
+    return rem::code::notimplemented;
+}
+
+
+rem::code object::apply_vcenter_constraints(object* _child)  const
+{
+    return rem::code::notimplemented;
+}
+
+
+
+rem::code object::apply_bottom_constraints(object* _child) const
+{
+    if (!(_child->_anchor & anchor::bottom))
+        return rem::code::rejected;
+
+    int child_y = (_geometry.size.h-_child->_margin.bottom-(_component&component::frame?2:0))-_child->_geometry.size.h;
+    _child->_geometry.move_at(cxy{_child->_geometry.a.x, child_y});
+    return rem::code::accepted;
+}
+
+
+rem::code object::apply_anchor(object* _child) const
+{
+    rem::code result;
+    if (_child->_anchor &  anchor::width)
+        apply_width_constraints(_child);
+    if (_child->_anchor &  anchor::height)
+        apply_height_constraints(_child);
+    if (_child->_anchor &  anchor::left)
+        apply_left_constraints(_child);
+    if (_child->_anchor &  anchor::right)
+        apply_right_constraints(_child);
+    if (_child->_anchor &  anchor::hcenter)
+        apply_hcenter_constraints(_child);
+    if (_child->_anchor &  anchor::vcenter)
+        apply_vcenter_constraints(_child);
+    if (_child->_anchor &  anchor::bottom)
+        apply_bottom_constraints(_child);
+
+    return rem::code::done;
 }
 
 
@@ -240,7 +332,13 @@ rem::code object::update(ui::rectangle rect)
 
 rem::code object::resize(ui::rectangle rect)
 {
-    _geometry = rect;
+    set_geometry(rect);
     return rem::code::accepted;
+}
+
+
+rem::code object::exec_layout(object* _child) const
+{
+    return apply_anchor(_child);
 }
 }

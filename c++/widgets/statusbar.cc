@@ -27,7 +27,13 @@ statusbar::statusbar()
 }
 
 
-statusbar::statusbar(object* parent_object, std::string _id): object(parent_object, _id){}
+statusbar::statusbar(object* parent_object, std::string _id): object(parent_object, _id)
+{
+    set_anchor(anchor::bottom | anchor::width);
+    if (_parent)
+        _parent->exec_layout(this);
+
+}
 
 
 statusbar::~statusbar()

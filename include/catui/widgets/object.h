@@ -289,8 +289,12 @@ public:
 
 
     virtual void      draw();
-    virtual rem::code update(ui::rectangle rect={});
+    virtual rem::code update(ui::rectangle rect);
     virtual rem::code resize(ui::rectangle rect);
+
+    int width() const { return _geometry.size.w; }
+    int height() const { return _geometry.size.h; }
+    rem::code exec_layout(object* _child) const;
 
 protected:
     object::list _children{};
@@ -320,6 +324,15 @@ protected:
     ui::vchar::bloc::shared _dc{nullptr};
     ui::rectangle           _geometry{};
     object* _parent{nullptr};
+
+    rem::code apply_width_constraints(object* _child) const;
+    rem::code apply_height_constraints(object* _child) const;
+    rem::code apply_left_constraints(object* _child) const;
+    rem::code apply_right_constraints(object* _child) const;
+    rem::code apply_hcenter_constraints(object* _child) const;
+    rem::code apply_vcenter_constraints(object* _child) const;
+    rem::code apply_bottom_constraints(object* _child) const;
+    rem::code apply_anchor(object* _child) const;
 public: // temporary
     void    redraw() const;
     //----------------------------------------------------------------------------------------------------------------------------
