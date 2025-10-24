@@ -43,8 +43,9 @@ set(HEADERS
     include/${PROJECT_NAME}/lexer/token_info.h
     include/${PROJECT_NAME}/lexer/lexer.h
     include/${PROJECT_NAME}/widgets/object-impl.h
-    c++/widgets/label.cc
+
     include/catui/widgets/label.h
+    include/catui/widgets/statusbar.h
 
 
 )
@@ -80,6 +81,8 @@ add_library(${PROJECT_NAME}
             c++/sys/strscan.cc
             c++/widgets/object.canva.cc
             c++/widgets/object.ui.cc
+            c++/widgets/label.cc
+            c++/widgets/statusbar.cc
 )
 
 
