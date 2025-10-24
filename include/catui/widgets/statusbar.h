@@ -33,11 +33,11 @@ class CATUI_LIB statusbar : public object
 
 public:
     statusbar();
-
+    statusbar(object*  parent_object, std::string _id);
     ~statusbar() override;
 
-
-
-
+    void      draw() override;
+    rem::code update(ui::rectangle rect) override;
+    rem::code resize(ui::rectangle rect) override;
 };
 }

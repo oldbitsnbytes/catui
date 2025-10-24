@@ -134,11 +134,11 @@ rem::code application::setup_ui()
 {
     io::console::start();
 
-    label = new ui::label("status bar");
-    label->set_geometry({cxy{0,io::console::geometry().height()-1},csz(io::console::geometry().width(),1)});
-    label->draw();
-    label->update();
-    label->redraw();
+    _statusbar = new ui::statusbar(nullptr,"status bar");
+    _statusbar->set_geometry({cxy{0,io::console::geometry().height()-1},csz(io::console::geometry().width(),1)});
+    _statusbar->draw();
+    _statusbar->update();
+    _statusbar->redraw();
     // auto object = new widgets::object("testing widgets::object");
     // object->set_geometry({ui::cxy{10,20},ui::csz{40,10}});
     // object->draw();
