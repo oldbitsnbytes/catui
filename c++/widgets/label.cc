@@ -52,7 +52,7 @@ label::label(object* parent_object, std::string lbl_text) : object(parent_object
 void label::draw()
 {
     object::draw();
-    auto paint = begin_paint();
+    auto& paint = begin_paint();
     paint << cxy{0,0} << _text;
     end_paint(paint);
     update({});

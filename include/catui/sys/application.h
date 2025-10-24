@@ -18,7 +18,7 @@
 
 #pragma once
 #include <catui/io/console.h>
-#include <catui/widgets/object.h>
+#include <catui/widgets/label.h>
 
 namespace cat
 {
@@ -28,12 +28,12 @@ class CATUI_LIB application
 {
     CLASSNAME_START(application)
     cat::string::view_list _arguments{};
-    ui::object* _root{nullptr};
+    ui::label* _root{nullptr};
     color::db::palette* _palette{nullptr};
     static std::string _global_theme_id;
 
     // Tests...
-    ui::object* status_bar{nullptr};
+    ui::object* label{nullptr};
 
 public:
     application();

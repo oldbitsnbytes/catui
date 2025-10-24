@@ -48,7 +48,7 @@ application::application(const std::string&app_name, cat::string::view_list&& ar
 application::~application()
 {
     sys::info() << "application::~application(); terminate interactive console and flush remaining application logs{ file ./catui_tests.sys }." << sys::eol;
-    delete status_bar;
+    delete label;
     io::console::end();
     sys::flush("catui_test.sys");
 }
@@ -85,24 +85,24 @@ rem::code application::run()
             {
                 cat::con << cxy{1,3} <<  "keystroke (mnemonic name): " << cat::io::kstroke::name(cev.k.mnemonic) << conio::eol;
                 sys::debug() << "keystroke (mnemonic name): " << cat::io::kstroke::name(cev.k.mnemonic) << sys::eol;
-                status_bar->clear();
-                auto& painter=status_bar->begin_paint();
+                label->clear();
+                auto& painter=label->begin_paint();
                 painter << cxy{1,0} << "keystroke (mnemonic name): " << cat::io::kstroke::name(cev.k.mnemonic) << " | " << (char)cev.k.kcode;
-                status_bar->end_paint(painter);
-                status_bar->update();
-                status_bar->redraw();
+                label->end_paint(painter);
+                label->update();
+                label->redraw();
 
                 if (cev.k.mnemonic == cat::io::kstroke::ESCAPE)
                     fini = true;
             }
             if (cev.is<cat::io::mouse>())
             {
-                status_bar->clear();
-                auto& painter=status_bar->begin_paint();
+                label->clear();
+                auto& painter=label->begin_paint();
                 painter << cxy{1,0} << "mouse event: " << (std::string)cev.m.pos;
-                status_bar->end_paint(painter);
-                status_bar->update();
-                status_bar->redraw();
+                label->end_paint(painter);
+                label->update();
+                label->redraw();
 
                 //cat::con << cxy{1,3} << "mouse event: " << cev.m() << conio::eol;
                 //cat::con << cev.m.pos << cat::ui::rectangle{cev.m.pos,ui::csz{20,5}};
@@ -134,11 +134,11 @@ rem::code application::setup_ui()
 {
     io::console::start();
 
-    status_bar = new ui::object("status bar");
-    status_bar->set_geometry({cxy{0,io::console::geometry().height()-1},csz(io::console::geometry().width(),1)});
-    status_bar->draw();
-    status_bar->update();
-    status_bar->redraw();
+    label = new ui::label("status bar");
+    label->set_geometry({cxy{0,io::console::geometry().height()-1},csz(io::console::geometry().width(),1)});
+    label->draw();
+    label->update();
+    label->redraw();
     // auto object = new widgets::object("testing widgets::object");
     // object->set_geometry({ui::cxy{10,20},ui::csz{40,10}});
     // object->draw();
