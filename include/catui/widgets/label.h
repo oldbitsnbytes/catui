@@ -34,9 +34,9 @@ public:
 
     explicit label(std::string lbl_text);
     label(object*  parent_object, std::string lbl_text);
-
-
-
+    void      draw() override;
+    rem::code update(ui::rectangle rect) override;
+    rem::code resize(ui::rectangle rect) override;
 };
 
 

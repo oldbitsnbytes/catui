@@ -264,7 +264,6 @@ public:
         void set_background_color(color::value aBg);
 
         template<typename T> canva& operator << (const T& val);
-
         canva& write(const std::string& str);
         canva& operator *() { return *this; }
 
@@ -289,9 +288,9 @@ public:
     void end_paint(object::canva& canva);
 
 
-    void      draw();
-    rem::code update(ui::rectangle rect={});
-    rem::code resize(ui::rectangle rect);
+    virtual void      draw();
+    virtual rem::code update(ui::rectangle rect={});
+    virtual rem::code resize(ui::rectangle rect);
 
 protected:
     object::list _children{};

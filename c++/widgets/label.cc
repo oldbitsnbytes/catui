@@ -22,9 +22,52 @@
 //------------------------------------------------------------------------------------------
 
 
-namespace cat
+namespace cat::ui
 {
-namespace ui
+
+
+
+label::label()
 {
-} // ui
-} // cat
+}
+
+
+label::~label()
+{
+}
+
+
+label::label(std::string lbl_text): object(lbl_text)
+{
+    ;
+}
+
+
+label::label(object* parent_object, std::string lbl_text) : object(parent_object, lbl_text)
+{
+
+}
+
+
+void label::draw()
+{
+    object::draw();
+    auto paint = begin_paint();
+    paint << cxy{0,0} << _text;
+    end_paint(paint);
+    update({});
+}
+
+
+rem::code label::update(ui::rectangle rect)
+{
+    return object::update(rect);
+}
+
+
+rem::code label::resize(ui::rectangle rect)
+{
+    return object::resize(rect);
+}
+
+} // namespace cat::ui
