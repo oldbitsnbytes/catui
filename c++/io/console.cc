@@ -50,6 +50,9 @@ void resize_signal(int i)
 }
 
 
+ui::csz size() { return _geometry.size; }
+
+
 rem::code start()
 {
     tcgetattr(STDIN_FILENO, &_saved);

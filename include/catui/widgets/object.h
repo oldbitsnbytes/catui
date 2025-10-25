@@ -292,9 +292,10 @@ public:
     virtual rem::code update(ui::rectangle rect);
     virtual rem::code resize(ui::rectangle rect);
 
+    void set_size_policy(ui::csz sz_policy);
     int width() const { return _geometry.size.w; }
     int height() const { return _geometry.size.h; }
-    rem::code exec_layout(object* _child) const;
+    rem::code exec_layout(object* _child);
 
 protected:
     object::list _children{};
@@ -318,21 +319,22 @@ protected:
 
     rem::code               allocate_bloc_dc(ui::csz wxh);
 
-    rem::code apply_anchor();
+
 
 
     ui::vchar::bloc::shared _dc{nullptr};
     ui::rectangle           _geometry{};
+    ui::csz                 _size_policy{};
     object* _parent{nullptr};
 
-    rem::code apply_width_constraints(object* _child) const;
-    rem::code apply_height_constraints(object* _child) const;
-    rem::code apply_left_constraints(object* _child) const;
-    rem::code apply_right_constraints(object* _child) const;
-    rem::code apply_hcenter_constraints(object* _child) const;
-    rem::code apply_vcenter_constraints(object* _child) const;
-    rem::code apply_bottom_constraints(object* _child) const;
-    rem::code apply_anchor(object* _child) const;
+    virtual rem::code apply_width_constraints(object* _child);
+    virtual rem::code apply_height_constraints(object* _child);
+    virtual rem::code apply_left_constraints(object* _child);
+    virtual rem::code apply_right_constraints(object* _child);
+    virtual rem::code apply_hcenter_constraints(object* _child);
+    virtual rem::code apply_vcenter_constraints(object* _child);
+    virtual rem::code apply_bottom_constraints(object* _child);
+    virtual rem::code apply_anchor(object* _child);
 public: // temporary
     void    redraw() const;
     //----------------------------------------------------------------------------------------------------------------------------

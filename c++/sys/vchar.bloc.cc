@@ -352,6 +352,7 @@ vchar::bloc::~bloc()
 
 vchar::bloc::shared vchar::bloc::create(csz sz, color::pair a_colours)
 {
+
     auto p  = std::make_shared<vchar::bloc>();
 
     p->dc = vchar::string(sz.area(),vchar(color::pair(a_colours)));

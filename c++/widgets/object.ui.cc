@@ -13,7 +13,7 @@ namespace cat::ui
 
 using namespace cat::ui;
 
-rem::code object::set_geometry(const ui::rectangle&rect)
+rem::code object::set_geometry(const ui::rectangle& rect)
 {
     _geometry = rect;
     allocate_bloc_dc(_geometry.size);
@@ -163,9 +163,18 @@ margin& object::dom_margin()
 rem::code object::allocate_bloc_dc(ui::csz wxh)
 {
     if (_parent)
+    {
+        sys::comment() << "using parent '" << color::yellow << _parent->id()<< color::r << "':: BLOC DC" << sys::eol;
         _dc = _parent->bloc_dc();
+    }
     else
     {
+        if (_dc)
+        {
+            sys::comment() << "releasing old BLOC DC" << sys::eol;
+            _dc.reset();
+        }
+        sys::comment() << "creating new BLOC DC: " << color::yellow << (std::string)wxh << sys::eol;
         _dc = ui::vchar::bloc::create(wxh, _theme_colors);
         _dc->move_to(_geometry.a);
 
@@ -177,33 +186,17 @@ rem::code object::allocate_bloc_dc(ui::csz wxh)
 }
 
 
-rem::code object::apply_anchor()
+
+
+rem::code object::apply_width_constraints(object* _child)
 {
-    switch (_anchor)
+    if (!_child)
     {
-        case anchor::none: break;
-        case anchor::fixed: break;
-        case anchor::width: break;
-        case anchor::height: break;
-        case anchor::frame: break;
-        case anchor::right: break;
-        case anchor::left: break;
-        case anchor::top: break;
-        case anchor::bottom: break;
-        case anchor::center: break;
-        case anchor::hcenter: break;
-        case anchor::vcenter: break;
-        case anchor::bottom | anchor::width: break;
-        default:break;
+        sys::comment() << "applying width constraints on the console:" << sys::eol;
+        set_geometry({_geometry.a,io::console::size()});
+        return rem::code::done;
     }
-    return rem::code::accepted;
-}
 
-
-rem::code object::apply_width_constraints(object* _child) const
-{
-    if (!(_child->_anchor & anchor::width))
-        return rem::code::rejected;
 
     int child_width = width()-_child->_margin.left-_child->_margin.right-(_component&component::frame?2:0);
     int child_left  = _child->_margin.left+(_component&component::frame?1:0);
@@ -213,7 +206,7 @@ rem::code object::apply_width_constraints(object* _child) const
 }
 
 
-rem::code object::apply_height_constraints(object* _child) const
+rem::code object::apply_height_constraints(object* _child)
 {
     if (!(_child->_anchor & anchor::height))
         return rem::code::rejected;
@@ -225,33 +218,41 @@ rem::code object::apply_height_constraints(object* _child) const
 }
 
 
-rem::code object::apply_left_constraints(object* _child) const
+rem::code object::apply_left_constraints(object* _child)
 {
     return rem::code::notimplemented;
 }
 
 
-rem::code object::apply_right_constraints(object* _child) const
+rem::code object::apply_right_constraints(object* _child)
 {
     return rem::code::notimplemented;
 }
 
 
-rem::code object::apply_hcenter_constraints(object* _child) const
+rem::code object::apply_hcenter_constraints(object* _child)
 {
     return rem::code::notimplemented;
 }
 
 
-rem::code object::apply_vcenter_constraints(object* _child)  const
+rem::code object::apply_vcenter_constraints(object* _child)
 {
     return rem::code::notimplemented;
 }
 
 
 
-rem::code object::apply_bottom_constraints(object* _child) const
+rem::code object::apply_bottom_constraints(object* _child)
 {
+    if (!_child)
+    {
+        sys::comment() << "applying bottom constraints on the console:" << sys::eol;
+        set_geometry({_geometry.a,io::console::size()});
+        return rem::code::done;
+    }
+
+
     if (!(_child->_anchor & anchor::bottom))
         return rem::code::rejected;
 
@@ -261,7 +262,17 @@ rem::code object::apply_bottom_constraints(object* _child) const
 }
 
 
-rem::code object::apply_anchor(object* _child) const
+/**
+ * Applies anchor-based constraints to a child object based on its defined anchor properties.
+ * Each anchor determines a specific type of alignment or size adjustment.
+ *
+ * @param _child A pointer to the child object whose anchor constraints will be applied.
+ *               The `_anchor` property of this object is evaluated to determine the constraints.
+ * @return A `rem::code` indicating the result of the operation:
+ *         - `rem::code::done` if the anchor constraints are successfully applied.
+ * @note if '_child' is nullptr, then the constraints are applied to this object, in absolute coords directly onto the console terminal.
+ */
+rem::code object::apply_anchor(object* _child)
 {
     rem::code result;
     if (_child->_anchor &  anchor::width)
@@ -337,7 +348,10 @@ rem::code object::resize(ui::rectangle rect)
 }
 
 
-rem::code object::exec_layout(object* _child) const
+void object::set_size_policy(ui::csz sz_policy) { _size_policy = sz_policy; }
+
+
+rem::code object::exec_layout(object* _child)
 {
     return apply_anchor(_child);
 }

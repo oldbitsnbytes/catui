@@ -30,8 +30,14 @@ statusbar::statusbar()
 statusbar::statusbar(object* parent_object, std::string _id): object(parent_object, _id)
 {
     set_anchor(anchor::bottom | anchor::width);
+    _geometry.size.h = 1;
+    _geometry.size.min_size = {1,1};
+    _geometry.size.max_size = {10000,1};
+
     if (_parent)
         _parent->exec_layout(this);
+    else
+        exec_layout(this);
 
 }
 

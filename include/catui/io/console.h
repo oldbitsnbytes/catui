@@ -90,7 +90,7 @@ static constexpr auto CSI_UNDERLINE_DECREMENT   = "\x1b[94m";
 
 
 
-
+ui::csz size();
 
 rem::code start();
 void      caret_off();
