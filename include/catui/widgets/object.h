@@ -295,8 +295,9 @@ public:
     void set_size_policy(ui::csz sz_policy);
     int width() const { return _geometry.size.w; }
     int height() const { return _geometry.size.h; }
-    rem::code exec_layout(object* _child);
-
+    virtual rem::code   exec_layout(object* _child);
+    virtual rem::code   apply_constraints(object* _child);
+    virtual void        redraw();
 protected:
     object::list _children{};
 
@@ -304,8 +305,6 @@ protected:
     //----------------------------------------------------------------------------------------------------------------------------
 
     //virtual rem::code   setup_ui(const std::string& _theme_name);
-    ui::rectangle               _rect{};
-    ui::rectangle               _dirty_area{};
     color::db::object_palette*  _palette{nullptr};
     color::pair                 _theme_colors{};
     std::string                 _theme_id{"default"};
@@ -315,16 +314,10 @@ protected:
     dom_status_enums::value     _dom_status{dom_status_enums::normal};
     component::value            _component{component::none};
     type_enums::value           _dom_type{type_enums::none};
-
-
-    rem::code               allocate_bloc_dc(ui::csz wxh);
-
-
-
-
-    ui::vchar::bloc::shared _dc{nullptr};
-    ui::rectangle           _geometry{};
-    ui::csz                 _size_policy{};
+    ui::vchar::bloc::shared     _dc{nullptr};
+    ui::rectangle               _geometry{};
+    ui::rectangle               _dirty_area{};
+    ui::csz                     _size_policy{};
     object* _parent{nullptr};
 
     virtual rem::code apply_width_constraints(object* _child);
@@ -335,8 +328,8 @@ protected:
     virtual rem::code apply_vcenter_constraints(object* _child);
     virtual rem::code apply_bottom_constraints(object* _child);
     virtual rem::code apply_anchor(object* _child);
+    rem::code         allocate_bloc_dc(ui::csz wxh);
 public: // temporary
-    void    redraw() const;
     //----------------------------------------------------------------------------------------------------------------------------
     #pragma endregion dom_element_protected
 };

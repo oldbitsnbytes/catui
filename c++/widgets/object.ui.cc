@@ -272,7 +272,7 @@ rem::code object::apply_bottom_constraints(object* _child)
  *         - `rem::code::done` if the anchor constraints are successfully applied.
  * @note if '_child' is nullptr, then the constraints are applied to this object, in absolute coords directly onto the console terminal.
  */
-rem::code object::apply_anchor(object* _child)
+rem::code object::apply_constraints(object* _child)
 {
     rem::code result;
     if (_child->_anchor &  anchor::width)
@@ -290,6 +290,7 @@ rem::code object::apply_anchor(object* _child)
     if (_child->_anchor &  anchor::bottom)
         apply_bottom_constraints(_child);
 
+    exec_layout(_child);
     return rem::code::done;
 }
 
@@ -309,7 +310,7 @@ void object::draw()
 
 
 
-void object::redraw() const
+void object::redraw()
 {
     sys::test() << " redraw Area : " << color::yellow << _dirty_area << color::r << " at " << color::yellow << _dc->geometry.a << color::r <<  sys::eol;
     con.render(*_dc, _dirty_area);
@@ -353,6 +354,7 @@ void object::set_size_policy(ui::csz sz_policy) { _size_policy = sz_policy; }
 
 rem::code object::exec_layout(object* _child)
 {
-    return apply_anchor(_child);
+    return apply_constraints(_child);
 }
+
 }
