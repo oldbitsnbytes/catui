@@ -193,7 +193,7 @@ rem::code object::apply_width_constraints(object* _child)
     if (!_child)
     {
         sys::comment() << "applying width constraints on the console:" << sys::eol;
-        set_geometry({_geometry.a,io::console::size()});
+        _geometry = {_geometry.a,io::console::size()};
         return rem::code::done;
     }
 
@@ -201,7 +201,7 @@ rem::code object::apply_width_constraints(object* _child)
     int child_width = width()-_child->_margin.left-_child->_margin.right-(_component&component::frame?2:0);
     int child_left  = _child->_margin.left+(_component&component::frame?1:0);
     //int child_top   = _child->_margin.top+(_component&component::frame?1:0);
-    _child->set_geometry({cxy{child_left,_child->_geometry.a.y},csz{child_width,_child->_geometry.size.h}});
+    _child->_geometry = {cxy{child_left,_child->_geometry.a.y},csz{child_width,_child->_geometry.size.h}};
     return rem::code::accepted;
 }
 
@@ -213,7 +213,7 @@ rem::code object::apply_height_constraints(object* _child)
 
     int child_height = height()-_child->_margin.top-_child->_margin.bottom-(_component&component::frame?2:0);
     int child_top    = _child->_margin.top+(_component&component::frame?1:0);
-    _child->set_geometry({cxy{_child->_geometry.a.x,child_top},csz{_child->_geometry.size.w,child_height}});
+    _child->_geometry = {cxy{_child->_geometry.a.x,child_top},csz{_child->_geometry.size.w,child_height}};
     return rem::code::accepted;
 }
 
