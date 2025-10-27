@@ -248,7 +248,7 @@ rem::code object::apply_bottom_constraints(object* _child)
     if (!_child)
     {
         sys::comment() << "applying bottom constraints on the console:" << sys::eol;
-        set_geometry({_geometry.a,io::console::size()});
+        _geometry = {_geometry.a,io::console::size()};
         return rem::code::done;
     }
 
@@ -290,7 +290,7 @@ rem::code object::apply_constraints(object* _child)
     if (_child->_anchor &  anchor::bottom)
         apply_bottom_constraints(_child);
 
-    exec_layout(_child);
+    compute_layout(_child);
     return rem::code::done;
 }
 
@@ -352,9 +352,22 @@ rem::code object::resize(ui::rectangle rect)
 void object::set_size_policy(ui::csz sz_policy) { _size_policy = sz_policy; }
 
 
+rem::code object::compute_layout(object* _child)
+{
+    if (!!apply_constraints(_child))
+    {
+        return exec_layout(_child);
+    }
+    return rem::code::rejected;
+}
+
+
 rem::code object::exec_layout(object* _child)
 {
-    return apply_constraints(_child);
+    if (_child) return _child->exec_layout(nullptr);
+
+    return rem::code::accepted;
 }
+
 
 }

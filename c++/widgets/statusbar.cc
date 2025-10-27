@@ -35,9 +35,9 @@ statusbar::statusbar(object* parent_object, std::string _id): object(parent_obje
     _geometry.size.max_size = {10000,1};
 
     if (_parent)
-        _parent->exec_layout(this);
+        _parent->compute_layout(this);
     else
-        exec_layout(this);
+        compute_layout(this);
 
 }
 

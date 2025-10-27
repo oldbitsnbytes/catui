@@ -295,7 +295,7 @@ public:
     void set_size_policy(ui::csz sz_policy);
     int width() const { return _geometry.size.w; }
     int height() const { return _geometry.size.h; }
-    virtual rem::code   exec_layout(object* _child);
+    virtual rem::code   compute_layout(object* _child);
     virtual rem::code   apply_constraints(object* _child);
     virtual void        redraw();
 protected:
@@ -329,6 +329,7 @@ protected:
     virtual rem::code apply_bottom_constraints(object* _child);
     //virtual rem::code apply_anchor(object* _child);
     rem::code         allocate_bloc_dc(ui::csz wxh);
+    rem::code         exec_layout(object* _child);
 public: // temporary
     //----------------------------------------------------------------------------------------------------------------------------
     #pragma endregion dom_element_protected
