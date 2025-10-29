@@ -226,12 +226,23 @@ rem::code object::apply_left_constraints(object* _child)
 
 rem::code object::apply_right_constraints(object* _child)
 {
-    return rem::code::notimplemented;
+    if (!_child)
+    {
+        sys::comment() << "applying right constraints on the console:" << sys::eol;
+        _geometry = {{io::console::size().w-_geometry.size.w,_geometry.a.y},_geometry.size};
+        return rem::code::done;
+    }
+    if (!(_child->_anchor & anchor::right))
+        return rem::code::rejected;
+    int child_right = width()-_child->_margin.right-(_component&component::frame?2:0);
+    _child->_geometry.move_at(cxy{child_right,_child->_geometry.a.y});
+    return rem::code::accepted;
 }
 
 
 rem::code object::apply_hcenter_constraints(object* _child)
 {
+
     return rem::code::notimplemented;
 }
 
@@ -365,7 +376,7 @@ rem::code object::compute_layout(object* _child)
 rem::code object::exec_layout(object* _child)
 {
     if (_child) return _child->exec_layout(nullptr);
-    .
+
     return rem::code::accepted;
 }
 
