@@ -365,7 +365,7 @@ rem::code object::compute_layout(object* _child)
 rem::code object::exec_layout(object* _child)
 {
     if (_child) return _child->exec_layout(nullptr);
-
+    .
     return rem::code::accepted;
 }
 
