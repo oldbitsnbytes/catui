@@ -328,7 +328,7 @@ protected:
     virtual rem::code apply_vcenter_constraints(object* _child);
     virtual rem::code apply_bottom_constraints(object* _child);
     //virtual rem::code apply_anchor(object* _child);
-    rem::code         allocate_bloc_dc(ui::csz wxh);
+    rem::code         allocate_bloc_dc();
     rem::code         exec_layout(object* _child);
 public: // temporary
     //----------------------------------------------------------------------------------------------------------------------------

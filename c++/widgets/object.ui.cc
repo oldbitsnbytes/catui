@@ -160,7 +160,7 @@ margin& object::dom_margin()
  * @return A `rem::code` indicating the result:
  *         - `rem::code::accepted` if the display context is allocated or retrieved successfully.
  */
-rem::code object::allocate_bloc_dc(ui::csz wxh)
+rem::code object::allocate_bloc_dc()
 {
     if (_parent)
     {
@@ -175,7 +175,7 @@ rem::code object::allocate_bloc_dc(ui::csz wxh)
             _dc.reset();
         }
         sys::comment() << "creating new BLOC DC: " << color::yellow << (std::string)wxh << sys::eol;
-        _dc = ui::vchar::bloc::create(wxh, _theme_colors);
+        _dc = ui::vchar::bloc::create(_geometry, _theme_colors);
         _dc->move_to(_geometry.a);
 
     }
@@ -340,12 +340,11 @@ rem::code object::update(ui::rectangle rect)
 {
     if (!rect)
         rect = _geometry.to_local();
-    else
-    {
-        rect = _geometry.to_local() & rect;
-        if (!rect)
-            return rem::code::rejected;
-    }
+
+    rect = _geometry.to_local() & rect;
+    if (!rect)
+        return rem::code::rejected;
+
     _dirty_area |= rect;
     sys::debug() << rem::fn::func << ": dirty area: " << color::yellow << _dirty_area << color::r << sys::eol;
 
@@ -376,6 +375,7 @@ rem::code object::compute_layout(object* _child)
 rem::code object::exec_layout(object* _child)
 {
     if (_child) return _child->exec_layout(nullptr);
+    allocate_bloc_dc(_geometry.size);
 
     return rem::code::accepted;
 }
