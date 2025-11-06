@@ -16,14 +16,21 @@ using namespace cat::ui;
 rem::code object::set_geometry(const ui::rectangle& rect)
 {
     _geometry = rect;
-    allocate_bloc_dc(_geometry.size);
+    if (_parent)
+        _dc = _parent->bloc_dc();
+    else
+        allocate_bloc_dc();
+
     return rem::code::accepted;
 }
 
 
 object& object::clear()
 {
-    _dc->clear(_geometry.to_local());
+    if (_parent)
+        _dc->clear(_geometry);
+    else
+        _dc->clear(_geometry.to_local());
     return *this;
 }
 
@@ -34,6 +41,7 @@ void object::set_status(dom_status_enums::value status)
 {
     _dom_status = status;
     _theme_colors = (*_palette)[_dom_status];
+    //@todo Propagate ui status changes
 }
 
 
@@ -46,23 +54,28 @@ void object::set_type(type_enums::value type)
 
 void object::set_component(component::value component)
 {
+    _component = component;
 }
 
 
 void object::set_anchor(anchor::value anchor)
 {
     _anchor = anchor;
-
+    ///@todo Propagate anchor chanages ( if in post setup )
 }
 
 
 void object::set_padding(padding padding)
 {
+    _padding = padding;
+    ///@todo Propagate padding changes.
 }
 
 
 void object::set_margin(margin margin)
 {
+    _margin = margin;
+    ///@todo Propagate maring changes
 }
 
 
@@ -162,22 +175,20 @@ margin& object::dom_margin()
  */
 rem::code object::allocate_bloc_dc()
 {
-    if (_parent)
-    {
-        sys::comment() << "using parent '" << color::yellow << _parent->id()<< color::r << "':: BLOC DC" << sys::eol;
-        _dc = _parent->bloc_dc();
-    }
-    else
+    if (_dom_type & type_enums::toplevel)
     {
         if (_dc)
         {
-            sys::comment() << "releasing old BLOC DC" << sys::eol;
-            _dc.reset();
+            sys::comment() << " Use count: "<< color::yellow << _dc.use_count() << color::r << " releasing old BLOC DC" << sys::eol;
+            _dc->geometry = _geometry;
+            _dc->realloc();
         }
-        sys::comment() << "creating new BLOC DC: " << color::yellow << (std::string)wxh << sys::eol;
-        _dc = ui::vchar::bloc::create(_geometry, _theme_colors);
-        _dc->move_to(_geometry.a);
+        else
+            _dc = ui::vchar::bloc::create(_geometry, _theme_colors);
 
+        sys::comment() << "creating new BLOC DC: " << color::yellow << (std::string)_geometry.size << sys::eol;
+
+        _dc->move_to(_geometry.a);
     }
 
     clear();
@@ -186,8 +197,17 @@ rem::code object::allocate_bloc_dc()
 }
 
 
-
-
+/**
+ * Applies width constraints to a child object or the current object if the child is null.
+ * For a valid child, calculates the child's width and left position based on its margin,
+ * the parent object's width, and whether the parent has a frame component.
+ *
+ * @param _child A pointer to the child object whose width constraints will be applied.
+ *               If null, the constraints are applied to the current object directly based on the console size.
+ * @return A `rem::code` indicating the result of the operation:
+ *         - `rem::code::done` if the constraints are applied to the console.
+ *         - `rem::code::accepted` if the constraints are applied to the child object successfully.
+ */
 rem::code object::apply_width_constraints(object* _child)
 {
     if (!_child)

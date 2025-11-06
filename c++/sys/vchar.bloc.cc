@@ -25,7 +25,7 @@ vchar::iterator vchar::bloc::set_position(cxy _pos)
 
     state = rem::code::accepted;
     geometry.cursor = _pos;
-    return dc.begin() + geometry.width()*_pos.y + _pos.x;
+    return data.begin() + geometry.width()*_pos.y + _pos.x;
 }
 
 
@@ -342,29 +342,47 @@ bool vchar::bloc::operator--(int)
 }
 
 
+/**
+ * @brief Constructs a bloc with the specified geometry and colors.
+ *
+ * Initializes a bloc object using the provided rectangle dimensions and color pair.
+ * The bloc's geometry and internal data are set based on the given rectangle,
+ * and default characters are assigned to fill its area.
+ *
+ * @param rect The rectangle defining the size and shape of the bloc.
+ * @param a_colors The pair of colors to be used for the bloc's default appearance.
+ *
+ * @note RAII
+ */
+vchar::bloc::bloc(const rectangle&rect, color::pair a_colors)
+{
+    geometry = rect;
+    data = vchar::string(rect.size.area(),vchar(a_colors));
+    cursor = data.begin();
+    colors = a_colors;
+}
+
 
 vchar::bloc::~bloc()
 {
-    dc.clear();
+    data.clear();
     geometry={};
 }
 
 
-vchar::bloc::shared vchar::bloc::create(csz sz, color::pair a_colours)
+
+
+vchar::bloc*  vchar::bloc::create(const rectangle&rect, color::pair a_colors)
 {
+    auto p  = new vchar::bloc(rect,a_colors);
 
-    auto p  = std::make_shared<vchar::bloc>();
-
-    p->dc = vchar::string(sz.area(),vchar(color::pair(a_colours)));
-    p->colors = a_colours;
-    p->geometry = {{0,0},sz};
+    //p->data = vchar::string(rect.size.area(),vchar(a_colors));
+    //p->colors = a_colors;
+    //p->geometry = rect;
     p->clear();
     //auto l = sys::Info(1); l << " vchar::pad size:" << color::Yellow << p->geometry.size.Area() << l;
     return p;
 }
-
-
-
 
 
 //////////////////////////////////////////////////////////////
@@ -374,12 +392,12 @@ void vchar::bloc::clear(const rectangle& subarea)
 {
     if (!subarea)
     {
-        std::fill_n(dc.begin(),geometry.size.area(), vchar(color::pair(colors)));
+        std::fill_n(data.begin(),geometry.size.area(), vchar(color::pair(colors)));
         return;
     }
 
     for (int y=0;y<subarea.size.h; ++y)
-        std::fill_n(dc.begin()+subarea.a.x + ((subarea.a.y + y) * geometry.size.w), subarea.size.w, vchar(color::pair(colors)));
+        std::fill_n(data.begin()+subarea.a.x + ((subarea.a.y + y) * geometry.size.w), subarea.size.w, vchar(color::pair(colors)));
 
 }
 
@@ -398,7 +416,7 @@ rem::code vchar::bloc::clear(ui::rectangle r, color::pair cp)
         }
     }
     for (int y=0;y<r.size.h; ++y)
-        std::fill_n(dc.begin()+r.a.x + ((r.a.y + y) * geometry.size.w), r.size.w, vchar(color::pair(cp)));
+        std::fill_n(data.begin()+r.a.x + ((r.a.y + y) * geometry.size.w), r.size.w, vchar(color::pair(cp)));
     return rem::code::accepted;
 }
 
@@ -431,7 +449,7 @@ rem::code vchar::bloc::copy(vchar::bloc&pad_dc, rectangle inner_area)
 vchar::iterator vchar::bloc::at(const cxy& offset)
 {
     if (geometry[offset])
-        return dc.begin() + (geometry.width() * offset.y) + offset.x;
+        return data.begin() + (geometry.width() * offset.y) + offset.x;
 
     sys::error() << rem::fn::func << " out of boundaries @" << color::red4 << offset << sys::eol;
     return cursor;
@@ -446,7 +464,7 @@ rem::code vchar::bloc::goto_xy(const cxy&offset)
         //return rem::code::oob;
     }
     geometry.cursor = offset;
-    cursor = dc.begin() + (geometry.width() * geometry.cursor.y) + geometry.cursor.x;
+    cursor = data.begin() + (geometry.width() * geometry.cursor.y) + geometry.cursor.x;
     return rem::code::accepted;
 }
 
@@ -488,12 +506,22 @@ void vchar::bloc::set_colors(color::pair cp)
 }
 
 
+void vchar::bloc::realloc()
+{
+    data.clear();
+    //...
+
+    // Toujours reserver une ligne de plus.
+    data.resize(geometry.size.area()+geometry.size.w);
+}
+
+
 rem::code vchar::bloc::print(const std::string& str)
 {
     auto size = str.length();
     // Re-assure syncing iterator position with the cursor position
     //cursor = (*this)[geometry.cursor];
-    auto count = MIN(size, (dc.end() - cursor));
+    auto count = MIN(size, (data.end() - cursor));
 
     for (int x=0; x < count; x++)  *cursor++ << str[x];
 
@@ -547,7 +575,7 @@ vchar::iterator vchar::bloc::operator[](cxy P)
     if (!r[P])
         return cursor;
 
-    return dc.begin() + (P.y * geometry.size.w) + P.x;
+    return data.begin() + (P.y * geometry.size.w) + P.x;
 }
 
 

@@ -56,6 +56,7 @@ static constexpr value prefix_glyph    = 0x0080;
 static constexpr value menubar       = 0x0100;
 static constexpr value menu          = 0x0200;
 
+
 //...
 }
 
@@ -177,9 +178,6 @@ class CATUI_LIB object
 
 public:
 
-    using shared = std::shared_ptr<object>;
-    using weak = std::weak_ptr<object>;
-
     using list = std::vector<object*>;
     using iterator = list::iterator;
 
@@ -187,13 +185,13 @@ public:
     virtual ~object();
 
     explicit object(std::string  a_id);
-    object(object*  parent_object, std::string  a_id);
+    object(object*  parent_object, std::string  a_id, type_enums::value obj_type=type_enums::none);
 
     object& operator = (object&& rhs) noexcept;
     object& operator = (const object& rhs);
 
 
-    object* parent() { return _parent; }
+    object* parent() const { return _parent; }
     [[nodiscard]] object::iterator child(const std::string& id);
     // object* child(int index);
     object::iterator child(const object*& child);
@@ -204,7 +202,7 @@ public:
 
 
     //object* operator ->() { return this; }
-    ui::vchar::bloc::shared bloc_dc() { return _dc; }
+    ui::vchar::bloc* bloc_dc() { return _dc; }
     [[nodiscard]] ui::vchar::bloc& dc() const { return **_dc; }
     ui::vchar::iterator operator[](ui::cxy pos) const;
     rem::code set_geometry(const ui::rectangle& rect);
@@ -314,7 +312,7 @@ protected:
     dom_status_enums::value     _dom_status{dom_status_enums::normal};
     component::value            _component{component::none};
     type_enums::value           _dom_type{type_enums::none};
-    ui::vchar::bloc::shared     _dc{nullptr};
+    ui::vchar::bloc*            _dc{nullptr};
     ui::rectangle               _geometry{};
     ui::rectangle               _dirty_area{};
     ui::csz                     _size_policy{};

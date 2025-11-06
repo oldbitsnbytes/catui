@@ -51,7 +51,7 @@ object::object(std::string a_id): _id(std::move(a_id))
 }
 
 
-object::object(object* parent_object, std::string a_id):  _id(std::move(a_id)),_parent(parent_object)
+object::object(object*  parent_object, std::string  a_id, type_enums::value obj_type):  _id(std::move(a_id)),_parent(parent_object),_dom_type(obj_type)
 {
     if (_parent)
         _parent->_children.push_back(this);
