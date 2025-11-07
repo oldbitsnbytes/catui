@@ -27,6 +27,10 @@ statusbar::statusbar()
 }
 
 
+
+/*!
+ * @note quasi RAII
+ */
 statusbar::statusbar(object* parent_object, std::string _id): object(parent_object, _id)
 {
     set_anchor(anchor::bottom | anchor::width);
@@ -34,10 +38,7 @@ statusbar::statusbar(object* parent_object, std::string _id): object(parent_obje
     _geometry.size.min_size = {1,1};
     _geometry.size.max_size = {10000,1};
 
-    if (_parent)
-        _parent->compute_layout(this);
-    else
-        compute_layout(this);
+    exec_layout();
 
 }
 

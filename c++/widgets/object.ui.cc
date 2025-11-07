@@ -196,99 +196,134 @@ rem::code object::allocate_bloc_dc()
 }
 
 
-/**
- * Applies width constraints to a child object or the current object if the child is null.
- * For a valid child, calculates the child's width and left position based on its margin,
- * the parent object's width, and whether the parent has a frame component.
- *
- * @param _child A pointer to the child object whose width constraints will be applied.
- *               If null, the constraints are applied to the current object directly based on the console size.
- * @return A `rem::code` indicating the result of the operation:
- *         - `rem::code::done` if the constraints are applied to the console.
- *         - `rem::code::accepted` if the constraints are applied to the child object successfully.
- */
-rem::code object::apply_width_constraints(object* _child)
+//
+// rem::code object::apply_right_constraints(object* _child)
+// {
+//     if (!_child)
+//     {
+//         sys::comment() << "applying right constraints on the console:" << sys::eol;
+//         _geometry = {{io::console::size().w-_geometry.size.w,_geometry.a.y},_geometry.size};
+//         return rem::code::done;
+//     }
+//     if (!(_child->_anchor & anchor::right))
+//         return rem::code::rejected;
+//     int child_right = width()-_child->_margin.right-(_component&component::frame?2:0);
+//     _child->_geometry.move_at(cxy{child_right,_child->_geometry.a.y});
+//     return rem::code::accepted;
+// }
+
+
+
+// rem::code object::apply_bottom_constraints(object* _child)
+// {
+//     if (!_child)
+//     {
+//         sys::comment() << "applying bottom constraints on the console:" << sys::eol;
+//         _geometry = {_geometry.a,io::console::size()};
+//         return rem::code::done;
+//     }
+//
+//
+//     if (!(_child->_anchor & anchor::bottom))
+//         return rem::code::rejected;
+//
+//     int child_y = (_geometry.size.h-_child->_margin.bottom-(_component&component::frame?2:0))-_child->_geometry.size.h;
+//     _child->_geometry.move_at(cxy{_child->_geometry.a.x, child_y});
+//     return rem::code::accepted;
+// }
+
+
+rem::code object::layout_width()
 {
-    if (!_child)
+    if (_dom_type & type_enums::toplevel)
     {
         sys::comment() << "applying width constraints on the console:" << sys::eol;
-        _geometry = {_geometry.a,io::console::size()};
+        _geometry = {cxy{0+_margin.left,_geometry.a.y}, csz{io::console::size().w-_margin.left-_margin.right-(_component&component::frame?2:0),_geometry.size.h}};
         return rem::code::done;
     }
 
-
-    int child_width = width()-_child->_margin.left-_child->_margin.right-(_component&component::frame?2:0);
-    int child_left  = _child->_margin.left+(_component&component::frame?1:0);
-    //int child_top   = _child->_margin.top+(_component&component::frame?1:0);
-    _child->_geometry = {cxy{child_left,_child->_geometry.a.y},csz{child_width,_child->_geometry.size.h}};
-    return rem::code::accepted;
-}
-
-
-rem::code object::apply_height_constraints(object* _child)
-{
-    if (!(_child->_anchor & anchor::height))
+    if (!_parent)
         return rem::code::rejected;
 
-    int child_height = height()-_child->_margin.top-_child->_margin.bottom-(_component&component::frame?2:0);
-    int child_top    = _child->_margin.top+(_component&component::frame?1:0);
-    _child->_geometry = {cxy{_child->_geometry.a.x,child_top},csz{_child->_geometry.size.w,child_height}};
+    int _width = _parent->width()-_margin.left-_margin.right-(_component&component::frame?2:0);
+    int _left  = _margin.left+(_component&component::frame?1:0);
+    _geometry = {cxy{_left,_geometry.a.y},csz{_width,_geometry.size.h}};
     return rem::code::accepted;
 }
 
 
-rem::code object::apply_left_constraints(object* _child)
+rem::code object::layout_height()
 {
+    if (!(_anchor & anchor::height))
+        return rem::code::rejected;
+
+    int _height = height()-_margin.top-_margin.bottom-(_component&component::frame?2:0);
+    int _top    = _margin.top+(_component&component::frame?1:0);
+    _geometry = {cxy{_geometry.a.x,_top},csz{_geometry.size.w,_height}};
+    return rem::code::accepted;
+}
+
+
+rem::code object::layout_left()
+{
+    sys::warning() << "layout_left() not implemented yet" << sys::eol;
     return rem::code::notimplemented;
 }
 
 
-rem::code object::apply_right_constraints(object* _child)
+rem::code object::layout_right()
 {
-    if (!_child)
-    {
-        sys::comment() << "applying right constraints on the console:" << sys::eol;
-        _geometry = {{io::console::size().w-_geometry.size.w,_geometry.a.y},_geometry.size};
-        return rem::code::done;
-    }
-    if (!(_child->_anchor & anchor::right))
-        return rem::code::rejected;
-    int child_right = width()-_child->_margin.right-(_component&component::frame?2:0);
-    _child->_geometry.move_at(cxy{child_right,_child->_geometry.a.y});
-    return rem::code::accepted;
-}
-
-
-rem::code object::apply_hcenter_constraints(object* _child)
-{
-
+    sys::warning() << "layout_right() not implemented yet" << sys::eol;
     return rem::code::notimplemented;
 }
 
 
-rem::code object::apply_vcenter_constraints(object* _child)
+rem::code object::layout_hcenter()
 {
+    sys::warning() << "layout_hcenter() not implemented yet" << sys::eol;
     return rem::code::notimplemented;
 }
 
 
-
-rem::code object::apply_bottom_constraints(object* _child)
+rem::code object::layout_vcenter()
 {
-    if (!_child)
-    {
-        sys::comment() << "applying bottom constraints on the console:" << sys::eol;
-        _geometry = {_geometry.a,io::console::size()};
-        return rem::code::done;
-    }
+    sys::warning() << "layout_vcenter() not implemented yet" << sys::eol;
+    return rem::code::notimplemented;
+}
 
 
-    if (!(_child->_anchor & anchor::bottom))
-        return rem::code::rejected;
+rem::code object::layout_bottom()
+{
+    sys::warning() << "layout_bottom() not implemented yet" << sys::eol;
+    //     if (!_child)
+    //     {
+    //         sys::comment() << "applying bottom constraints on the console:" << sys::eol;
+    //         _geometry = {_geometry.a,io::console::size()};
+    //         return rem::code::done;
+    //     }
+    //
+    //
+    //     if (!(_child->_anchor & anchor::bottom))
+    //         return rem::code::rejected;
+    //
+    //     int child_y = (_geometry.size.h-_child->_margin.bottom-(_component&component::frame?2:0))-_child->_geometry.size.h;
+    //     _child->_geometry.move_at(cxy{_child->_geometry.a.x, child_y});
+    //     return rem::code::accepted;
+    return rem::code::notimplemented;
+}
 
-    int child_y = (_geometry.size.h-_child->_margin.bottom-(_component&component::frame?2:0))-_child->_geometry.size.h;
-    _child->_geometry.move_at(cxy{_child->_geometry.a.x, child_y});
-    return rem::code::accepted;
+
+rem::code object::layout_top()
+{
+    sys::warning() << "layout_top() not implemented yet" << sys::eol;
+    return rem::code::notimplemented;
+}
+
+
+rem::code object::layout_center()
+{
+    sys::warning() << "layout_center() not implemented yet" << sys::eol;
+    return rem::code::notimplemented;
 }
 
 
@@ -302,25 +337,26 @@ rem::code object::apply_bottom_constraints(object* _child)
  *         - `rem::code::done` if the anchor constraints are successfully applied.
  * @note if '_child' is nullptr, then the constraints are applied to this object, in absolute coords directly onto the console terminal.
  */
-rem::code object::apply_constraints(object* _child)
+rem::code object::exec_layout()
 {
     rem::code result;
-    if (_child->_anchor &  anchor::width)
-        apply_width_constraints(_child);
-    if (_child->_anchor &  anchor::height)
-        apply_height_constraints(_child);
-    if (_child->_anchor &  anchor::left)
-        apply_left_constraints(_child);
-    if (_child->_anchor &  anchor::right)
-        apply_right_constraints(_child);
-    if (_child->_anchor &  anchor::hcenter)
-        apply_hcenter_constraints(_child);
-    if (_child->_anchor &  anchor::vcenter)
-        apply_vcenter_constraints(_child);
-    if (_child->_anchor &  anchor::bottom)
-        apply_bottom_constraints(_child);
 
-    compute_layout(_child);
+    if (_anchor &  anchor::width)
+        layout_width();
+    if (_anchor &  anchor::height)
+        layout_height();
+    if (_anchor &  anchor::left)
+        layout_left();
+    if (_anchor &  anchor::right)
+        layout_right();
+    if (_anchor &  anchor::hcenter)
+        layout_hcenter();
+    if (_anchor &  anchor::vcenter)
+        layout_vcenter();;
+    if (_anchor &  anchor::bottom)
+        layout_bottom();
+
+    allocate_bloc_dc();
     return rem::code::done;
 }
 
@@ -380,24 +416,6 @@ rem::code object::resize(ui::rectangle rect)
 
 void object::set_size_policy(ui::csz sz_policy) { _size_policy = sz_policy; }
 
-
-rem::code object::compute_layout(object* _child)
-{
-    if (!!apply_constraints(_child))
-    {
-        return exec_layout(_child);
-    }
-    return rem::code::rejected;
-}
-
-
-rem::code object::exec_layout(object* _child)
-{
-    if (_child) return _child->exec_layout(nullptr);
-    allocate_bloc_dc();
-
-    return rem::code::accepted;
-}
 
 
 }

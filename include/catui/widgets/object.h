@@ -293,8 +293,6 @@ public:
     void set_size_policy(ui::csz sz_policy);
     int width() const { return _geometry.size.w; }
     int height() const { return _geometry.size.h; }
-    virtual rem::code   compute_layout(object* _child);
-    virtual rem::code   apply_constraints(object* _child);
     virtual void        redraw();
 protected:
     object::list _children{};
@@ -318,16 +316,20 @@ protected:
     ui::csz                     _size_policy{};
     object* _parent{nullptr};
 
-    virtual rem::code apply_width_constraints(object* _child);
-    virtual rem::code apply_height_constraints(object* _child);
-    virtual rem::code apply_left_constraints(object* _child);
-    virtual rem::code apply_right_constraints(object* _child);
-    virtual rem::code apply_hcenter_constraints(object* _child);
-    virtual rem::code apply_vcenter_constraints(object* _child);
-    virtual rem::code apply_bottom_constraints(object* _child);
-    //virtual rem::code apply_anchor(object* _child);
+
+    virtual rem::code layout_width();
+    virtual rem::code layout_height();
+    virtual rem::code layout_left();
+    virtual rem::code layout_right();
+    virtual rem::code layout_hcenter();
+    virtual rem::code layout_vcenter();
+    virtual rem::code layout_bottom();
+    virtual rem::code layout_top();
+    virtual rem::code layout_center();
+
     rem::code         allocate_bloc_dc();
-    rem::code         exec_layout(object* _child);
+    rem::code         exec_layout();
+
 public: // temporary
     //----------------------------------------------------------------------------------------------------------------------------
     #pragma endregion dom_element_protected
