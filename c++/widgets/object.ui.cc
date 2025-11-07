@@ -179,7 +179,6 @@ rem::code object::allocate_bloc_dc()
     {
         if (_dc)
         {
-            sys::comment() << " Use count: "<< color::yellow << _dc.use_count() << color::r << " releasing old BLOC DC" << sys::eol;
             _dc->geometry = _geometry;
             _dc->realloc();
         }
@@ -395,7 +394,7 @@ rem::code object::compute_layout(object* _child)
 rem::code object::exec_layout(object* _child)
 {
     if (_child) return _child->exec_layout(nullptr);
-    allocate_bloc_dc(_geometry.size);
+    allocate_bloc_dc();
 
     return rem::code::accepted;
 }

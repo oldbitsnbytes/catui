@@ -231,7 +231,7 @@ public:
 
     struct canva
     {
-        ui::vchar::bloc::shared dc{nullptr};
+        ui::vchar::bloc* dc{nullptr};
         ui::rectangle geometry{};
         // --------- Mark iterators with the object's DC bloc.
         ui::vchar::iterator cursor{};   ///< dc->at(geometry.cursor + geometry.a);
